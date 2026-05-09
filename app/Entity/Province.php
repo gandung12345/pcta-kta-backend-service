@@ -10,12 +10,14 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use OpenApi\Attributes as OpenApi;
 use Schnell\Attribute\Schema\Json;
 use Schnell\Entity\AbstractEntity;
+use Schnell\Entity\EntityInterface;
 
 use function class_exists;
 use function sprintf;
@@ -102,6 +104,9 @@ class Province extends AbstractEntity
         description: 'Province updated at'
     )]
     private ?DateTime $updatedAt;
+
+    #[OneToOne(targetEntity: Member::class, mappedBy: 'province')]
+    private Member $member;
 
     /**
      * @return void
@@ -205,6 +210,23 @@ class Province extends AbstractEntity
     public function setUpdatedAt(?DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return \Schnell\Entity\EntityInterface
+     */
+    public function getMember(): EntityInterface
+    {
+        return $this->member;
+    }
+
+    /**
+     * @param \Schnell\Entity\EntityInterface $member
+     * @return void
+     */
+    public function setMember(EntityInterface $member): void
+    {
+        $this->member = $member;
     }
 
     /**

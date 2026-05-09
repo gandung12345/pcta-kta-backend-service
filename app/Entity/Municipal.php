@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
@@ -20,6 +21,7 @@ use Doctrine\ORM\PersistentCollection;
 use OpenApi\Attributes as OpenApi;
 use Schnell\Attribute\Schema\Json;
 use Schnell\Entity\AbstractEntity;
+use Schnell\Entity\EntityInterface;
 
 use function class_exists;
 use function sprintf;
@@ -129,6 +131,9 @@ class Municipal extends AbstractEntity
         orphanRemoval: true
     )]
     private PersistentCollection $districts;
+
+    #[OneToOne(targetEntity: Member::class, mappedBy: 'municipal')]
+    private Member $member;
 
     /**
      * @return void
@@ -249,6 +254,23 @@ class Municipal extends AbstractEntity
     public function setDistricts(PersistentCollection $districts): void
     {
         $this->districts = $districts;
+    }
+
+    /**
+     * @return \Schnell\Entity\EntityInterface
+     */
+    public function getMember(): EntityInterface
+    {
+        return $this->member;
+    }
+
+    /**
+     * @param \Schnell\Entity\EntityInterface $member
+     * @return void
+     */
+    public function setMember(EntityInterface $member): void
+    {
+        $this->member = $member;
     }
 
     /**

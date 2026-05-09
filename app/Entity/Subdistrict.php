@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
@@ -118,6 +119,9 @@ class Subdistrict extends AbstractEntity
     )]
     #[JoinColumn(name: 'districtRefId', referencedColumnName: 'id')]
     private District $district;
+
+    #[OneToOne(targetEntity: Member::class, mappedBy: 'subdistrict')]
+    private Member $member;
 
     /**
      * @return void
@@ -238,6 +242,23 @@ class Subdistrict extends AbstractEntity
     public function setDistrict(EntityInterface $district): void
     {
         $this->district = $district;
+    }
+
+    /**
+     * @return \Schnell\Entity\EntityInterface
+     */
+    public function getMember(): EntityInterface
+    {
+        return $this->member;
+    }
+
+    /**
+     * @param \Schnell\Entity\EntityInterface $member
+     * @return void
+     */
+    public function setMember(EntityInterface $member): void
+    {
+        $this->member = $member;
     }
 
     /**

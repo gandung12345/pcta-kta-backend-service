@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
@@ -17,6 +19,7 @@ use OpenApi\Attributes as OpenApi;
 use Schnell\Attribute\Schema\Json;
 use Schnell\Decorator\Stringified\DateTimeDecorator;
 use Schnell\Entity\AbstractEntity;
+use Schnell\Entity\EntityInterface;
 
 use function class_exists;
 use function sprintf;
@@ -193,6 +196,22 @@ class Member extends AbstractEntity
         description: 'Member work date'
     )]
     private ?DateTimeDecorator $workDate;
+
+    #[OneToOne(targetEntity: Province::class, inversedBy: 'member')]
+    #[JoinColumn(name: 'provinceRefId', referencedColumnName: 'id')]
+    private Province $province;
+
+    #[OneToOne(targetEntity: Municipal::class, inversedBy: 'member')]
+    #[JoinColumn(name: 'municipalRefId', referencedColumnName: 'id')]
+    private Municipal $municipal;
+
+    #[OneToOne(targetEntity: District::class, inversedBy: 'member')]
+    #[JoinColumn(name: 'districtRefId', referencedColumnName: 'id')]
+    private District $district;
+
+    #[OneToOne(targetEntity: Subdistrict::class, inversedBy: 'member')]
+    #[JoinColumn(name: 'subdistrictRefId', referencedColumnName: 'id')]
+    private Subdistrict $subdistrict;
 
     /**
      * @var string
@@ -502,6 +521,74 @@ class Member extends AbstractEntity
     public function setUpdatedAt(?DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return \Schnell\Entity\EntityInterface
+     */
+    public function getProvince(): EntityInterface
+    {
+        return $this->province;
+    }
+
+    /**
+     * @param \Schnell\Entity\EntityInterface $province
+     * @return void
+     */
+    public function setProvince(EntityInterface $province): void
+    {
+        $this->province = $province;
+    }
+
+    /**
+     * @return \Schnell\Entity\EntityInterface
+     */
+    public function getMunicipal(): EntityInterface
+    {
+        return $this->municipal;
+    }
+
+    /**
+     * @param \Schnell\Entity\EntityInterface $municipal
+     * @return void
+     */
+    public function setMunicipal(EntityInterface $municipal): void
+    {
+        $this->municipal = $municipal;
+    }
+
+    /**
+     * @return \Schnell\Entity\EntityInterface
+     */
+    public function getDistrict(): EntityInterface
+    {
+        return $this->district;
+    }
+
+    /**
+     * @param \Schnell\Entity\EntityInterface $district
+     * @return void
+     */
+    public function setDistrict(EntityInterface $district): void
+    {
+        $this->district = $district;
+    }
+
+    /**
+     * @return \Schnell\Entity\EntityInterface
+     */
+    public function getSubdistrict(): EntityInterface
+    {
+        return $this->subdistrict;
+    }
+
+    /**
+     * @param \Schnell\Entity\EntityInterface $subdistrict
+     * @return void
+     */
+    public function setSubdistrict(EntityInterface $subdistrict): void
+    {
+        $this->subdistrict = $subdistrict;
     }
 
     /**
