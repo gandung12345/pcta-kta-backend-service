@@ -21,6 +21,27 @@ use Schnell\Decorator\Stringified\DateTimeDecorator;
 use Schnell\Entity\AbstractEntity;
 use Schnell\Entity\EntityInterface;
 
+use function class_exists;
+use function sprintf;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(DateTime::class);
+class_exists(Types::class);
+class_exists(Entity::class);
+class_exists(Table::class);
+class_exists(Id::class);
+class_exists(Column::class);
+class_exists(JoinColumn::class);
+class_exists(ManyToOne::class);
+class_exists(PrePersist::class);
+class_exists(PreUpdate::class);
+class_exists(HasLifecycleCallbacks::class);
+class_exists(Json::class);
+class_exists(DateTimeDecorator::class);
+class_exists(AbstractEntity::class);
+// phpcs:enable
+
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */

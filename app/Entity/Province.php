@@ -12,12 +12,27 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use OpenApi\Attributes as OpenApi;
+use Schnell\Attribute\Schema\Json;
+use Schnell\Entity\AbstractEntity;
 
 use function class_exists;
 use function sprintf;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
+class_exists(DateTime::class);
+class_exists(Types::class);
+class_exists(Entity::class);
+class_exists(Table::class);
+class_exists(Id::class);
+class_exists(Column::class);
+class_exists(PrePersist::class);
+class_exists(PreUpdate::class);
+class_exists(HasLifecycleCallbacks::class);
+class_exists(Json::class);
+class_exists(AbstractEntity::class);
 // phpcs:enable
 
 #[Entity]
