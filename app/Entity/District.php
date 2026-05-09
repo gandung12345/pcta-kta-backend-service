@@ -1,0 +1,247 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Pcta\Api\Entity;
+
+use DateTime;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\ORM\Mapping\PreUpdate;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use OpenApi\Attributes as OpenApi;
+use Schnell\Attribute\Schema\Json;
+use Schnell\Decorator\Stringified\DateTimeDecorator;
+use Schnell\Entity\AbstractEntity;
+use Schnell\Entity\EntityInterface;
+
+/**
+ * @author Paulus Gandung Prakosa <gandung@infradead.org>
+ */
+#[Entity]
+#[Table(name: 'district')]
+#[HasLifecycleCallbacks]
+#[OpenApi\Schema]
+class District extends AbstractEntity
+{
+    /**
+     * @var string
+     */
+    #[Id]
+    #[Column(type: 'guid', nullable: false, unique: true)]
+    #[Json(name: 'id')]
+    #[OpenApi\Property(
+        property: 'id',
+        type: 'string',
+        description: 'District ID',
+        readOnly: true
+    )]
+    private string $id;
+
+    /**
+     * @var string
+     */
+    #[Column(type: 'text', nullable: false)]
+    #[Json(name: 'formalIdentifier')]
+    #[OpenApi\Property(
+        property: 'formalIdentifier',
+        type: 'string',
+        description: 'District formal identifier'
+    )]
+    private string $formalIdentifier;
+
+    /**
+     * @var string
+     */
+    #[Column(type: 'text', nullable: false)]
+    #[Json(name: 'formalName')]
+    #[OpenApi\Property(
+        property: 'formalName',
+        type: 'string',
+        description: 'District formal name'
+    )]
+    private string $formalName;
+
+    /**
+     * @var \DateTime|null
+     */
+    #[Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Json(name: 'createdAt')]
+    #[OpenApi\Property(
+        property: 'createdAt',
+        type: 'timestamp',
+        description: 'District created at'
+    )]
+    private ?DateTime $createdAt;
+
+    /**
+     * @var \DateTime|null
+     */
+    #[Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Json(name: 'updatedAt')]
+    #[OpenApi\Property(
+        property: 'updatedAt',
+        type: 'timestamp',
+        description: 'District updated at'
+    )]
+    private ?DateTime $updatedAt;
+
+    #[ManyToOne(
+        targetEntity: Municipal::class,
+        inversedBy: 'districts',
+        cascade: ['persist']
+    )]
+    #[JoinColumn(name: 'municipalRefId', referencedColumnName: 'id')]
+    private Municipal $municipal;
+
+    /**
+     * @return void
+     */
+    #[PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->setCreatedAt(new DateTime());
+        $this->setUpdatedAtValue();
+    }
+
+    /**
+     * @return void
+     */
+    #[PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->setUpdatedAt(new DateTime());
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string $id
+     * @return void
+     */
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormalIdentifier(): string
+    {
+        return $this->formalIdentifier;
+    }
+
+    /**
+     * @param string $formatIdentifier
+     * @return void
+     */
+    public function setFormalIdentifier(string $formalIdentifier): void
+    {
+        $this->formalIdentifier = $formalIdentifier;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormalName(): string
+    {
+        return $this->formalName;
+    }
+
+    /**
+     * @param string $formalName
+     * @return void
+     */
+    public function setFormalName(string $formalName): void
+    {
+        $this->formalName = $formalName;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getCreatedAt(): ?DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime|null $createdAt
+     * @return void
+     */
+    public function setCreatedAt(?DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getUpdatedAt(): ?DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime|null $updatedAt
+     * @return void
+     */
+    public function setUpdatedAt(?DateTime $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return \Schnell\Entity\EntityInterface
+     */
+    public function getMunicipal(): EntityInterface
+    {
+        return $this->municipal;
+    }
+
+    /**
+     * @param \Schnell\Entity\EntityInterface $municipal
+     * @return void
+     */
+    public function setMunicipal(EntityInterface $municipal): void
+    {
+        $this->municipal = $municipal;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getQueryBuilderAlias(): string
+    {
+        return sprintf('__%s__', $this->getCanonicalTableName());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCanonicalTableName(): string
+    {
+        return 'district';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDqlName(): string
+    {
+        return District::class;
+    }
+}
