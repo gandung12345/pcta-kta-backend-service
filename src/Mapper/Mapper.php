@@ -561,6 +561,67 @@ final class Mapper implements MapperInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function createFromMultipleReference(
+        array $refIds,
+        array $referencedEntities,
+        SchemaInterface $schema,
+        EntityInterface $targetEntity
+    ): EntityInterface|array|null {
+        $refFqcns = array_map(fn ($refObj) => get_class($refObj), $referencedEntities);
+        $methods = $this->getMethodNamesFromClassObject($targetEntity, true);
+        $clonedTargetEntity = clone $targetEntity;
+
+        foreach ($refFqcns as $refIndex => $refFqcn) {
+            try {
+                $referencedEntity = $this->getEntityManager()
+                    ->getRepository($refFqcn)
+                    ->find($refIds[$refIndex]);
+            } catch (Throwable $e) {
+                $referencedEntity = null;
+            }
+
+            if ($referencedEntity === null) {
+                return null;
+            }
+
+            $splittedFqcn = preg_split('/\\\/', $refFqcn);
+            $refClassName = end($splittedFqcn);
+
+            call_user_func_array(
+                [$clonedTargetEntity, sprintf('set%s', $refClassName)],
+                [$referencedEntity]
+            );
+        }
+
+        foreach ($methods as $method) {
+            call_user_func_array(
+                [$clonedTargetEntity, $method],
+                [call_user_func([$schema, str_replace('set', 'get', $method)])]
+            );
+        }
+
+        $hydrator = $this->getHydrator();
+
+        try {
+            $this->getEntityManager()->persist($clonedTargetEntity);
+            $this->getEntityManager()->flush();
+        } catch (ConstraintViolationException | UniqueConstraintViolationException $e) {
+            $result = $this->handleDoctrineException(
+                $clonedTargetEntity,
+                $e
+            );
+
+            throw $result === null ? $e : $result;
+        }
+
+        return null === $hydrator
+            ? $clonedTargetEntity
+            : $hydrator->hydrate($clonedTargetEntity);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function update(

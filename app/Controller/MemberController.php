@@ -89,4 +89,30 @@ class MemberController extends BaseController
 
         return $this->json($response, $result);
     }
+
+    #[Route('/province/{pid}/municipal/{mid}/district/{did}/subdistrict/{sid}/member', method: 'POST')]
+    #[OpenApi\Post(
+        path: '/province/{pid}/municipal/{mid}/district/{did}/subdistrict/{sid}/member',
+        tags: ['Member'],
+        responses: [
+            new OpenApi\Response(response: 201, description: 'Created')
+        ]
+    )]
+    public function createMember(
+        Request $request,
+        Response $response,
+        array $args
+    ): Response {
+        $schema = new MemberSchema();
+        $validator = new Validator();
+        $validator = $validator->withRequest($request);
+        $validator->assign($schema);
+
+        $repository = new MemberRepository(
+            $this->getContainer()->get('mapper'),
+            $request
+        );
+
+        $entity =
+    }
 }

@@ -206,6 +206,22 @@ interface MapperInterface extends RequestAwareInterface
     /**
      * @psalm-api
      *
+     * @param array $refIds
+     * @param array $referencedEntities
+     * @param \Schnell\Schema\SchemaInterface $schema
+     * @param \Schnell\Entity\EntityInterface $targetEntity
+     * @return \Schnell\Entity\EntityInterface|array|null
+     */
+    public function createFromMultipleReference(
+        array $refIds,
+        array $referencedEntities,
+        SchemaInterface $schema,
+        EntityInterface $targetEntity
+    ): EntityInterface|array|null;
+
+    /**
+     * @psalm-api
+     *
      * @param mixed $id
      * @param \Schnell\Schema\SchemaInterface $schema
      * @param \Schnell\Entity\EntityInterface $entity
