@@ -6,30 +6,25 @@ namespace Pcta\Api\Controller;
 
 use Throwable;
 use OpenApi\Attributes as OpenApi;
-use Pcta\Api\Entity\Member;
+use Pcta\Api\Entity\District;
 use Pcta\Api\Http\Response\Builder as ResponseBuilder;
-use Pcta\Api\Repository\MemberRepository;
-use Pcta\Api\Schema\MemberSchema;
+use Pcta\Api\Repository\DistrictRepository;
+use Pcta\Api\Schema\DistrictSchema;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\RequestInterface as Request;
 use Schnell\Attribute\Route;
 use Schnell\Paginator\Paginator;
 use Schnell\Validator\Validator;
 
-use function array_combine;
-use function array_keys;
-use function array_map;
-use function array_values;
 use function class_exists;
-use function implode;
 use function sprintf;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
-class_exists(Member::class);
+class_exists(District::class);
 class_exists(ResponseBuilder::class);
-class_exists(MemberRepository::class);
-class_exists(MemberSchema::class);
+class_exists(DistrictRepository::class);
+class_exists(DistrictSchema::class);
 class_exists(Route::class);
 class_exists(Paginator::class);
 class_exists(Validator::class);
@@ -38,7 +33,7 @@ class_exists(Validator::class);
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
-class MemberController extends BaseController
+class DistrictController extends BaseController
 {
     /**
      * @param \Psr\Http\Message\RequestInterface $request
@@ -46,20 +41,20 @@ class MemberController extends BaseController
      * @param array $args
      * @return \Psr\Http\Message\ResponseInterface
      */
-    #[Route('/member', method: 'GET')]
+    #[Route('/district', method: 'GET')]
     #[OpenApi\Get(
-        path: '/member',
-        tags: ['Member'],
+        path: '/district',
+        tags: ['District'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK')
         ]
     )]
-    public function getAllMembers(
+    public function getAllDistricts(
         Request $request,
-        Response $response,
+        Response $repsonse,
         array $args
     ): Response {
-        $repository = new MemberRepository(
+        $repository = new DistrictRepository(
             $this->getContainer()->get('mapper'),
             $request
         );
@@ -67,7 +62,7 @@ class MemberController extends BaseController
         $count = $this->getContainer()
             ->get('mapper')
             ->withRequest($request)
-            ->count(new Member());
+            ->count(new District());
 
         $paginator = new Paginator($count);
         $page = $paginator->getMetadata($request);
@@ -86,21 +81,21 @@ class MemberController extends BaseController
      * @param array $args
      * @return \Psr\Http\Message\ResponseInterface
      */
-    #[Route('/member/{id}', method: 'GET')]
+    #[Route('/district/{id}', method: 'GET')]
     #[OpenApi\Get(
-        path: '/member/{id}',
-        tags: ['Member'],
+        path: '/district/{id}',
+        tags: ['District'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK'),
             new OpenApi\Response(response: 404, description: 'Not Found')
         ]
     )]
-    public function getMemberById(
+    public function getDistrictById(
         Request $request,
         Response $response,
         array $args
     ): Response {
-        $repository = new MemberRepository(
+        $repository = new DistrictRepository(
             $this->getContainer()->get('mapper'),
             $request
         );
@@ -115,7 +110,7 @@ class MemberController extends BaseController
             $builder = new ResponseBuilder();
             $builder = $builder
                 ->withPair('code', HttpCode::NOT_FOUND)
-                ->withPair('message', sprintf('Member with id \'%s\' not found.', $args['id']));
+                ->withPair('message', sprintf('District with id \'%s\' not found.', $args['id']));
 
             return $this->json($response, $builder->build(), HttpCode::NOT_FOUND);
         }
@@ -129,57 +124,37 @@ class MemberController extends BaseController
      * @param array $args
      * @return \Psr\Http\Message\ResponseInterface
      */
-    #[Route('/province/{pid}/municipal/{mid}/district/{did}/subdistrict/{sid}/member', method: 'POST')]
+    #[Route('/municipal/{mid}/district', method: 'POST')]
     #[OpenApi\Post(
-        path: '/province/{pid}/municipal/{mid}/district/{did}/subdistrict/{sid}/member',
-        tags: ['Member'],
+        path: '/municipal/{mid}/district',
+        tags: ['District'],
         responses: [
             new OpenApi\Response(response: 201, description: 'Created'),
             new OpenApi\Response(response: 404, description: 'Not Found')
         ]
     )]
-    public function createMember(
+    public function createDistrict(
         Request $request,
         Response $response,
         array $args
     ): Response {
-        $schema = new MemberSchema();
+        $schema = new DistrictSchema();
         $validator = new Validator();
         $validator = $validator->withRequest($request);
         $validator->assign($schema);
 
-        $repository = new MemberRepository(
+        $repository = new DistrictRepository(
             $this->getContainer()->get('mapper'),
             $request
         );
 
-        $entity = $repository->create(
-            $args['pid'],
-            $args['mid'],
-            $args['did'],
-            $args['sid'],
-            $schema
-        );
+        $entity = $repository->create($args['mid'], $schema);
 
         if (null === $entity) {
-            $dataPair = array_combine(
-                ['province', 'municipal', 'district', 'subdistrict'],
-                [$args['pid'], $args['mid'], $args['did'], $args['sid']]
-            );
-
-            $mappedPair = array_map(
-                fn (string $key, string $value): string => sprintf('%s (id: %s)', $key, $value),
-                array_keys($dataPair),
-                array_values($dataPair)
-            );
-
             $builder = new ResponseBuilder();
             $builder = $builder
                 ->withPair('code', HttpCode::NOT_FOUND)
-                ->withPair('message', sprintf(
-                    'Failed to create new member. Check the availability of supplied data dependencies (%s)',
-                    implode(', ', $mappedPair)
-                ));
+                ->withPair('message', sprintf('Municipal with id \'%s\' not found.', $args['mid']));
 
             return $this->json($response, $builder->build(), HttpCode::NOT_FOUND);
         }
@@ -193,26 +168,26 @@ class MemberController extends BaseController
      * @param array $args
      * @return \Psr\Http\Message\ResponseInterface
      */
-    #[Route('/member/{id}', method: 'PUT')]
+    #[Route('/district/{id}', method: 'PUT')]
     #[OpenApi\Put(
-        path: '/member/{id}',
-        tags: ['Member'],
+        path: '/district/{id}',
+        tags: ['District'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK'),
             new OpenApi\Response(response: 404, description: 'Not Found')
         ]
     )]
-    public function updateMember(
+    public function updateDistrict(
         Request $request,
         Response $response,
         array $args
     ): Response {
-        $schema = new MemberSchema();
+        $schema = new DistrictSchema();
         $validator = new Validator();
         $validator = $validator->withRequest($request);
         $validator->assignOptional($schema);
 
-        $repository = new MemberRepository(
+        $repository = new DistrictRepository(
             $this->getContainer()->get('mapper'),
             $request
         );
@@ -223,7 +198,7 @@ class MemberController extends BaseController
             $builder = new ResponseBuilder();
             $builder = $builder
                 ->withPair('code', HttpCode::NOT_FOUND)
-                ->withPair('message', sprintf('Member with id \'%s\' not found.', $args['id']));
+                ->withPair('message', sprintf('District with id \'%s\' not found.', $args['id']));
 
             return $this->json($response, $builder->build(), HttpCode::NOT_FOUND);
         }
@@ -237,44 +212,21 @@ class MemberController extends BaseController
      * @param array $args
      * @return \Psr\Http\Message\ResponseInterface
      */
-    #[Route('/member/{id}/upload-image', method: 'PATCH')]
-    #[OpenApi\Patch(
-        path: '/member/{id}/upload-image',
-        tags: ['Member'],
-        responses: [
-            new OpenApi\Response(response: 200, description: 'OK'),
-            new OpenApi\Response(response: 404, description: 'Not Found')
-        ]
-    )]
-    public function uploadMemberImage(
-        Request $request,
-        Response $response,
-        array $args
-    ): Response {
-        //
-    }
-
-    /**
-     * @param \Psr\Http\Message\RequestInterface $request
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @param array $args
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    #[Route('/member/{id}', method: 'DELETE')]
+    #[Route('/district/{id}', method: 'DELETE')]
     #[OpenApi\Delete(
-        path: '/member/{id}',
-        tags: ['Member'],
+        path: '/district/{id}',
+        tags: ['District'],
         responses: [
             new OpenApi\Response(response: 204, description: 'No Content'),
             new OpenApi\Response(response: 404, description: 'Not Found')
         ]
     )]
-    public function removeMember(
+    public function removeDistrict(
         Request $request,
         Response $response,
         array $args
     ): Response {
-        $repository = new MemberRepository(
+        $repository = new DistrictRepository(
             $this->getContainer()->get('mapper'),
             $request
         );
@@ -285,7 +237,7 @@ class MemberController extends BaseController
             $builder = new ResponseBuilder();
             $builder = $builder
                 ->withPair('code', HttpCode::NOT_FOUND)
-                ->withPair('message', sprintf('Member with id \'%s\' not found.', $args['id']));
+                ->withPair('message', sprintf('District with id \'%s\' not found.', $args['id']));
 
             return $this->json($response, $builder->build(), HttpCode::NOT_FOUND);
         }
