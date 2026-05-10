@@ -9,10 +9,32 @@ use OpenApi\Attributes as OpenApi;
 use Pcta\Api\Entity\Member;
 use Pcta\Api\Http\Response\Builder as ResponseBuilder;
 use Pcta\Api\Repository\MemberRepository;
+use Pcta\Api\Schema\MemberSchema;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\RequestInterface as Request;
 use Schnell\Attribute\Route;
 use Schnell\Paginator\Paginator;
+use Schnell\Validator\Validator;
+
+use function array_combine;
+use function array_keys;
+use function array_map;
+use function array_values;
+use function class_exists;
+use function implode;
+use function sprintf;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Throwable::class);
+class_exists(Member::class);
+class_exists(ResponseBuilder::class);
+class_exists(MemberRepository::class);
+class_exists(MemberSchema::class);
+class_exists(Route::class);
+class_exists(Paginator::class);
+class_exists(Validator::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -113,6 +135,125 @@ class MemberController extends BaseController
             $request
         );
 
-        $entity =
+        $entity = $repository->create(
+            $args['pid'],
+            $args['mid'],
+            $args['did'],
+            $args['sid'],
+            $schema
+        );
+
+        if (null === $entity) {
+            $dataPair = array_combine(
+                ['province', 'municipal', 'district', 'subdistrict'],
+                [$args['pid'], $args['mid'], $args['did'], $args['sid']]
+            );
+
+            $mappedPair = array_map(
+                fn (string $key, string $value): string => sprintf('%s (id: %s)', $key, $value),
+                array_keys($dataPair),
+                array_values($dataPair)
+            );
+
+            $builder = new ResponseBuilder();
+            $builder = $builder
+                ->withPair('code', HttpCode::NOT_FOUND)
+                ->withPair('message', sprintf(
+                    'Failed to create new member. Check the availability of supplied data dependencies (%s)',
+                    implode(', ', $mappedPair)
+                ));
+
+            return $this->json($response, $builder->build(), HttpCode::NOT_FOUND);
+        }
+
+        return $this->json($response, $entity, HttpCode::CREATED);
+    }
+
+    #[Route('/member/{id}', method: 'PUT')]
+    #[OpenApi\Put(
+        path: '/member/{id}',
+        tags: ['Member'],
+        responses: [
+            new OpenApi\Response(response: 200, description: 'OK'),
+            new OpenApi\Response(response: 404, description: 'Not Found')
+        ]
+    )]
+    public function updateMember(
+        Request $request,
+        Response $response,
+        array $args
+    ): Response {
+        $schema = new MemberSchema();
+        $validator = new Validator();
+        $validator = $validator->withRequest($request);
+        $validator->assignOptional($schema);
+
+        $repository = new MemberRepository(
+            $this->getContainer()->get('mapper'),
+            $request
+        );
+
+        $entity = $repository->update($args['id'], $schema);
+
+        if (null === $entity) {
+            $builder = new ResponseBuilder();
+            $builder = $builder
+                ->withPair('code', HttpCode::NOT_FOUND)
+                ->withPair('message', sprintf('Member with id \'%s\' not found.', $args['id']));
+
+            return $this->json($response, $builder->build(), HttpCode::NOT_FOUND);
+        }
+
+        return $this->json($response, $entity);
+    }
+
+    #[Route('/member/{id}/upload-image', method: 'PATCH')]
+    #[OpenApi\Patch(
+        path: '/member/{id}/upload-image',
+        tags: ['Member'],
+        responses: [
+            new OpenApi\Response(response: 200, description: 'OK'),
+            new OpenApi\Response(response: 404, description: 'Not Found')
+        ]
+    )]
+    public function uploadMemberImage(
+        Request $request,
+        Response $response,
+        array $args
+    ): Response {
+        //
+    }
+
+    #[Route('/member/{id}', method: 'DELETE')]
+    #[OpenApi\Delete(
+        path: '/member/{id}',
+        tags: ['Member'],
+        responses: [
+            new OpenApi\Response(response: 204, description: 'No Content'),
+            new OpenApi\Response(response: 404, description: 'Not Found')
+        ]
+    )]
+    public function removeMember(
+        Request $request,
+        Response $response,
+        array $args
+    ): Response {
+        $repository = new MemberRepository(
+            $this->getContainer()->get('mapper'),
+            $request
+        );
+
+        $entity = $repository->remove($args['id']);
+
+        if (null === $entity) {
+            $builder = new ResponseBuilder();
+            $builder = $builder
+                ->withPair('code', HttpCode::NOT_FOUND)
+                ->withPair('message', sprintf('Member with id \'%s\' not found.', $args['id']));
+
+            return $this->json($response, $builder->build(), HttpCode::NOT_FOUND);
+        }
+
+        return $this->response($response, '', HttpCode::NO_CONTENT);
     }
 }
