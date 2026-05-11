@@ -52,6 +52,10 @@ class DistrictRepository extends AbstractRepository
         return $this->hydrateListWithParent($result, $this->getRequest());
     }
 
+    /**
+     * @param mixed $id
+     * @return \Schnell\Entity\EntityInterface|array|null
+     */
     public function getById($id): EntityInterface|array|null
     {
         $entity = $this->getMapper()->find(new District(), $id);
@@ -63,6 +67,11 @@ class DistrictRepository extends AbstractRepository
         return $this->hydrateEntityWithParent($entity, $this->getRequest());
     }
 
+    /**
+     * @param mixed $refId
+     * @param \Schnell\Schema\SchemaInterface $schema
+     * @return \Schnell\Entity\EntityInterface|array|null
+     */
     public function create($refId, SchemaInterface $schema): EntityInterface|array|null
     {
         $district = new District();
@@ -80,6 +89,11 @@ class DistrictRepository extends AbstractRepository
         return $entity;
     }
 
+    /**
+     * @param mixed $id
+     * @param \Schnell\Schema\SchemaInterface $schema
+     * @return \Schnell\Entity\EntityInterface|array|null
+     */
     public function update($id, SchemaInterface $schema): EntityInterface|array|null
     {
         $result = $this->getMapper()
@@ -89,6 +103,10 @@ class DistrictRepository extends AbstractRepository
         return $result;
     }
 
+    /**
+     * @param mixed $id
+     * @return \Schnell\Entity\EntityInterface|array|null
+     */
     public function remove($id): EntityInterface|array|null
     {
         $result = $this->getMapper()
