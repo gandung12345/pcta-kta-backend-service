@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pcta\Api\Repository;
 
-use Doctrine\ORM\Query\Expr;
 use Pcta\Api\Entity\District;
 use Pcta\Api\Entity\Municipal;
 use Schnell\Entity\EntityInterface;
@@ -18,7 +17,6 @@ use function class_exists;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
-class_exists(Expr::class);
 class_exists(District::class);
 class_exists(Municipal::class);
 class_exists(MapHydrator::class);
