@@ -197,6 +197,18 @@ class Member extends AbstractEntity
     )]
     private ?DateTimeDecorator $workDate;
 
+    /**
+     * @var string
+     */
+    #[Column(type: 'string', nullable: true)]
+    #[Json(name: 'workPlace')]
+    #[OpenApi\Property(
+        property: 'workPlace',
+        type: 'string',
+        description: 'Member work place'
+    )]
+    private ?string $workPlace;
+
     #[OneToOne(targetEntity: Province::class, inversedBy: 'member')]
     #[JoinColumn(name: 'provinceRefId', referencedColumnName: 'id')]
     private Province $province;
@@ -212,18 +224,6 @@ class Member extends AbstractEntity
     #[OneToOne(targetEntity: Subdistrict::class, inversedBy: 'member')]
     #[JoinColumn(name: 'subdistrictRefId', referencedColumnName: 'id')]
     private Subdistrict $subdistrict;
-
-    /**
-     * @var string
-     */
-    #[Column(type: 'string', nullable: true)]
-    #[Json(name: 'workPlace')]
-    #[OpenApi\Property(
-        property: 'workPlace',
-        type: 'string',
-        description: 'Member work place'
-    )]
-    private ?string $workPlace;
 
     /**
      * @var \DateTime|null
