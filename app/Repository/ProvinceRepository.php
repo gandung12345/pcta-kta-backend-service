@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pcta\Api\Repository;
 
-use Pcta\Api\Entity\Municipal;
 use Pcta\Api\Entity\Province;
 use Schnell\Entity\EntityInterface;
 use Schnell\Hydrator\MapHydrator;
@@ -17,7 +16,6 @@ use function class_exists;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
-class_exists(Municipal::class);
 class_exists(Province::class);
 class_exists(MapHydrator::class);
 class_exists(Paginator::class);
@@ -28,7 +26,7 @@ class_exists(Uuid::class);
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
-class MunicipalRepository extends AbstractRepository
+class ProvinceRepository extends AbstractRepository
 {
     use RepositoryTrait;
 
@@ -39,13 +37,13 @@ class MunicipalRepository extends AbstractRepository
     {
         $count = $this->getMapper()
             ->withRequest($this->getRequest())
-            ->count(new Municipal());
+            ->count(new Province());
         $paginator = new Paginator($count);
         $page = $paginator->getMetadata($this->getRequest());
         $result = $this->getMapper()
             ->withPage($page)
             ->withRequest($this->getRequest())
-            ->paginate(new Municipal());
+            ->paginate(new Province());
 
         return $this->hydrateListWithParent($result, $this->getRequest());
     }
@@ -56,7 +54,7 @@ class MunicipalRepository extends AbstractRepository
      */
     public function getById($id): EntityInterface|array|null
     {
-        $entity = $this->getMapper()->find(new Municipal(), $id);
+        $entity = $this->getMapper()->find(new Province(), $id);
 
         if (null === $entity) {
             return null;
@@ -66,23 +64,17 @@ class MunicipalRepository extends AbstractRepository
     }
 
     /**
-     * @param mixed $refId
      * @param \Schnell\Schema\SchemaInterface $schema
-     * @return \Schnell\Entity\EntityInterface|array|null
+     * @return \Schnell\Entity\EntityInterface|array
      */
-    public function create($refId, SchemaInterface $schema): EntityInterface|array|null
+    public function create(SchemaInterface $schema): EntityInterface|array
     {
-        $municipal = new Municipal();
-        $municipal->setId(Uuid::v7()->toString());
+        $province = new Province();
+        $province->setId(Uuid::v7()->toString());
 
         $entity = $this->getMapper()
             ->withHydrator(new MapHydrator())
-            ->createReferenced(
-                $refId,
-                $schema,
-                $municipal,
-                new Province()
-            );
+            ->create($schema, $province);
 
         return $entity;
     }
@@ -96,7 +88,7 @@ class MunicipalRepository extends AbstractRepository
     {
         $result = $this->getMapper()
             ->withHydrator(new MapHydrator())
-            ->update($id, $schema, new Municipal());
+            ->update($id, $schema, new Province());
 
         return $result;
     }
@@ -109,7 +101,7 @@ class MunicipalRepository extends AbstractRepository
     {
         $result = $this->getMapper()
             ->withHydrator(new MapHydrator())
-            ->remove($id, new Municipal());
+            ->remove($id, new Province());
 
         return $result;
     }
