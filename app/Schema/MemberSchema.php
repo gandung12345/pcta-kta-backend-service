@@ -34,8 +34,8 @@ class MemberSchema extends AbstractSchema
      * @var string|null
      */
     #[Rule(required: true)]
-	#[Json(name: 'identityNumber')]
-	#[Regex(pattern: self::IDENTITY_NUMBER_PATTERN)]
+    #[Json(name: 'identityNumber')]
+    #[Regex(pattern: self::IDENTITY_NUMBER_PATTERN)]
     private ?string $identityNumber;
 
     /**
