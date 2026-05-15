@@ -36,4 +36,18 @@ trait SchemaTrait
     private const string EMAIL_PATTERN = <<<REGEX
     /^(?:[a-z]{1})(?:[a-zA-Z0-9\.\-\_]*)(?:\@)(?:[a-zA-Z0-9\-\_]+)(?:\.(?:[a-z]+))+/
     REGEX;
+
+    /**
+     * @var string
+     */
+    private const string IDENTITY_NUMBER_PATTERN = <<<REGEX
+    /^(?:\d{16})$/
+    REGEX;
+
+    /**
+     * @var string
+     */
+    private const string POSTAL_CODE_PATTERN = <<<REGEX
+    /^(?:\d{1,5})^/
+    REGEX;
 }
