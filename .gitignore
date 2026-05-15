@@ -14,3 +14,7 @@ var/.DS_Store
 app/Repository/.DS_Store
 src/Http/.DS_Store
 src/Bridge/Doctrine/Type/.DS_Store
+gen/__pycache__
+gen/genesis/__pycache__
+gen/genesis/entity/__pycache__
+gen/genesis/task/__pycache__
