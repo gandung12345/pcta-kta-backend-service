@@ -9,6 +9,14 @@ use Schnell\Controller\AbstractController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\RequestInterface as Request;
 
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Route::class);
+class_exists(AbstractController::class);
+// phpcs:enable
+
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
