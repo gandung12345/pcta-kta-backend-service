@@ -32,6 +32,7 @@ import uuid
 from datetime import datetime, timezone
 from typing import Optional
 from sqlmodel import Field, Relationship, SQLModel
+from genesis.entity.province import Province
 
 def get_utc_now():
     return datetime.now(timezone.utc)

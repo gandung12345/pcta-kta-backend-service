@@ -30,11 +30,69 @@
 
 import uuid
 
+from genesis.entity.district import District
+from genesis.entity.subdistrict import Subdistrict
 from genesis.task.base import AbstractTask
+from sqlmodel import Session, func, select
+from tqdm import trange
 
 class CreateBulkSubdistrictTask(AbstractTask):
     def invoke(self, engine):
-        pass
+        def func(x):
+            return '.'.join(x.split('.')[:-1])
+
+        ldeps = self.dependency_map(engine)
+        session = Session(engine)
+
+        for i in trange(len(self.chunks)):
+            entity = Subdistrict(
+                formalIdentifier=self.chunks[i][0],
+                formalName=self.chunks[i][1].upper(),
+                districtRefId=ldeps[func(self.chunks[i][0])]
+            )
+
+            session.add(entity)
+
+        session.commit()
+        session.close()
 
     def guid(self):
         return '<create-bulk-subdistrict-task:%s>' % str(uuid.uuid4())
+
+    def dependency_map(self, engine):
+        def callback(x):
+            return '.'.join(x.split('.')[:-1])
+
+        def count_rec(did, engine):
+            count = None
+
+            with Session(engine) as session:
+                statm = select(func.count()).where(District.formalIdentifier == did)
+                count = session.exec(statm).one()
+
+            return count
+
+        def get_rec(did, engine):
+            parent = None
+
+            with Session(engine) as session:
+                statm = select(District).where(District.formalIdentifier == did)
+                parent = session.exec(statm).first()
+
+            return parent
+
+        wpid = []
+
+        for chunk in self.chunks:
+            wpid.append(chunk[0])
+
+        lpid = list(map(callback, wpid))
+        lmap = {}
+
+        for pid in lpid:
+            if count_rec(pid, engine) != 1:
+                continue
+
+            lmap[pid] = get_rec(pid, engine).id
+
+        return lmap

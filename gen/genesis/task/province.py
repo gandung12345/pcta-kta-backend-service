@@ -47,3 +47,6 @@ class CreateBulkProvinceTask(AbstractTask):
 
     def guid(self):
         return '<create-bulk-province-task:%s>' % str(uuid.uuid4())
+
+    def dependency_map(self, engine):
+        pass
