@@ -26,7 +26,7 @@ The PCTA KTA Backend Service is a PHP-based API built with modern frameworks and
 - **Database**: MySQL/MariaDB
 - **API Documentation**: OpenAPI (Swagger) annotations
 - **Authentication**: JWT tokens
-- **Caching**: Symfony Cache
+- **Caching**: Custom caching module based on Symfony caching component
 - **Validation**: Custom validation components
 - **Testing**: PHPUnit
 
@@ -37,14 +37,14 @@ Before you begin, ensure you have met the following requirements:
 - PHP 8.1 or higher
 - Composer (PHP dependency manager)
 - MySQL 5.7+ or MariaDB 10.2+
-- Apache or Nginx web server with PHP support
+- Nginx (web server)
 - Git (for cloning the repository)
 
 ## Installation
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/kta-pcta-backend.git
+   git clone https://github.com/gandung12345/kta-pcta-backend.git
    cd kta-pcta-backend
    ```
 
@@ -60,17 +60,20 @@ Before you begin, ensure you have met the following requirements:
      ```
    - Update the database configuration in `config/database.conf` with your database credentials.
 
-4. **Configure the application**:
+4. **Database Migration**
+   - Enter ```bin``` directory and run:
+     ```bash
+     $ ./doctrine orm:clear-cache:metadata
+     $ ./doctrine orm:clear-cache:query
+     $ ./doctrine orm:schema-tool:create
+     ```
+
+5. **Configure the application**:
    - Review and update `config/app.conf` with your specific settings:
      - `secret`: Application secret key for JWT signing
      - `dev_mode`: Set to `false` for production
      - `member_image`: Directory for storing member images
      - `member_qrcode_image`: Directory for storing member QR codes
-
-5. **Set up web server**:
-   - Configure your web server to point to the project's root directory
-   - Ensure the `public` directory is set as the document root
-   - Configure URL rewriting to direct all requests to `index.php`
 
 6. **Directory permissions**:
    - Ensure the web server has write permissions to:
@@ -107,25 +110,6 @@ member_image = '/path/to/member/images'
 member_qrcode_image = '/path/to/qr/codes'
 ```
 
-## API Endpoints
-
-### Member Endpoints
-
-- `GET /member` - Retrieve all members with pagination
-- `GET /member/{id}` - Retrieve a specific member by ID
-- `POST /province/{pid}/municipal/{mid}/district/{did}/subdistrict/{sid}/member` - Create a new member
-- `PUT /member/{id}` - Update an existing member
-- `DELETE /member/{id}` - Delete a member
-- `PATCH /member/{id}/upload-image` - Upload member image
-
-### Location Endpoints
-
-- `GET /province` - Retrieve all provinces
-- `GET /province/{id}` - Retrieve a specific province
-- `GET /province/{pid}/municipal` - Retrieve municipalities in a province
-- `GET /province/{pid}/municipal/{mid}/district` - Retrieve districts in a municipality
-- `GET /province/{pid}/municipal/{mid}/district/{did}/subdistrict` - Retrieve subdistricts in a district
-
 ## Running the Application
 
 ### Development Server
@@ -133,10 +117,10 @@ member_qrcode_image = '/path/to/qr/codes'
 For development purposes, you can use PHP's built-in server:
 
 ```bash
-php -S localhost:8000 -t .
+php -S localhost:31337 -t .
 ```
 
-Then access the API at `http://localhost:8000`.
+Then access the API at `http://localhost:31337`.
 
 ### Production Deployment
 
@@ -176,28 +160,10 @@ Or directly with PHPUnit:
 ./vendor/bin/phpunit
 ```
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a pull request
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Support
-
-For support, contact the development team or open an issue in the repository.
-
 ## Authors
 
 - **Paulus Gandung Prakosa** - *Initial work* - [gandung](mailto:gandung@infradead.org)
-
-## Acknowledgments
-
-- Thanks to the Slim Framework team for providing an excellent PHP micro-framework
-- Thanks to the Doctrine project for the ORM implementation
-- Thanks to all contributors who have helped with the development of this project
