@@ -28,6 +28,29 @@ use Slim\Views\TwigMiddleware;
 
 use Odan\Twig\TwigAssetsExtension;
 
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(RoleMiddleware::class);
+class_exists(Container::class);
+class_exists(Kernel::class);
+class_exists(CacheBridge::class);
+class_exists(DoctrineBridge::class);
+class_exists(MapperBridge::class);
+class_exists(SlimCacheProviderBridge::class);
+class_exists(SwaggerBridge::class);
+class_exists(ConfigFactory::class);
+class_exists(ControllerPool::class);
+class_exists(ControllerResolver::class);
+class_exists(CorsMiddleware::class);
+class_exists(HttpErrorMiddleware::class);
+class_exists(ContentTypeMiddleware::class);
+class_exists(AppFactory::class);
+class_exists(ServerRequestCreatorFactory::class);
+class_exists(Twig::class);
+class_exists(TwigMiddleware::class);
+class_exists(TwigAssetsExtension::class);
+// phpcs:enable
+
 $configFactory = new ConfigFactory();
 $configFactory->importBulk([
     '../config/app.conf',
