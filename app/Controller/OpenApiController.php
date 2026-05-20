@@ -20,6 +20,7 @@ class_exists(AbstractController::class);
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
+#[Route('/api/v1')]
 class OpenApiController extends AbstractController
 {
     /**

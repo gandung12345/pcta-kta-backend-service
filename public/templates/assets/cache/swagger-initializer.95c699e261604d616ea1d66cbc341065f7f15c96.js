@@ -1,3 +1,4 @@
+/* swagger-initializer.js */
 window.onload = function () {
   //<editor-fold desc="Changeable Configuration Block">
 
@@ -18,3 +19,4 @@ window.onload = function () {
 
   //</editor-fold>
 };
+

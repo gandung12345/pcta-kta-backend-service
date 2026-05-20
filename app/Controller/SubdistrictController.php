@@ -33,6 +33,7 @@ class_exists(Validator::class);
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
+#[Route('/api/v1')]
 class SubdistrictController extends BaseController
 {
     /**
@@ -43,7 +44,7 @@ class SubdistrictController extends BaseController
      */
     #[Route('/subdistrict', method: 'GET')]
     #[OpenApi\Get(
-        path: '/subdistrict',
+        path: '/api/v1/subdistrict',
         tags: ['Subdistrict'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK')
@@ -83,7 +84,7 @@ class SubdistrictController extends BaseController
      */
     #[Route('/subdistrict/{id}', method: 'GET')]
     #[OpenApi\Get(
-        path: '/subdistrict/{id}',
+        path: '/api/v1/subdistrict/{id}',
         tags: ['Subdistrict'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK'),
@@ -126,7 +127,7 @@ class SubdistrictController extends BaseController
      */
     #[Route('/district/{did}/subdistrict', method: 'POST')]
     #[OpenApi\Post(
-        path: '/district/{did}/subdistrict',
+        path: '/api/v1/district/{did}/subdistrict',
         tags: ['District'],
         responses: [
             new OpenApi\Response(response: 201, description: 'Created'),
@@ -170,7 +171,7 @@ class SubdistrictController extends BaseController
      */
     #[Route('/subdistrict/{id}', method: 'PUT')]
     #[OpenApi\Put(
-        path: '/subdistrict/{id}',
+        path: '/api/v1/subdistrict/{id}',
         tags: ['Subdistrict'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK'),
@@ -214,7 +215,7 @@ class SubdistrictController extends BaseController
      */
     #[Route('/subdistrict/{id}', method: 'DELETE')]
     #[OpenApi\Delete(
-        path: '/subdistrict/{id}',
+        path: '/api/v1/subdistrict/{id}',
         tags: ['Subdistrict'],
         responses: [
             new OpenApi\Response(response: 204, description: 'No Content'),

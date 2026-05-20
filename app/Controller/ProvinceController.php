@@ -33,6 +33,7 @@ class_exists(Validator::class);
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
+#[Route('/api/v1')]
 class ProvinceController extends BaseController
 {
     /**
@@ -43,7 +44,7 @@ class ProvinceController extends BaseController
      */
     #[Route('/province', method: 'GET')]
     #[OpenApi\Get(
-        path: '/province',
+        path: '/api/v1/province',
         tags: ['Province'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK')
@@ -83,7 +84,7 @@ class ProvinceController extends BaseController
      */
     #[Route('/province/{id}', method: 'GET')]
     #[OpenApi\Get(
-        path: '/province/{id}',
+        path: '/api/v1/province/{id}',
         tags: ['Province'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK'),
@@ -126,7 +127,7 @@ class ProvinceController extends BaseController
      */
     #[Route('/province', method: 'POST')]
     #[OpenApi\Post(
-        path: '/province',
+        path: '/api/v1/province',
         tags: ['Province'],
         responses: [
             new OpenApi\Response(response: 201, description: 'Created')
@@ -160,7 +161,7 @@ class ProvinceController extends BaseController
      */
     #[Route('/province/{id}', method: 'PUT')]
     #[OpenApi\Put(
-        path: '/province/{id}',
+        path: '/api/v1/province/{id}',
         tags: ['Province'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK'),
@@ -204,7 +205,7 @@ class ProvinceController extends BaseController
      */
     #[Route('/province/{id}', method: 'DELETE')]
     #[OpenApi\Delete(
-        path: '/province/{id}',
+        path: '/api/v1/province/{id}',
         tags: ['Province'],
         responses: [
             new OpenApi\Response(response: 204, description: 'No Content'),

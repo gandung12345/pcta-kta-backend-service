@@ -38,6 +38,7 @@ class_exists(Validator::class);
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
+#[Route('/api/v1')]
 class MemberController extends BaseController
 {
     /**
@@ -48,7 +49,7 @@ class MemberController extends BaseController
      */
     #[Route('/member', method: 'GET')]
     #[OpenApi\Get(
-        path: '/member',
+        path: '/api/v1/member',
         tags: ['Member'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK')
@@ -88,7 +89,7 @@ class MemberController extends BaseController
      */
     #[Route('/member/{id}', method: 'GET')]
     #[OpenApi\Get(
-        path: '/member/{id}',
+        path: '/api/v1/member/{id}',
         tags: ['Member'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK'),
@@ -131,7 +132,7 @@ class MemberController extends BaseController
      */
     #[Route('/province/{pid}/municipal/{mid}/district/{did}/subdistrict/{sid}/member', method: 'POST')]
     #[OpenApi\Post(
-        path: '/province/{pid}/municipal/{mid}/district/{did}/subdistrict/{sid}/member',
+        path: '/api/v1/province/{pid}/municipal/{mid}/district/{did}/subdistrict/{sid}/member',
         tags: ['Member'],
         responses: [
             new OpenApi\Response(response: 201, description: 'Created'),
@@ -195,7 +196,7 @@ class MemberController extends BaseController
      */
     #[Route('/member/{id}', method: 'PUT')]
     #[OpenApi\Put(
-        path: '/member/{id}',
+        path: '/api/v1/member/{id}',
         tags: ['Member'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK'),
@@ -239,7 +240,7 @@ class MemberController extends BaseController
      */
     #[Route('/member/{id}/upload-image', method: 'PATCH')]
     #[OpenApi\Patch(
-        path: '/member/{id}/upload-image',
+        path: '/api/v1/member/{id}/upload-image',
         tags: ['Member'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK'),
@@ -262,7 +263,7 @@ class MemberController extends BaseController
      */
     #[Route('/member/{id}', method: 'DELETE')]
     #[OpenApi\Delete(
-        path: '/member/{id}',
+        path: '/api/v1/member/{id}',
         tags: ['Member'],
         responses: [
             new OpenApi\Response(response: 204, description: 'No Content'),

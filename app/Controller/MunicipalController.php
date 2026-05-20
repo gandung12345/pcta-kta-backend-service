@@ -33,6 +33,7 @@ class_exists(Validator::class);
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
+#[Route('/api/v1')]
 class MunicipalController extends BaseController
 {
     /**
@@ -43,7 +44,7 @@ class MunicipalController extends BaseController
      */
     #[Route('/municipal', method: 'GET')]
     #[OpenApi\Get(
-        path: '/municipal',
+        path: '/api/v1/municipal',
         tags: ['Municipal'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK')
@@ -83,7 +84,7 @@ class MunicipalController extends BaseController
      */
     #[Route('/municipal/{id}', method: 'GET')]
     #[OpenApi\Get(
-        path: '/municipal/{id}',
+        path: '/api/v1/municipal/{id}',
         tags: ['Municipal'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK'),
@@ -126,7 +127,7 @@ class MunicipalController extends BaseController
      */
     #[Route('/province/{pid}/municipal', method: 'POST')]
     #[OpenApi\Post(
-        path: '/province/{pid}/municipal',
+        path: '/api/v1/province/{pid}/municipal',
         tags: ['Municipal'],
         responses: [
             new OpenApi\Response(response: 201, description: 'Created'),
@@ -170,7 +171,7 @@ class MunicipalController extends BaseController
      */
     #[Route('/municipal/{id}', method: 'PUT')]
     #[OpenApi\Put(
-        path: '/municipal/{id}',
+        path: '/api/v1/municipal/{id}',
         tags: ['Municipal'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK'),
@@ -214,7 +215,7 @@ class MunicipalController extends BaseController
      */
     #[Route('/municipal/{id}', method: 'DELETE')]
     #[OpenApi\Delete(
-        path: '/municipal/{id}',
+        path: '/api/v1/municipal/{id}',
         tags: ['Municipal'],
         responses: [
             new OpenApi\Response(response: 204, description: 'No Content'),

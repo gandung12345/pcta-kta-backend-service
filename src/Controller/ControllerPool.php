@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Schnell\Controller;
 
+use ReflectionAttribute;
 use ReflectionClass;
 use SplObjectStorage;
-use Schnell\Attribute\Route;
 use Schnell\ContainerInterface;
+use Schnell\Attribute\Route;
+use Schnell\Exception\ControllerPoolException;
 use Schnell\Config\ConfigInterface;
 
 use function array_map;
@@ -21,6 +23,7 @@ use function sprintf;
 // phpcs:disable
 class_exists(ReflectionClass::class);
 class_exists(SplObjectStorage::class);
+class_exists(ControllerPoolException::class);
 class_exists(Route::class);
 class_exists(Container::class);
 // phpcs:enable
@@ -210,6 +213,12 @@ class ControllerPool implements ControllerPoolInterface
      */
     private function resolveControllerClass(string $name): void
     {
+        try {
+            $routeGroup = $this->resolveContextualRouteGroup($name);
+        } catch (ControllerPoolException $e) {
+            throw $e;
+        }
+
         /** @psalm-suppress ArgumentTypeCoercion */
         $reflection = new ReflectionClass($name);
         $ctrlInstance = $reflection->newInstance(
@@ -244,6 +253,7 @@ class ControllerPool implements ControllerPoolInterface
 
                 if ($attribute->getName() === Route::class) {
                     $routeAttr = $attribute->newInstance();
+                    $routeAttr->setUrl(sprintf('%s%s', $routeGroup, $routeAttr->getUrl()));
                     $attrObjs[$routeAttr->getIdentifier()] = $routeAttr;
                     continue;
                 }
@@ -253,7 +263,39 @@ class ControllerPool implements ControllerPoolInterface
             }
 
             /** @psalm-suppress PossiblyNullArgument */
-            $this->addPoolAt($routeAttr, $attrObjs);
+            if (null !== $routeAttr) {
+                $this->addPoolAt($routeAttr, $attrObjs);
+            }
         }
+    }
+
+    /**
+     * @internal
+     *
+     * @param string $className
+     * @return string
+     * @throws \Schnell\Exception\ControllerPoolException
+     */
+    private function resolveContextualRouteGroup(string $className): string
+    {
+        try {
+            $reflection = new ReflectionClass($className);
+        } catch (ReflectionException $e) {
+            throw new ControllerPoolException(
+                sprintf(
+                    'Unable to reflect class (%s, reason: %s)',
+                    $className,
+                    $e->getMessage()
+                )
+            );
+        }
+
+        $attributes = $reflection->getAttributes(Route::class, ReflectionAttribute::IS_INSTANCEOF);
+
+        if (sizeof($attributes) !== 1) {
+            return '';
+        }
+
+        return $attributes[0]->newInstance()->getUrl();
     }
 }

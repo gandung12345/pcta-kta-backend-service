@@ -11,7 +11,7 @@ use Attribute;
  *
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
-#[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD)]
+#[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_CLASS)]
 class Route implements AttributeInterface
 {
     /**
@@ -31,7 +31,7 @@ class Route implements AttributeInterface
      * @param string|array $method
      * @return static
      */
-    public function __construct(?string $url, string|array $method)
+    public function __construct(?string $url, string|array $method = [])
     {
         $this->setUrl($url);
         $this->addMethod($method);

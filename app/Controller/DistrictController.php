@@ -33,6 +33,7 @@ class_exists(Validator::class);
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
+#[Route('/api/v1')]
 class DistrictController extends BaseController
 {
     /**
@@ -43,7 +44,7 @@ class DistrictController extends BaseController
      */
     #[Route('/district', method: 'GET')]
     #[OpenApi\Get(
-        path: '/district',
+        path: '/api/v1/district',
         tags: ['District'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK')
@@ -83,7 +84,7 @@ class DistrictController extends BaseController
      */
     #[Route('/district/{id}', method: 'GET')]
     #[OpenApi\Get(
-        path: '/district/{id}',
+        path: '/api/v1/district/{id}',
         tags: ['District'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK'),
@@ -126,7 +127,7 @@ class DistrictController extends BaseController
      */
     #[Route('/municipal/{mid}/district', method: 'POST')]
     #[OpenApi\Post(
-        path: '/municipal/{mid}/district',
+        path: '/api/v1/municipal/{mid}/district',
         tags: ['District'],
         responses: [
             new OpenApi\Response(response: 201, description: 'Created'),
@@ -170,7 +171,7 @@ class DistrictController extends BaseController
      */
     #[Route('/district/{id}', method: 'PUT')]
     #[OpenApi\Put(
-        path: '/district/{id}',
+        path: '/api/v1/district/{id}',
         tags: ['District'],
         responses: [
             new OpenApi\Response(response: 200, description: 'OK'),
@@ -214,7 +215,7 @@ class DistrictController extends BaseController
      */
     #[Route('/district/{id}', method: 'DELETE')]
     #[OpenApi\Delete(
-        path: '/district/{id}',
+        path: '/api/v1/district/{id}',
         tags: ['District'],
         responses: [
             new OpenApi\Response(response: 204, description: 'No Content'),

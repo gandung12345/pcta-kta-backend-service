@@ -1,5 +1,5 @@
 {
-  "name": "gandung/lazis",
+  "name": "pcta/kta",
   "type": "project",
   "require": {
     "slim/slim": "^4.14",
