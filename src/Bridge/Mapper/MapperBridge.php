@@ -46,14 +46,13 @@ class MapperBridge extends AbstractBridge
         }
 
         /** @psalm-suppress PossiblyNullReference */
-        $this->getContainer()->registerCallback(
+        $this->getContainer()->set(
             MapperInterface::class,
-            function (?ContainerInterface $container = null): MapperInterface {
+            function (ContainerInterface $container, ConfigInterface $config): MapperInterface {
                 return new Mapper(
                     $container->get(EntityManagerInterface::class)
                 );
-            },
-            [$this->getContainer()]
+            }
         );
 
         /** @psalm-suppress PossiblyNullReference */

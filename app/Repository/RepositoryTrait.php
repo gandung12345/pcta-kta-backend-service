@@ -135,7 +135,7 @@ trait RepositoryTrait
             $attributeNames = array_map(
                 fn (ReflectionAttribute $attribute): string => $attribute->getName(),
                 $property->getAttribute()
-            )
+            );
 
             if (!in_array(JoinColumn::class, $attributeNames, true)) {
                 continue;

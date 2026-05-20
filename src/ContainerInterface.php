@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Schnell;
 
 use Psr\Container\ContainerInterface as PsrContainerInterface;
+use Schnell\Config\ConfigInterface;
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -12,30 +13,33 @@ use Psr\Container\ContainerInterface as PsrContainerInterface;
 interface ContainerInterface extends PsrContainerInterface
 {
     /**
-     * @psalm-api
-     *
-     * @param string $class
-     * @param callable $fn
-     * @param array $fnParam
+     * @param string $id
+     * @param mixed $definition
      * @return void
      */
-    public function registerCallback(string $class, callable $fn, array $fnParam): void;
+    public function set(string $id, $definition): void;
 
     /**
-     * @psalm-api
-     *
-     * @param string $class
+     * @param array $definitions
+     * @return void
+     */
+    public function setMultiple(array $definitions): void;
+
+    /**
+     * @param string $className
      * @param string $alias
      * @return void
      */
-    public function alias(string $class, string $alias): void;
+    public function alias(string $className, string $alias): void;
 
     /**
-     * @psalm-api
-     *
-     * @param string $class
-     * @param object $instance
+     * @return \Schnell\Config\ConfigInterface
+     */
+    public function getConfig(): ConfigInterface;
+
+    /**
+     * @param \Schnell\Config\ConfigInterface $config
      * @return void
      */
-    public function direct(string $class, object $instance): void;
+    public function setConfig(ConfigInterface $config): void;
 }

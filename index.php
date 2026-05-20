@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 
-use Lazis\Api\Middleware\RoleMiddleware;
+use Pcta\Api\Middleware\RoleMiddleware;
 use Schnell\Container;
 use Schnell\Kernel;
 use Schnell\Bridge\Cache\CacheBridge;
@@ -35,7 +35,7 @@ $configFactory->importBulk([
 ]);
 
 $config = $configFactory->getConfig();
-$container = new Container();
+$container = new Container($config);
 $request = ServerRequestCreatorFactory::create()
     ->createServerRequestFromGlobals();
 $controllerPool = new ControllerPool(

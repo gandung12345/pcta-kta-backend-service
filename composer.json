@@ -18,7 +18,8 @@
     "guzzlehttp/guzzle": "^7.10",
     "gedmo/doctrine-extensions": "^3.21",
     "symfony/var-exporter": "^7",
-    "phpoffice/phpspreadsheet": "^5.4"
+    "phpoffice/phpspreadsheet": "^5.4",
+    "psr/container": "^2.0"
   },
   "license": "BSD-3-Clause",
   "autoload": {

@@ -58,12 +58,9 @@ class DoctrineBridge extends AbstractBridge
          * @psalm-suppress PossiblyNullReference
          * @psalm-suppress PossiblyNullArgument
          */
-        $this->getContainer()->registerCallback(
+        $this->getContainer()->set(
             EntityManagerInterface::class,
-            function (
-                ContainerInterface $container,
-                ConfigInterface $config
-            ): EntityManagerInterface {
+            function (ContainerInterface $container, ConfigInterface $config): EntityManagerInterface {
                 $cacheDir = sprintf(
                     "%s%s%s",
                     $this->getBasePath(),
@@ -139,15 +136,11 @@ class DoctrineBridge extends AbstractBridge
                     ->registerDoctrineTypeMapping('date', 'date');
 
                 return $entityManager;
-            },
-            [$this->getContainer(), $this->getConfig()]
+            }
         );
 
         /** @psalm-suppress PossiblyNullReference */
-        $this->getContainer()->alias(
-            EntityManagerInterface::class,
-            $this->getAlias()
-        );
+        $this->getContainer()->alias(EntityManagerInterface::class, $this->getAlias());
     }
 
     /**

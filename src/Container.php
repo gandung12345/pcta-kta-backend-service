@@ -4,17 +4,26 @@ declare(strict_types=1);
 
 namespace Schnell;
 
-use DI\Container as CoreContainer;
+use Closure;
+use ReflectionClass;
+use ReflectionException;
+use Schnell\Config\ConfigInterface;
+use Schnell\Exception\ContainerException;
 use Schnell\Exception\NotFoundException;
 
 use function array_key_exists;
 use function class_exists;
-use function call_user_func_array;
+use function call_user_func;
+use function is_string;
+use function sprintf;
 
 // help opcache.preload discover always-needed symbols
 // @codeCoverageIgnoreStart
 // phpcs:disable
-class_exists(CoreContainer::class);
+class_exists(Closure::class);
+class_exists(ReflectionClass::class);
+class_exists(ReflectionException::class);
+class_exists(ContainerException::class);
 class_exists(NotFoundException::class);
 // phpcs:enable
 // @codeCoverageIgnoreEnd
@@ -25,105 +34,203 @@ class_exists(NotFoundException::class);
 class Container implements ContainerInterface
 {
     /**
-     * @readonly
-     * @psalm-allow-private-mutation
-     *
+     * @var array
+     */
+    private array $definitions = [];
+
+    /**
      * @var array
      */
     private array $instances = [];
 
     /**
-     * @readonly
-     * @psalm-allow-private-mutation
-     *
      * @var array
      */
-    private array $aliasMap = [];
+    private array $aliases = [];
 
     /**
-     * @readonly
-     * @psalm-allow-private-mutation
-     *
-     * @var \DI\Container
+     * @var \Schnell\Config\ConfigInterface
      */
-    private CoreContainer $container;
+    private ConfigInterface $config;
 
     /**
-     * @psalm-api
-     *
-     * @param \DI\Container|null $container
+     * @param array $definitions
      * @return static
      */
-    public function __construct(CoreContainer|null $container = null)
+    public function __construct(ConfigInterface $config, array $definitions = [])
     {
-        $this->container = $container ?? new CoreContainer();
+        $this->setConfig($config);
+        $this->setMultiple($definitions);
     }
 
     /**
      * {@inheritDoc}
-     */
-    public function registerCallback(
-        string $class,
-        callable $fn,
-        array $fnParam
-    ): void {
-        $this->instances[$class] = call_user_func_array($fn, $fnParam);
-    }
-
-    /**
-     * @psalm-api
-     *
-     * @param string $class
-     * @return void
-     */
-    public function autowire(string $class)
-    {
-        $this->instances[$class] = $this->container->get($class);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function direct(string $class, object $instance): void
-    {
-        $this->instances[$class] = $instance;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function alias(string $class, string $alias): void
-    {
-        $this->aliasMap[$alias] = $class;
-    }
-
-    /**
-     * {@inheritdoc}
      */
     public function has(string $id): bool
     {
-        $class = array_key_exists($id, $this->aliasMap)
-            ? $this->aliasMap[$id]
-            : $id;
-
-        return array_key_exists($class, $this->instances);
+        return array_key_exists($id, $this->definitions);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function get(string $id)
     {
-        if (!$this->has($id)) {
-            throw new NotFoundException(
-                sprintf("Object with identifier '%s' not found.", $id)
-            );
+        if (array_key_exists($id, $this->aliases)) {
+            return $this->get($this->aliases[$id]);
         }
 
-        $className = isset($this->aliasMap[$id])
-            ? $this->aliasMap[$id]
-            : $id;
+        if (array_key_exists($id, $this->instances)) {
+            return $this->instances[$id];
+        }
 
-        return $this->instances[$className];
+        $this->instances[$id] = $this->createFromDefinition($id);
+        return $this->instances[$id];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function set(string $id, $definition): void
+    {
+        if (array_key_exists($id, $this->instances)) {
+            unset($this->instances[$id]);
+        }
+
+        $this->definitions[$id] = $definition;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setMultiple(array $definitions): void
+    {
+        foreach ($definitions as $id => $definition) {
+            $this->set($id, $definition);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function alias(string $className, string $alias): void
+    {
+        if (array_key_exists($alias, $this->aliases)) {
+            unset($this->aliases[$alias]);
+        }
+
+        $this->aliases[$alias] = $className;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getConfig(): ConfigInterface
+    {
+        return $this->config;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setConfig(ConfigInterface $config): void
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @internal
+     *
+     * @param string $id
+     * @return object
+     */
+    private function autowire(string $id): object
+    {
+        try {
+            $reflection = new ReflectionClass($id);
+        } catch (ReflectionException $e) {
+            throw new ContainerException(sprintf('Unable to create object \'%s\'.', $id));
+        }
+
+        if (($constructor = $reflection->getConstructor()) === null) {
+            return $reflection->newInstance();
+        }
+
+        $args = [];
+
+        foreach ($constructor->getParameters() as $parameter) {
+            if ($type = $parameter->getType()) {
+                $typeName = $type->getName();
+
+                if (!$type->isBuiltin() && ($this->has($typeName) || $this->isClassName($typeName))) {
+                    $args[] = $this->get($typeName);
+                    continue;
+                }
+
+                if ($typeName === 'array' && $type->isBuiltin() && !$parameter->isDefaultValueAvailable()) {
+                    $arguments[] = [];
+                    continue;
+                }
+            }
+
+            if ($parameter->isDefaultValueAvailable()) {
+                try {
+                    $args[] = $parameter->getDefaultValue();
+                    continue;
+                } catch (ReflectionException $e) {
+                    throw new ContainerException(sprintf(
+                        'Unable to create object \'%s\'. Unable to get default value of constructor parameter: \'%s\'.',
+                        $reflection->getName(),
+                        $parameter->getName()
+                    ));
+                }
+            }
+
+            throw new ContainerException(sprintf(
+                'Unable to create object \'%s\'. Unable to process a constructor parameter: \'%s\'.',
+                $reflection->getName(),
+                $parameter->getName()
+            ));
+        }
+
+        return $reflection->newInstanceArgs($args);
+    }
+
+    /**
+     * @internal
+     *
+     * @param string $id
+     * @return mixed
+     */
+    private function createFromDefinition(string $id): mixed
+    {
+        if (!$this->has($id)) {
+            if ($this->isClassName($id)) {
+                return $this->autowire($id);
+            }
+
+            throw new NotFoundException('Definition with id \'%s\' not found.', $id);
+        }
+
+        if ($this->isClassName($this->definitions[$id])) {
+            return $this->createFromDefinition($this->definitions[$id]);
+        }
+
+        if ($this->definitions[$id] instanceof Closure) {
+            return call_user_func($this->definitions[$id], $this, $this->getConfig());
+        }
+
+        return $this->definitions[$id];
+    }
+
+    /**
+     * @internal
+     *
+     * @param mixed $id
+     * @return bool
+     */
+    private function isClassName(mixed $id): bool
+    {
+        return is_string($id) && class_exists($id);
     }
 }

@@ -20,11 +20,7 @@ class CacheBridge extends AbstractBridge
         $flyweight = new CacheFlyweightFactory($this->getConfig());
         $factory = $flyweight->createFactory($this->getConfig()->get('cache.driver'));
 
-        $this->getContainer()->direct(
-            CacheItemPoolInterface::class,
-            $factory->createCache()
-        );
-
+        $this->getContainer()->set(CacheItemPoolInterface::class, $factory->createCache());
         $this->getContainer()->alias(CacheItemPoolInterface::class, $this->getAlias());
     }
 

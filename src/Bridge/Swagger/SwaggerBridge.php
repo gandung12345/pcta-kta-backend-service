@@ -24,12 +24,9 @@ class SwaggerBridge extends AbstractBridge
     public function load(): void
     {
         /** @psalm-suppress PossiblyNullReference */
-        $this->getContainer()->registerCallback(
+        $this->getContainer()->set(
             OpenApi::class,
-            function (
-                ContainerInterface $container,
-                ConfigInterface $config
-            ): ?OpenApi {
+            function (ContainerInterface $container, ConfigInterface $config): ?OpenApi {
                 /** @psalm-suppress PossiblyNullArgument */
                 $normalizedDirs = array_map(
                     fn(string $dir) => sprintf(
@@ -45,8 +42,7 @@ class SwaggerBridge extends AbstractBridge
                 return OpenApiGenerator::scan($normalizedDirs, [
                     'logger' => new NullLogger()
                 ]);
-            },
-            [$this->getContainer(), $this->getConfig()]
+            }
         );
 
         /** @psalm-suppress PossiblyNullReference */

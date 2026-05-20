@@ -20,7 +20,7 @@ class SlimCacheProviderBridge extends AbstractBridge
     public function load(): void
     {
         /** @psalm-suppress PossiblyNullReference */
-        $this->getContainer()->direct(CacheProvider::class, new CacheProvider());
+        $this->getContainer()->set(CacheProvider::class, new CacheProvider());
         /** @psalm-suppress PossiblyNullReference */
         $this->getContainer()->alias(CacheProvider::class, $this->getAlias());
     }
