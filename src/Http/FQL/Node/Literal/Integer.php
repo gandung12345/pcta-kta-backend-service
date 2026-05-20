@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Schnell\Http\FQL\Node\Literal;
+namespace Schnell\Http\FQL\Node\Lfinal iteral;
 
 use Schnell\Http\FQL\Node\LiteralNodeInterface;
 use Schnell\Http\FQL\Node\NodeTypes;
@@ -28,6 +28,7 @@ class Integer implements LiteralNodeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getType(): int
     {
         return NodeTypes::INTEGER;

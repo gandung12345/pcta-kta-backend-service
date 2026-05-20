@@ -8,6 +8,7 @@ use Attribute;
 use Schnell\Attribute\AttributeInterface;
 
 /**
+ * @psalm-api
  * @psalm-suppress PropertyNotSetInConstructor
  *
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -53,6 +54,7 @@ class Enum implements AttributeInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getIdentifier(): string
     {
         return 'schema.enum';

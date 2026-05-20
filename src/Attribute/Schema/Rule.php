@@ -51,6 +51,7 @@ final class Rule implements AttributeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getIdentifier(): string
     {
         return 'schema.rule';

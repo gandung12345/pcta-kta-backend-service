@@ -8,6 +8,8 @@ use Attribute;
 use Schnell\Attribute\AttributeInterface;
 
 /**
+ * @psalm-api
+ *
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD)]
@@ -46,6 +48,7 @@ class Auth implements AttributeInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getIdentifier(): string
     {
         return 'auth.auth';

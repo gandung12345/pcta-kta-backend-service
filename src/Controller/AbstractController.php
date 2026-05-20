@@ -54,6 +54,7 @@ abstract class AbstractController implements ControllerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getContainer(): ContainerInterface
     {
         return $this->container;
@@ -62,6 +63,7 @@ abstract class AbstractController implements ControllerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setContainer(ContainerInterface $container): void
     {
         $this->container = $container;
@@ -70,6 +72,7 @@ abstract class AbstractController implements ControllerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getConfig(): ConfigInterface
     {
         return $this->config;
@@ -78,6 +81,7 @@ abstract class AbstractController implements ControllerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setConfig(ConfigInterface $config): void
     {
         $this->config = $config;
@@ -86,6 +90,7 @@ abstract class AbstractController implements ControllerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function withEtag(ResponseInterface $response): ResponseInterface
     {
         return $this->getContainer()
@@ -96,6 +101,7 @@ abstract class AbstractController implements ControllerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function json(
         ResponseInterface $response,
         array $data,
@@ -115,6 +121,7 @@ abstract class AbstractController implements ControllerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function hateoas(
         RequestInterface $request,
         ResponseInterface $response,
@@ -139,6 +146,7 @@ abstract class AbstractController implements ControllerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function response(
         ResponseInterface $response,
         string $buffer,
@@ -156,6 +164,7 @@ abstract class AbstractController implements ControllerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function html(
         ResponseInterface $response,
         string $buffer,

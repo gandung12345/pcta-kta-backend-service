@@ -15,6 +15,7 @@ class ArrayCacheFactory extends AbstractCacheFactory
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function createCache(): CacheItemPoolInterface
     {
         return new ArrayAdapter(

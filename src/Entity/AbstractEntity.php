@@ -14,15 +14,18 @@ abstract class AbstractEntity implements EntityInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     abstract public function getQueryBuilderAlias(): string;
 
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     abstract public function getCanonicalTableName(): string;
 
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     abstract public function getDqlName(): string;
 }

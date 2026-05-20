@@ -8,6 +8,8 @@ use Schnell\Bridge\AbstractBridge;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
+ * @psalm-api
+ *
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
 class CacheBridge extends AbstractBridge
@@ -15,6 +17,7 @@ class CacheBridge extends AbstractBridge
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function load(): void
     {
         $flyweight = new CacheFlyweightFactory($this->getConfig());
@@ -27,6 +30,7 @@ class CacheBridge extends AbstractBridge
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getAlias(): string
     {
         return 'cache';

@@ -51,6 +51,7 @@ abstract class AbstractNode implements NodeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getType(): int
     {
         return $this->type;
@@ -59,6 +60,7 @@ abstract class AbstractNode implements NodeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getValue()
     {
         return $this->value;
@@ -67,6 +69,7 @@ abstract class AbstractNode implements NodeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getLineNumber(): int
     {
         return $this->line;
@@ -75,6 +78,7 @@ abstract class AbstractNode implements NodeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getColumnNumber(): int
     {
         return $this->column;

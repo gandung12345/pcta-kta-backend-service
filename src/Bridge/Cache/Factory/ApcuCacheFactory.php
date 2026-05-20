@@ -15,6 +15,7 @@ class ApcuCacheFactory extends AbstractCacheFactory
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function createCache(): CacheItemPoolInterface
     {
         $this->checkExtension('apcu');

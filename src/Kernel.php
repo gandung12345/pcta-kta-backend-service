@@ -59,6 +59,7 @@ final class Kernel implements KernelInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getConfig(): ConfigInterface
     {
         return $this->config;
@@ -67,6 +68,7 @@ final class Kernel implements KernelInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setConfig(ConfigInterface $config): void
     {
         $this->config = $config;
@@ -75,6 +77,7 @@ final class Kernel implements KernelInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getContainer(): ContainerInterface
     {
         return $this->container;
@@ -83,6 +86,7 @@ final class Kernel implements KernelInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setContainer(ContainerInterface $container): void
     {
         $this->container = $container;
@@ -91,6 +95,7 @@ final class Kernel implements KernelInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getControllerResolver(): ControllerResolverInterface
     {
         return $this->controllerResolver;
@@ -99,6 +104,7 @@ final class Kernel implements KernelInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setControllerResolver(
         ControllerResolverInterface $controllerResolver
     ): void {
@@ -108,6 +114,7 @@ final class Kernel implements KernelInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function handle(RequestInterface $request): void
     {
         /** @psalm-suppress ArgumentTypeCoercion */
@@ -117,6 +124,7 @@ final class Kernel implements KernelInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function addExtension(
         BridgeInterface $extension,
         string|null $basePath = null
@@ -132,6 +140,7 @@ final class Kernel implements KernelInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function load(): void
     {
         foreach ($this->extensions as $extension) {

@@ -50,6 +50,7 @@ class DoctrineBridge extends AbstractBridge
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function load(): void
     {
         $this->overrideType();
@@ -146,6 +147,7 @@ class DoctrineBridge extends AbstractBridge
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getAlias(): string
     {
         return 'entity-manager';

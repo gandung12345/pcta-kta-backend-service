@@ -98,6 +98,7 @@ final class Parser implements ParserInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getTokens(): array
     {
         return $this->tokens;
@@ -106,6 +107,7 @@ final class Parser implements ParserInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getTokensAt(int $index): NodeInterface|null
     {
         if (!isset($this->tokens[$index])) {
@@ -118,6 +120,7 @@ final class Parser implements ParserInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setTokens(array $tokens): void
     {
         $this->tokens = $tokens;
@@ -126,6 +129,7 @@ final class Parser implements ParserInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getToken(): NodeInterface|null
     {
         return $this->token;
@@ -134,6 +138,7 @@ final class Parser implements ParserInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setToken(NodeInterface|null $token): void
     {
         $this->token = $token;
@@ -142,6 +147,7 @@ final class Parser implements ParserInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function resetToken(): void
     {
         $this->setToken(null);
@@ -150,6 +156,7 @@ final class Parser implements ParserInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getPosition(): int
     {
         return $this->position;
@@ -158,6 +165,7 @@ final class Parser implements ParserInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setPosition(int $position): void
     {
         $this->position = $position;
@@ -166,6 +174,7 @@ final class Parser implements ParserInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function incrementPosition(): void
     {
         $this->position++;
@@ -174,6 +183,7 @@ final class Parser implements ParserInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getRoot(): AstInterface
     {
         return $this->root;
@@ -182,6 +192,7 @@ final class Parser implements ParserInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setRoot(AstInterface $root): void
     {
         $this->root = $root;
@@ -190,6 +201,7 @@ final class Parser implements ParserInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function parse(): void
     {
         while (true) {
@@ -215,6 +227,7 @@ final class Parser implements ParserInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function ast(): AstInterface
     {
         return $this->getRoot();

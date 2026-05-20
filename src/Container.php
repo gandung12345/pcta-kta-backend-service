@@ -29,6 +29,8 @@ class_exists(NotFoundException::class);
 // @codeCoverageIgnoreEnd
 
 /**
+ * @psalm-api
+ *
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
 class Container implements ContainerInterface
@@ -54,8 +56,8 @@ class Container implements ContainerInterface
     private ConfigInterface $config;
 
     /**
-     * @param array $definitions
-     * @return static
+     * @var \Schnell\Config\ConfigInterface $config
+     * @var array $definitions
      */
     public function __construct(ConfigInterface $config, array $definitions = [])
     {
@@ -66,6 +68,7 @@ class Container implements ContainerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function has(string $id): bool
     {
         return array_key_exists($id, $this->definitions);
@@ -74,6 +77,7 @@ class Container implements ContainerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function get(string $id)
     {
         if (array_key_exists($id, $this->aliases)) {
@@ -91,6 +95,7 @@ class Container implements ContainerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function set(string $id, $definition): void
     {
         if (array_key_exists($id, $this->instances)) {
@@ -103,6 +108,7 @@ class Container implements ContainerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setMultiple(array $definitions): void
     {
         foreach ($definitions as $id => $definition) {
@@ -113,6 +119,7 @@ class Container implements ContainerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function alias(string $className, string $alias): void
     {
         if (array_key_exists($alias, $this->aliases)) {
@@ -125,6 +132,7 @@ class Container implements ContainerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getConfig(): ConfigInterface
     {
         return $this->config;
@@ -133,6 +141,7 @@ class Container implements ContainerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setConfig(ConfigInterface $config): void
     {
         $this->config = $config;

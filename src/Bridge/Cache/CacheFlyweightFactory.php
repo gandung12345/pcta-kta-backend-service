@@ -32,6 +32,7 @@ class CacheFlyweightFactory implements CacheFlyweightFactoryInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function createFactory(string $cacheDriver): CacheFactoryInterface
     {
         return match ($cacheDriver) {
@@ -47,6 +48,7 @@ class CacheFlyweightFactory implements CacheFlyweightFactoryInterface
     /**
      * @return \Schnell\Config\ConfigInterface
      */
+    #[\Override]
     public function getConfig(): ConfigInterface
     {
         return $this->config;
@@ -56,6 +58,7 @@ class CacheFlyweightFactory implements CacheFlyweightFactoryInterface
      * @param \Schnell\Config\ConfigInterface $config
      * @return void
      */
+    #[\Override]
     public function setConfig(ConfigInterface $config): void
     {
         $this->config = $config;

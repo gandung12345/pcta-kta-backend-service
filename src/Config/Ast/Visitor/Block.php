@@ -12,6 +12,7 @@ class Block extends AbstractVisitor
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getName(): string
     {
         return '(block-visitor)';
@@ -20,6 +21,7 @@ class Block extends AbstractVisitor
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function resolve()
     {
         return $this->ast->getValue()->getValue();

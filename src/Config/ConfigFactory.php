@@ -33,6 +33,7 @@ class ConfigFactory implements ConfigFactoryInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function import(string $filename): void
     {
         if (true === in_array($filename, $this->files, true)) {
@@ -47,6 +48,7 @@ class ConfigFactory implements ConfigFactoryInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function importBulk(array $filenames): void
     {
         foreach ($filenames as $filename) {
@@ -57,6 +59,7 @@ class ConfigFactory implements ConfigFactoryInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getConfig(): ConfigInterface
     {
         $lexer = new Lexer($this->collectBuffer());

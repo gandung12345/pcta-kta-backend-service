@@ -53,6 +53,7 @@ final class Hateoas implements HateoasInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getData(): array
     {
         return $this->data;
@@ -61,6 +62,7 @@ final class Hateoas implements HateoasInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setData(array $data): void
     {
         $this->data = $data;
@@ -69,6 +71,7 @@ final class Hateoas implements HateoasInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getPage(): PageInterface
     {
         return $this->page;
@@ -77,6 +80,7 @@ final class Hateoas implements HateoasInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setPage(PageInterface $page): void
     {
         $this->page = $page;
@@ -85,6 +89,7 @@ final class Hateoas implements HateoasInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getRequest(): RequestInterface
     {
         return $this->request;
@@ -93,6 +98,7 @@ final class Hateoas implements HateoasInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setRequest(RequestInterface $request): void
     {
         $this->request = $request;
@@ -101,6 +107,7 @@ final class Hateoas implements HateoasInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function generate(): array
     {
         return [

@@ -42,6 +42,7 @@ class KeyValue implements PairedAwareNodeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getKey(): ?string
     {
         return $this->key;
@@ -50,6 +51,7 @@ class KeyValue implements PairedAwareNodeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setKey(?string $key): void
     {
         $this->key = $key;
@@ -58,6 +60,7 @@ class KeyValue implements PairedAwareNodeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getValue()
     {
         return $this->value;
@@ -66,6 +69,7 @@ class KeyValue implements PairedAwareNodeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setValue(mixed $value): void
     {
         $this->value = $value;
@@ -74,6 +78,7 @@ class KeyValue implements PairedAwareNodeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getType(): int
     {
         return AstNodeTypes::KEY_VALUE;
@@ -82,6 +87,7 @@ class KeyValue implements PairedAwareNodeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getInvokable(AstInterface $ast): ?array
     {
         return null;

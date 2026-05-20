@@ -17,6 +17,8 @@ class_exists(Exception::class);
 // @codeCoverageIgnoreEnd
 
 /**
+ * @psalm-api
+ *
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
 class NotFoundException extends Exception implements NotFoundExceptionInterface

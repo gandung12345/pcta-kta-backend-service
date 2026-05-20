@@ -33,6 +33,7 @@ class MapperBridge extends AbstractBridge
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function load(): void
     {
         /** @psalm-suppress PossiblyNullReference */
@@ -62,6 +63,7 @@ class MapperBridge extends AbstractBridge
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getAlias(): string
     {
         return 'mapper';

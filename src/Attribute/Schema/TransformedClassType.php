@@ -119,6 +119,7 @@ final class TransformedClassType implements AttributeInterface
     /**
      * @return string
      */
+    #[\Override]
     public function getIdentifier(): string
     {
         return 'schema.transformedClassType';

@@ -57,6 +57,7 @@ abstract class AbstractBridge implements BridgeInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getConfig(): ConfigInterface|null
     {
         return $this->config;
@@ -65,6 +66,7 @@ abstract class AbstractBridge implements BridgeInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setConfig(ConfigInterface|null $config): void
     {
         $this->config = $config;
@@ -73,6 +75,7 @@ abstract class AbstractBridge implements BridgeInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getContainer(): ContainerInterface|null
     {
         return $this->container;
@@ -81,6 +84,7 @@ abstract class AbstractBridge implements BridgeInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setContainer(ContainerInterface|null $container): void
     {
         $this->container = $container;
@@ -89,6 +93,7 @@ abstract class AbstractBridge implements BridgeInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getBasePath(): string|null
     {
         return $this->basePath;
@@ -97,6 +102,7 @@ abstract class AbstractBridge implements BridgeInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setBasePath(string|null $path): void
     {
         $this->basePath = $path;
@@ -105,10 +111,12 @@ abstract class AbstractBridge implements BridgeInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     abstract public function load(): void;
 
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     abstract public function getAlias(): string;
 }

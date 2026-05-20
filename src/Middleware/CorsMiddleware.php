@@ -36,6 +36,7 @@ class CorsMiddleware implements MiddlewareInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getControllerPool(): ControllerPoolInterface
     {
         return $this->controllerPool;
@@ -44,6 +45,7 @@ class CorsMiddleware implements MiddlewareInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setControllerPool(ControllerPoolInterface $controllerPool): void
     {
         $this->controllerPool = $controllerPool;
@@ -52,6 +54,7 @@ class CorsMiddleware implements MiddlewareInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function process(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler

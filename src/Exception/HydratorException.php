@@ -14,6 +14,8 @@ class_exists(Exception::class);
 // phpcs:enable
 
 /**
+ * @psalm-api
+ *
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
 class HydratorException extends Exception

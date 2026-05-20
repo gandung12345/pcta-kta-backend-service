@@ -18,6 +18,7 @@ class ExprGreaterX implements ExprNodeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getOperator(): string
     {
         return '>';
@@ -26,6 +27,7 @@ class ExprGreaterX implements ExprNodeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getType(): int
     {
         return NodeTypes::EXPR_GREATERX;
@@ -34,6 +36,7 @@ class ExprGreaterX implements ExprNodeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getInvokable(AstInterface $ast): ?array
     {
         /** @psalm-suppress PossiblyNullReference */

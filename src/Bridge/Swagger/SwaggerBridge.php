@@ -21,6 +21,7 @@ class SwaggerBridge extends AbstractBridge
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function load(): void
     {
         /** @psalm-suppress PossiblyNullReference */
@@ -52,6 +53,7 @@ class SwaggerBridge extends AbstractBridge
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getAlias(): string
     {
         return 'swagger';

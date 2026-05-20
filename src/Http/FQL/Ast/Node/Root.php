@@ -16,6 +16,7 @@ class Root implements NodeInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getType(): int
     {
         return NodeTypes::ROOT;
@@ -24,6 +25,7 @@ class Root implements NodeInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getInvokable(AstInterface $ast): ?array
     {
         return [$ast->getQueryBuilder(), 'andWhere'];

@@ -35,6 +35,7 @@ class Paginator implements PaginatorInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getTotalRows(): int
     {
         return $this->totalRows;
@@ -43,6 +44,7 @@ class Paginator implements PaginatorInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setTotalRows(int $totalRows): void
     {
         $this->totalRows = $totalRows;
@@ -51,6 +53,7 @@ class Paginator implements PaginatorInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getMetadata(RequestInterface $request): PageInterface
     {
         $page = new Page();

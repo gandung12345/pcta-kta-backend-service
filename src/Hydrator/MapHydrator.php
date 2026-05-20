@@ -40,6 +40,7 @@ class MapHydrator implements HydratorInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function hydrate($value)
     {
         if (false === is_a($value, EntityInterface::class)) {

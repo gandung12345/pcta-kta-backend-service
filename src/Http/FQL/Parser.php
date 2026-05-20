@@ -117,6 +117,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getTokens(): ?array
     {
         return $this->tokens;
@@ -125,6 +126,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setTokens(?array $tokens): void
     {
         $this->tokens = $tokens;
@@ -133,6 +135,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getQueryBuilder(): ?QueryBuilder
     {
         return $this->queryBuilder;
@@ -141,6 +144,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setQueryBuilder(?QueryBuilder $queryBuilder): void
     {
         $this->queryBuilder = $queryBuilder;
@@ -149,6 +153,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getEntity(): ?EntityInterface
     {
         return $this->entity;
@@ -157,6 +162,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setEntity(?EntityInterface $entity): void
     {
         $this->entity = $entity;
@@ -165,6 +171,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getPosition(): int
     {
         return $this->position;
@@ -173,6 +180,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setPosition(int $position): void
     {
         $this->position = $position;
@@ -181,6 +189,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getScoped(): ?bool
     {
         return $this->scoped;
@@ -189,6 +198,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setScoped(?bool $scoped): void
     {
         $this->scoped = $scoped;
@@ -197,6 +207,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getScopeCount(): ?int
     {
         return $this->scopeCount;
@@ -205,6 +216,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setScopeCount(?int $scopeCount): void
     {
         $this->scopeCount = $scopeCount;
@@ -213,6 +225,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function decrementScopeCount(): void
     {
         $this->scopeCount--;
@@ -221,6 +234,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function incrementScopeCount(): void
     {
         $this->scopeCount++;
@@ -229,6 +243,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getAst(): ?AstInterface
     {
         return $this->ast;
@@ -237,6 +252,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setAst(?AstInterface $ast): void
     {
         $this->ast = $ast;
@@ -245,6 +261,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getParameterBag(): ?ParameterBag
     {
         return $this->parameterBag;
@@ -253,6 +270,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setParameterBag(?ParameterBag $parameterBag): void
     {
         $this->parameterBag = $parameterBag;
@@ -419,6 +437,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function parse(): void
     {
         $this->pushScopeContext($this->getAst());
@@ -493,7 +512,7 @@ class Parser implements ParserInterface
         $ast->setQueryBuilder($this->getQueryBuilder());
         $ast->setParameterBag($this->getParameterBag());
 
-        $context = $this->pullScopeContext();
+        $this->pullScopeContext();
         $context->addChild($ast);
 
         $ast->setParent($context);
@@ -532,7 +551,7 @@ class Parser implements ParserInterface
         $ast->setQueryBuilder($this->getQueryBuilder());
         $ast->setParameterBag($this->getParameterBag());
 
-        $context = $this->pullScopeContext();
+        $this->pullScopeContext();
         $context->addChild($ast);
 
         $ast->setParent($context);
@@ -551,9 +570,8 @@ class Parser implements ParserInterface
 
     /**
      * @internal
-     * @return void
      */
-    private function pullScopeContext(): AstInterface
+    private function pullScopeContext(): AstInterface|null
     {
         return array_pop($this->scopeContext);
     }
@@ -586,29 +604,6 @@ class Parser implements ParserInterface
         $this->expect($this->peek() !== null, $exceptionMessage);
         /** @psalm-suppress PossiblyNullReference */
         $this->expect($this->peek()->getType() === $type, $exceptionMessage);
-        return;
-    }
-
-    /**
-     * @param array $types
-     * @param string $exceptionMessage
-     * @return void
-     */
-    private function expectNodes(array $types, string $exceptionMessage): void
-    {
-        $this->expect(null === $this->peek(), $exceptionMessage);
-
-        $found = false;
-
-        foreach ($types as $type) {
-            /** @psalm-suppress PossiblyNullReference */
-            if ($this->peek()->getType() === $type) {
-                $found = true;
-                break;
-            }
-        }
-
-        $this->expect(!$found, $exceptionMessage);
         return;
     }
 }

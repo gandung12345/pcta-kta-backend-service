@@ -38,17 +38,9 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param \Psr\Http\Message\RequestInterface|null $request
-     * @return \Schnell\Validator\ValidatorInterface
-     */
-    public static function create(?RequestInterface $request = null): ValidatorInterface
-    {
-        return new self($request);
-    }
-
-    /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getRequest(): ?RequestInterface
     {
         return $this->request;
@@ -57,6 +49,7 @@ final class Validator implements ValidatorInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setRequest(?RequestInterface $request): void
     {
         $this->request = $request;
@@ -65,6 +58,7 @@ final class Validator implements ValidatorInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function withRequest(
         RequestInterface|null $request
     ): ValidatorInterface {
@@ -76,6 +70,7 @@ final class Validator implements ValidatorInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function assign(SchemaInterface $schema, ?array $data = null): bool
     {
         if (null === $data && null === $this->getRequest()) {
@@ -92,6 +87,7 @@ final class Validator implements ValidatorInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function assignMultiple(SchemaInterface $schema): array
     {
         if (null === $this->getRequest()) {
@@ -189,7 +185,7 @@ final class Validator implements ValidatorInterface
                 $attributes['chainEnum'] !== null
             ) {
                 $reflection = new ReflectionClass($schema);
-                $targetField = $reflection->getProperty(
+                $reflection->getProperty(
                     $attributes['chainEnum']->getField()
                 );
 
@@ -262,6 +258,7 @@ final class Validator implements ValidatorInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function assignOptional(SchemaInterface $schema): bool
     {
         if (null === $this->getRequest()) {
@@ -358,6 +355,7 @@ final class Validator implements ValidatorInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function validateSchema(SchemaInterface $schema): void
     {
         $properties = $this->populateSchemaPropertiesWithProperty($schema);
@@ -417,7 +415,7 @@ final class Validator implements ValidatorInterface
                 $meta['attr']['chainEnum'] !== null
             ) {
                 $reflection = new ReflectionClass($schema);
-                $targetField = $reflection->getProperty(
+                $reflection->getProperty(
                     $meta['attr']['chainEnum']->getField()
                 );
 

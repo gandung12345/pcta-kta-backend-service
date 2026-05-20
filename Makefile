@@ -13,4 +13,7 @@ runprof:
 run:
 	$(RUNTIME) -S localhost:31337 -t ./public
 
-.PHONY: runprof run
+analyze:
+	./vendor/bin/psalm --force-jit 2>&1
+
+.PHONY: runprof run analyze

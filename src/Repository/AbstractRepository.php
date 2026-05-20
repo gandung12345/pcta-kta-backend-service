@@ -41,6 +41,7 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getMapper(): MapperInterface
     {
         return $this->mapper;
@@ -49,6 +50,7 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setMapper(MapperInterface $mapper): void
     {
         $this->mapper = $mapper;
@@ -57,6 +59,7 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getRequest(): RequestInterface
     {
         return $this->request;
@@ -65,6 +68,7 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setRequest(RequestInterface $request): void
     {
         $this->request = $request;

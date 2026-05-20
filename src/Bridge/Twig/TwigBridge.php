@@ -21,6 +21,7 @@ class TwigBridge extends AbstractBridge
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function load(): void
     {
         $container = $this->getContainer();
@@ -53,6 +54,7 @@ class TwigBridge extends AbstractBridge
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getAlias(): string
     {
         return 'twig';

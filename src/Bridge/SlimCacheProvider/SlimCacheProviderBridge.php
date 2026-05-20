@@ -17,6 +17,7 @@ class SlimCacheProviderBridge extends AbstractBridge
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function load(): void
     {
         /** @psalm-suppress PossiblyNullReference */
@@ -28,6 +29,7 @@ class SlimCacheProviderBridge extends AbstractBridge
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getAlias(): string
     {
         return 'slim-cache-provider';

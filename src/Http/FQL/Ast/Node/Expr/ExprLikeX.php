@@ -18,6 +18,7 @@ class ExprLikeX implements ExprNodeInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getOperator(): string
     {
         return 'LIKE';
@@ -26,6 +27,7 @@ class ExprLikeX implements ExprNodeInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getType(): int
     {
         return NodeTypes::EXPR_LIKEX;
@@ -34,6 +36,7 @@ class ExprLikeX implements ExprNodeInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getInvokable(AstInterface $ast): ?array
     {
         return [$ast->getQueryBuilder()->expr(), 'like'];

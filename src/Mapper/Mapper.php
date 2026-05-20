@@ -99,6 +99,7 @@ final class Mapper implements MapperInterface
     /**
      * @return \Doctrine\ORM\EntityManagerInterface
      */
+    #[\Override]
     public function getEntityManager(): EntityManagerInterface
     {
         return $this->entityManager;
@@ -108,6 +109,7 @@ final class Mapper implements MapperInterface
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @return void
      */
+    #[\Override]
     public function setEntityManager(EntityManagerInterface $entityManager): void
     {
         $this->entityManager = $entityManager;
@@ -116,6 +118,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getDql(): AbstractQuery|null
     {
         return $this->dql;
@@ -124,6 +127,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setDql(AbstractQuery|null $dql): void
     {
         $this->dql = $dql;
@@ -132,6 +136,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function withDql(AbstractQuery|null $dql): MapperInterface
     {
         $ret = clone $this;
@@ -142,6 +147,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function runDql()
     {
         /** @psalm-suppress PossiblyNullReference */
@@ -151,6 +157,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getHydrator(): ?HydratorInterface
     {
         return $this->hydrator;
@@ -159,6 +166,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setHydrator(?HydratorInterface $hydrator): void
     {
         $this->hydrator = $hydrator;
@@ -167,6 +175,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function withHydrator(?HydratorInterface $hydrator): MapperInterface
     {
         $ret = clone $this;
@@ -177,6 +186,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getPage(): ?PageInterface
     {
         return $this->page;
@@ -185,6 +195,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setPage(?PageInterface $page): void
     {
         $this->page = $page;
@@ -193,6 +204,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function withPage(?PageInterface $page): MapperInterface
     {
         $ret = clone $this;
@@ -203,6 +215,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getRequest(): ?Requestinterface
     {
         return $this->request;
@@ -211,6 +224,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setRequest(?RequestInterface $request): void
     {
         $this->request = $request;
@@ -219,6 +233,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function withRequest(?RequestInterface $request): MapperInterface
     {
         $that = clone $this;
@@ -256,6 +271,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function all(EntityInterface $entity): array
     {
         $hydrator = $this->getHydrator();
@@ -309,6 +325,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function paginate(EntityInterface $entity): array
     {
         $queryBuilder = $this->getEntityManager()
@@ -321,6 +338,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function paginateByParent(
         string $parentColumn,
         EntityInterface $parent,
@@ -335,6 +353,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function paginateFromQueryBuilder(
         QueryBuilder $queryBuilder,
         EntityInterface $entity
@@ -361,6 +380,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function find(
         EntityInterface $entity,
         $id
@@ -385,7 +405,10 @@ final class Mapper implements MapperInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @return null|scalar
      */
+    #[\Override]
     public function count(EntityInterface $entity): int
     {
         $entityManager = $this->getEntityManager();
@@ -426,7 +449,10 @@ final class Mapper implements MapperInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @return null|scalar
      */
+    #[\Override]
     public function countByParent(
         EntityInterface $entity,
         EntityInterface $parent
@@ -466,6 +492,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function create(
         SchemaInterface $schema,
         EntityInterface $entity
@@ -502,6 +529,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function createReferenced(
         $refId,
         SchemaInterface $schema,
@@ -563,6 +591,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function createFromMultipleReference(
         array $refIds,
         array $referencedEntities,
@@ -624,6 +653,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function update(
         $id,
         SchemaInterface $schema,
@@ -666,6 +696,7 @@ final class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function remove($id, EntityInterface $entity): EntityInterface|array|null
     {
         try {

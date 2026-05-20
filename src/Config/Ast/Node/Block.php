@@ -39,6 +39,7 @@ class Block extends AbstractNode
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getName(): string
     {
         return '(block)';

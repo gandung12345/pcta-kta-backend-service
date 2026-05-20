@@ -38,10 +38,12 @@ abstract class AbstractVisitor implements VisitorInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     abstract public function getName(): string;
 
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     abstract public function resolve();
 }

@@ -7,6 +7,7 @@ namespace Schnell\Config\Ast;
 use Schnell\Config\Ast\Visitor\VisitorInterface;
 
 /**
+ * @psalm-api
  * @psalm-suppress PropertyNotSetInConstructor
  *
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -57,6 +58,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getValue()
     {
         return $this->value;
@@ -65,6 +67,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setValue($value): void
     {
         $this->value = $value;
@@ -73,6 +76,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getVisitor(): VisitorInterface|null
     {
         return $this->visitor;
@@ -81,6 +85,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setVisitor(VisitorInterface|null $visitor): void
     {
         $this->visitor = $visitor;
@@ -89,6 +94,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getChilds(): array
     {
         return $this->childs;
@@ -97,6 +103,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setChilds(array $childs): void
     {
         $this->childs = $childs;
@@ -105,6 +112,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function addChild(AstInterface $child): void
     {
         $this->childs[] = $child;
@@ -113,6 +121,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getChildAt(int $index): AstInterface|null
     {
         if (!isset($this->childs[$index])) {
@@ -125,6 +134,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getLastChild(): AstInterface|null
     {
         return $this->getChildAt(sizeof($this->childs) - 1);
@@ -133,6 +143,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function visit()
     {
         if ($this->getVisitor() === null) {

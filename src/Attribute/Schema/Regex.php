@@ -51,6 +51,7 @@ final class Regex implements AttributeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getIdentifier(): string
     {
         return 'schema.regex';

@@ -52,6 +52,7 @@ class Interceptor implements InterceptorInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getAst(): ?AstInterface
     {
         return $this->ast;
@@ -60,6 +61,7 @@ class Interceptor implements InterceptorInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setAst(?AstInterface $ast): void
     {
         $this->ast = $ast;
@@ -68,6 +70,7 @@ class Interceptor implements InterceptorInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getQueryBuilder(): ?QueryBuilder
     {
         return $this->queryBuilder;
@@ -76,6 +79,7 @@ class Interceptor implements InterceptorInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setQueryBuilder(?QueryBuilder $queryBuilder): void
     {
         $this->queryBuilder = $queryBuilder;
@@ -84,6 +88,7 @@ class Interceptor implements InterceptorInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getEntity(): ?EntityInterface
     {
         return $this->entity;
@@ -92,6 +97,7 @@ class Interceptor implements InterceptorInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setEntity(?EntityInterface $entity): void
     {
         $this->entity = $entity;
@@ -100,6 +106,7 @@ class Interceptor implements InterceptorInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function intercept(): ?QueryBuilder
     {
         /** @psalm-suppress PossiblyNullReference */

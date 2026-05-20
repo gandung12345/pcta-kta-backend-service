@@ -48,6 +48,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getTotalCount(): int
     {
         return $this->totalCount;
@@ -56,6 +57,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setTotalCount(int $totalCount): void
     {
         $this->totalCount = $totalCount;
@@ -64,6 +66,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getPage(): int
     {
         return $this->page;
@@ -72,6 +75,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setPage(int $page): void
     {
         $this->page = $page;
@@ -80,6 +84,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getPerPage(): int
     {
         return $this->perPage;
@@ -88,6 +93,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setPerPage(int $perPage): void
     {
         $this->perPage = $perPage;
@@ -96,6 +102,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getOffset(): int
     {
         return $this->offset;
@@ -104,6 +111,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setOffset(int $offset): void
     {
         $this->offset = $offset;
@@ -112,6 +120,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getTotalPage(): int
     {
         return $this->totalPage;
@@ -120,6 +129,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setTotalPage(int $totalPage): void
     {
         $this->totalPage = $totalPage;

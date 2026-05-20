@@ -6,7 +6,7 @@ namespace Schnell\Attribute\Entity;
 
 use Attribute;
 use Throwable;
-use Schnell\Attribute\AttributeInterface;
+use Schnell\Attribute\Attributefinal Interface;
 use Schnell\Entity\EntityInterface;
 use Schnell\Mapper\Query\Error as QueryError;
 
@@ -179,6 +179,7 @@ class GeneratedError implements AttributeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getIdentifier(): string
     {
         return 'entity.generatedError';

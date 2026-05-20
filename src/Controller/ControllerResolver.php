@@ -68,6 +68,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getControllerPool(): ControllerPoolInterface
     {
         return $this->controllerPool;
@@ -76,6 +77,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setControllerPool(
         ControllerPoolInterface $controllerPool
     ): void {
@@ -85,6 +87,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getRouteCollectorProxy(): RouteCollectorProxyInterface
     {
         return $this->routeCollectorProxy;
@@ -93,6 +96,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setRouteCollectorProxy(
         RouteCollectorProxyInterface $routeCollectorProxy
     ): void {
@@ -102,6 +106,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function resolve(ServerRequestInterface $request): void
     {
         foreach ($this->getControllerPool()->getPool() as $key) {
@@ -114,6 +119,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function add(MiddlewareInterface $middleware): void
     {
         /** @psalm-suppress UndefinedInterfaceMethod */
@@ -129,6 +135,7 @@ class ControllerResolver implements ControllerResolverInterface
     private function resolveSingle(array $value): void
     {
         if (!isset($value['route']) || !is_a($value['route'], Route::class)) {
+            dd($value);
             throw new ControllerResolverException(
                 sprintf(
                     "Route object is undefined or not an " .
@@ -162,25 +169,9 @@ class ControllerResolver implements ControllerResolverInterface
     }
 
     /**
-     * @internal
-     *
-     * @return void
-     */
-    private function enableRouteCache(): void
-    {
-        $routeCollector = $this->getRouteCollectorProxy()
-            ->getRouteCollector();
-
-        $routeCollector->setCacheFile(
-            $this->getControllerPool()
-                ->getConfig()
-                ->get('route.cacheFile')
-        );
-    }
-
-    /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function run(?ServerRequestInterface $request = null): void
     {
         /** @psalm-suppress UndefinedInterfaceMethod */
@@ -190,6 +181,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         /** @psalm-suppress UndefinedInterfaceMethod */
@@ -199,6 +191,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function addRoutingMiddleware(): RoutingMiddleware
     {
         /** @psalm-suppress UndefinedInterfaceMethod */
@@ -208,6 +201,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function addBodyParsingMiddleware(
         array $bodyParsers = []
     ): BodyParsingMiddleware {
@@ -219,6 +213,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function addErrorMiddleware(
         bool $displayErrorDetails,
         bool $logErrors,
@@ -237,6 +232,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function addHttpCache(): void
     {
         $this->add(new Cache('public'));

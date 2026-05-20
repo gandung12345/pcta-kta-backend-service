@@ -15,6 +15,7 @@ class FilesystemCacheFactory extends AbstractCacheFactory
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function createCache(): CacheItemPoolInterface
     {
         return new FilesystemAdapter(

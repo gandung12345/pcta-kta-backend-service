@@ -67,15 +67,6 @@ class Route implements AttributeInterface
     }
 
     /**
-     * @param array $method
-     * @return void
-     */
-    public function setMethod(array $method): void
-    {
-        $this->method = $method;
-    }
-
-    /**
      * @param string|array $method
      * @return void
      */
@@ -87,6 +78,7 @@ class Route implements AttributeInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getIdentifier(): string
     {
         return 'route';

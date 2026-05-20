@@ -32,6 +32,7 @@ abstract class AbstractCacheFactory implements CacheFactoryInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getConfig(): ConfigInterface
     {
         return $this->config;
@@ -40,6 +41,7 @@ abstract class AbstractCacheFactory implements CacheFactoryInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setConfig(ConfigInterface $config): void
     {
         $this->config = $config;
@@ -48,5 +50,6 @@ abstract class AbstractCacheFactory implements CacheFactoryInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     abstract public function createCache(): CacheItemPoolInterface;
 }

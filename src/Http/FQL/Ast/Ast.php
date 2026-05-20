@@ -75,6 +75,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getValue(): ?AstNodeInterface
     {
         return $this->value;
@@ -83,6 +84,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setValue(?AstNodeInterface $value): void
     {
         $this->value = $value;
@@ -91,6 +93,7 @@ class Ast implements AstInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getParent(): ?AstInterface
     {
         return $this->parent;
@@ -99,6 +102,7 @@ class Ast implements AstInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setParent(?AstInterface $parent): void
     {
         $this->parent = $parent;
@@ -107,6 +111,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getQueryBuilder(): ?QueryBuilder
     {
         return $this->queryBuilder;
@@ -115,6 +120,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setQueryBuilder(?QueryBuilder $queryBuilder): void
     {
         $this->queryBuilder = $queryBuilder;
@@ -123,6 +129,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getParameterBag(): ?ParameterBag
     {
         return $this->parameterBag;
@@ -131,6 +138,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setParameterBag(?ParameterBag $parameterBag): void
     {
         $this->parameterBag = $parameterBag;
@@ -139,6 +147,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getChilds(): ?array
     {
         return $this->childs;
@@ -147,6 +156,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setChilds(?array $childs): void
     {
         $this->childs = $childs;
@@ -155,6 +165,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function addChild(?AstInterface $child): void
     {
         $this->childs[] = $child;
@@ -163,6 +174,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function visit(?string $queryAlias)
     {
         if (null === $queryAlias || '' === $queryAlias) {

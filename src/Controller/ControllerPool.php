@@ -6,6 +6,7 @@ namespace Schnell\Controller;
 
 use ReflectionAttribute;
 use ReflectionClass;
+use ReflectionMethod;
 use SplObjectStorage;
 use Schnell\ContainerInterface;
 use Schnell\Attribute\Route;
@@ -72,6 +73,7 @@ class ControllerPool implements ControllerPoolInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getContainer(): ContainerInterface
     {
         return $this->container;
@@ -80,6 +82,7 @@ class ControllerPool implements ControllerPoolInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setContainer(ContainerInterface $container): void
     {
         $this->container = $container;
@@ -88,6 +91,7 @@ class ControllerPool implements ControllerPoolInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getPool(): SplObjectStorage
     {
         return $this->pool;
@@ -96,6 +100,7 @@ class ControllerPool implements ControllerPoolInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getPoolAt(object $key)
     {
         return $this->pool[$key];
@@ -104,6 +109,7 @@ class ControllerPool implements ControllerPoolInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setPool(SplObjectStorage $pool): void
     {
         $this->pool = $pool;
@@ -112,6 +118,7 @@ class ControllerPool implements ControllerPoolInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function addPoolAt(object $key, $value): void
     {
         $this->pool[$key] = $value;
@@ -120,6 +127,7 @@ class ControllerPool implements ControllerPoolInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getConfig(): ConfigInterface
     {
         return $this->config;
@@ -128,6 +136,7 @@ class ControllerPool implements ControllerPoolInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setConfig(ConfigInterface $config): void
     {
         $this->config = $config;
@@ -136,9 +145,10 @@ class ControllerPool implements ControllerPoolInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function collect(): void
     {
-        $recGlobFn = function (string $pattern, int $flags = 0) use (&$recGlobFn) {
+        $recGlobFn = function (string $pattern, int $flags = 0) use (&$recGlobFn): array {
             $files = glob($pattern, $flags);
             $result = [];
 
@@ -226,7 +236,12 @@ class ControllerPool implements ControllerPoolInterface
             $this->getConfig()
         );
 
-        $classMethods = $reflection->getMethods();
+        $classMethods = array_filter(
+            $reflection->getMethods(),
+            function (ReflectionMethod $method) use ($reflection) {
+                return $method->getDeclaringClass()->getName() === $reflection->getName();
+            }
+        );
 
         if (sizeof($classMethods) === 0) {
             return;
@@ -247,7 +262,8 @@ class ControllerPool implements ControllerPoolInterface
             ];
 
             foreach ($attributes as $attribute) {
-                if (false !== stripos($attribute->getName(), 'OpenApi')) {
+                if (false !== stripos($attribute->getName(), 'OpenApi') ||
+                    false !== stripos($attribute->getName(), 'Override')) {
                     continue;
                 }
 
@@ -274,6 +290,7 @@ class ControllerPool implements ControllerPoolInterface
      *
      * @param string $className
      * @return string
+     *
      * @throws \Schnell\Exception\ControllerPoolException
      */
     private function resolveContextualRouteGroup(string $className): string

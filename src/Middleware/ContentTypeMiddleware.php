@@ -57,6 +57,7 @@ class ContentTypeMiddleware implements MiddlewareInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getControllerPool(): ControllerPoolInterface
     {
         return $this->controllerPool;
@@ -65,6 +66,7 @@ class ContentTypeMiddleware implements MiddlewareInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setControllerPool(
         ControllerPoolInterface $controllerPool
     ): void {
@@ -74,6 +76,7 @@ class ContentTypeMiddleware implements MiddlewareInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function process(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler

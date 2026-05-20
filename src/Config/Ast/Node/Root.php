@@ -22,6 +22,7 @@ class Root extends AbstractNode
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getName(): string
     {
         return '(root)';

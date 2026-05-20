@@ -44,6 +44,7 @@ class ArrayHydrator implements HydratorInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function hydrate($value)
     {
         $ret = [];

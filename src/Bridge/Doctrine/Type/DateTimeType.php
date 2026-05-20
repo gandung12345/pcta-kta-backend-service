@@ -17,6 +17,7 @@ class DateTimeType extends Type
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         return $platform->getDateTypeDeclarationSQL($column);
@@ -25,6 +26,7 @@ class DateTimeType extends Type
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
         return $value
@@ -35,6 +37,7 @@ class DateTimeType extends Type
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function convertToPHPValue($value, AbstractPlatform $platform): ?DateTime
     {
         if (null === $value || $value instanceof DateTimeDecorator) {

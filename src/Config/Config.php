@@ -65,6 +65,7 @@ final class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getAst(): AstInterface
     {
         return $this->ast;
@@ -73,6 +74,7 @@ final class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setAst(AstInterface $ast): void
     {
         $this->ast = $ast;
@@ -81,6 +83,7 @@ final class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getMap(): array
     {
         return $this->map;
@@ -89,6 +92,7 @@ final class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setMap(array $map): void
     {
         $this->map = $map;
@@ -97,6 +101,7 @@ final class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getKey(): string|null
     {
         return $this->key;
@@ -105,6 +110,7 @@ final class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setKey(string|null $key): void
     {
         $this->key = $key;
@@ -113,6 +119,7 @@ final class Config implements ConfigInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function get(string $name)
     {
         /** @psalm-suppress PossiblyFalseArgument */

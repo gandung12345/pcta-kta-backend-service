@@ -7,6 +7,8 @@ namespace Schnell\Exception;
 use Exception;
 
 /**
+ * @psalm-api
+ *
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
 class FQLLexerException extends Exception

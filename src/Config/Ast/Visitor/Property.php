@@ -12,6 +12,7 @@ class Property extends AbstractVisitor
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getName(): string
     {
         return '(property-visitor)';
@@ -20,6 +21,7 @@ class Property extends AbstractVisitor
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function resolve()
     {
         $property = $this->ast

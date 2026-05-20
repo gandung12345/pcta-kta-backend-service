@@ -81,6 +81,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function lex(): void
     {
         while (true) {
@@ -135,6 +136,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getTokens(): array
     {
         return $this->tokens;
@@ -143,6 +145,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setTokens(array $tokens): void
     {
         $this->tokens = $tokens;
@@ -151,6 +154,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function addToken(NodeInterface $node): void
     {
         $this->tokens[] = $node;
@@ -159,6 +163,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getBuffer(): ?string
     {
         return $this->buffer;
@@ -167,6 +172,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setBuffer(?string $buffer): void
     {
         $this->buffer = $buffer;
@@ -175,6 +181,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getPosition(): int
     {
         return $this->position;
@@ -183,6 +190,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function setPosition(int $position): void
     {
         $this->position = $position;
@@ -191,6 +199,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function incrementPosition(): void
     {
         $this->position++;

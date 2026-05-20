@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Schnell\Bridge\Cache\Exception;
+namespace Schnell\Bridge\Cache\Exfinal ception;
 
 use Exception;
 
