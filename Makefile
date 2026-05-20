@@ -8,9 +8,9 @@ XDEBUG_USE_COMPRESSION = 'xdebug.use_compression=false'
 runprof:
 	$(RUNTIME) -d $(XDEBUG_MODE) -d $(XDEBUG_PROFILER_ENABLE_TRIGGER) \
 		-d $(XDEBUG_OUTPUT_DIR) -d $(XDEBUG_PROFILER_OUTPUT_NAME) \
-		-d $(XDEBUG_USE_COMPRESSION) -S localhost:31337 -t ./
+		-d $(XDEBUG_USE_COMPRESSION) -S localhost:31337 -t ./public
 
 run:
-	$(RUNTIME) -S localhost:31337 -t ./
+	$(RUNTIME) -S localhost:31337 -t ./public
 
 .PHONY: runprof run

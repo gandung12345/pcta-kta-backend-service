@@ -19,7 +19,9 @@
     "gedmo/doctrine-extensions": "^3.21",
     "symfony/var-exporter": "^7",
     "phpoffice/phpspreadsheet": "^5.4",
-    "psr/container": "^2.0"
+    "psr/container": "^2.0",
+    "slim/twig-view": "^3.4",
+    "odan/twig-assets": "^4.1"
   },
   "license": "BSD-3-Clause",
   "autoload": {
@@ -33,13 +35,13 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Pcta\\Api\\Tests\\": "app/",
+      "Pcta\\Api\\Tests\\": "tests/App",
       "Schnell\\Tests\\": "tests/"
     }
   },
   "authors": [
     {
-      "name": "plvhx",
+      "name": "Paulus Gandung Prakosa",
       "email": "gandung@infradead.org"
     }
   ],

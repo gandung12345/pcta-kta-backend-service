@@ -1,0 +1,19 @@
+<!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    {{ assets({files: ['assets/swagger-ui.css'], name: 'swagger-ui.css'}) }}
+    {{ assets({files: ['assets/index.css'], name: 'index.css'}) }}
+    <link rel="icon" type="image/png" href="{{ 'assets/favicon-32x32.png' }}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{{ 'assets/favicon-16x16.png' }}" sizes="16x16" />
+    {{ assets({files: ['assets/swagger-ui-bundle.js'], name: 'swagger-ui-bundle.js'}) }}
+    {{ assets({files: ['assets/swagger-ui-standalone-preset.js'], name: 'swagger-ui-standalone-preset.js'}) }}
+    {{ assets({files: ['assets/swagger-initializer.js'], name: 'swagger-initializer.js'}) }}
+  </head>
+
+  <body>
+    <div id="swagger-ui"></div>
+  </body>
+</html>

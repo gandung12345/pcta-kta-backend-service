@@ -135,4 +135,38 @@ abstract class AbstractController implements ControllerInterface
 
         return $this->withEtag($clonedResponse);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function response(
+        ResponseInterface $response,
+        string $buffer,
+        int $code = HttpCode::OK
+    ): ResponseInterface {
+        $clonedResponse = $response
+            ->withStatus($code, HttpCode::toString($code))
+            ->withHeader('Content-Type', 'text/plain');
+
+        $clonedResponse->getBody()->write($buffer);
+
+        return $this->withEtag($clonedResponse);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function html(
+        ResponseInterface $response,
+        string $buffer,
+        int $code = HttpCode::OK
+    ): ResponseInterface {
+        $clonedResponse = $response
+            ->withStatus($code, HttpCode::toString($code))
+            ->withHeader('Content-Type', 'text/html');
+
+        $clonedResponse->getBody()->write($buffer);
+
+        return $this->withEtag($clonedResponse);
+    }
 }

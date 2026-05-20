@@ -81,4 +81,32 @@ interface ControllerInterface
         array $data,
         int $code = HttpCode::OK
     ): ResponseInterface;
+
+    /**
+     * @psalm-api
+     *
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param string $buffer
+     * @param int $code
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function response(
+        ResponseInterface $response,
+        string $buffer,
+        int $code = HttpCode::OK
+    ): ResponseInterface;
+
+    /**
+     * @psalm-api
+     *
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param string $buffer
+     * @param int $code
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function html(
+        ResponseInterface $response,
+        string $buffer,
+        int $code = HttpCode::OK
+    ): ResponseInterface;
 }

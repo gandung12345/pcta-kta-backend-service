@@ -49,7 +49,7 @@ class MemberSchema extends AbstractSchema
     /**
      * @var string|null
      */
-    #[Rule(reuqired: true)]
+    #[Rule(required: true)]
     #[Json(name: 'name')]
     private ?string $name;
 

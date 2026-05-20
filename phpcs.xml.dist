@@ -12,9 +12,12 @@
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
 
     <!-- Paths to check -->
-    <file>index.php</file>
+    <file>public</file>
     <file>app</file>
     <file>functions</file>
     <file>src</file>
     <file>tests</file>
+
+    <!-- exclude assets directory -->
+    <exclude-pattern>public/templates/*</exclude-pattern>
 </ruleset>
