@@ -4,7 +4,10 @@ bin/var/
 var/doctrine/
 var/doctrine-proxy/
 var/cache/
-var/routes
+var/routes/
+var/twig-cache/
+var/twig-assets-cache/
+public/assets/cache/
 .phpunit.result.cache
 phpcs.phar
 phpcbf.phar
