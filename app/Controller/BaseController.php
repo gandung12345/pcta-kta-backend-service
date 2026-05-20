@@ -18,7 +18,7 @@ class_exists(AbstractController::class);
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
 #[OpenApi\Info(
-    title: 'PCTA Member Registration REST API',
+    title: 'PCTA eKTA REST API',
     version: '1.0-dev'
 )]
 class BaseController extends AbstractController
