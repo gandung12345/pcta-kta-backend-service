@@ -5,7 +5,18 @@ declare(strict_types=1);
 namespace Schnell\Attribute\Auth;
 
 use Attribute;
+use Override;
 use Schnell\Attribute\AttributeInterface;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// @codeCoverageIgnoreStart
+// phpcs:disable
+class_exists(Attribute::class);
+class_exists(Override::class);
+// phpcs:enable
+// @codeCoverageIgnoreEnd
 
 /**
  * @psalm-api
@@ -46,9 +57,9 @@ class Auth implements AttributeInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getIdentifier(): string
     {
         return 'auth.auth';

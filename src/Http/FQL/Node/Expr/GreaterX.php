@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Schnell\Http\FQL\Node\Efinal xpr;
+namespace Schnell\Http\FQL\Node\Expr;
 
 use Schnell\Http\FQL\Node\ExprNodeInterface;
 use Schnell\Http\FQL\Node\NodeTypes;

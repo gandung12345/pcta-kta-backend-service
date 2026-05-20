@@ -5,10 +5,23 @@ declare(strict_types=1);
 namespace Schnell\Attribute\Entity;
 
 use Attribute;
+use Override;
 use Throwable;
-use Schnell\Attribute\Attributefinal Interface;
+use Schnell\Attribute\AttributeInterface;
 use Schnell\Entity\EntityInterface;
 use Schnell\Mapper\Query\Error as QueryError;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// @codeCoverageIgnoreStart
+// phpcs:disable
+class_exists(Attribute::class);
+class_exists(Override::class);
+class_exists(Throwable::class);
+class_exists(QueryError::class);
+// phpcs:enable
+// @codeCoverageIgnoreEnd
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -179,7 +192,7 @@ class GeneratedError implements AttributeInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getIdentifier(): string
     {
         return 'entity.generatedError';

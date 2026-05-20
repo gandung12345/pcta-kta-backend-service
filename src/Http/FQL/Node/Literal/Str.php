@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Schnell\Http\FQL\Node\Lfinal iteral;
+namespace Schnell\Http\FQL\Node\Literal;
 
 use Schnell\Http\FQL\Node\LiteralNodeInterface;
 use Schnell\Http\FQL\Node\NodeTypes;
