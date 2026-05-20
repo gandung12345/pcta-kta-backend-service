@@ -7,8 +7,6 @@
     "symfony/cache": "^7.2",
     "php-di/slim-bridge": "^3.4",
     "slim/psr7": "^1.7",
-    "doctrine/cache": "^2.2",
-    "doctrine/annotations": "^2.0",
     "doctrine/dbal": "^4.0",
     "symfony/uid": "^7.2",
     "slim/http-cache": "^1.2",
