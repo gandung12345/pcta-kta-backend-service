@@ -15,6 +15,16 @@ use Schnell\Bridge\Doctrine\DoctrineBridge;
 use Schnell\Config\ConfigFactory;
 use Schnell\Container;
 
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(ConsoleRunner::class);
+class_exists(SingleManagerProvider::class);
+class_exists(CacheBridge::class);
+class_exists(DoctrineBridge::class);
+class_exists(ConfigFactory::class);
+class_exists(Container::class);
+// phpcs:enable
+
 $configFactory = new ConfigFactory();
 $configFactory->importBulk([
     '../config/app.conf',
@@ -24,7 +34,7 @@ $configFactory->importBulk([
 ]);
 
 $config = $configFactory->getConfig();
-$container = new Container();
+$container = new Container($config);
 
 $cacheBridge = new CacheBridge($config, $container);
 $cacheBridge->setBasePath(getcwd() . DIRECTORY_SEPARATOR . '..');

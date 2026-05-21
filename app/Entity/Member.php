@@ -16,6 +16,9 @@ use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use OpenApi\Attributes as OpenApi;
+use Pcta\Api\Type\Religion as ReligionType;
+use Pcta\Api\Type\Role as RoleType;
+use Pcta\Api\Type\Sex as SexType;
 use Schnell\Attribute\Schema\Json;
 use Schnell\Decorator\Stringified\DateTimeDecorator;
 use Schnell\Entity\AbstractEntity;
@@ -134,6 +137,33 @@ class Member extends AbstractEntity
         description: 'Member address'
     )]
     private string $address;
+
+    #[Column(type: 'string', nullable: false, enumType: SexType::class)]
+    #[Json(name: 'sex')]
+    #[OpenApi\Property(
+        property: 'sex',
+        type: 'string',
+        description: 'Member sex type'
+    )]
+    private SexType $sex;
+
+    #[Column(type: 'string', nullable: false, enumType: ReligionType::class)]
+    #[Json(name: 'religion')]
+    #[OpenApi\Property(
+        property: 'religion',
+        type: 'string',
+        description: 'Member religion type'
+    )]
+    private ReligionType $religion;
+
+    #[Column(type: 'string', nullable: false, enumType: RoleType::class)]
+    #[Json(name: 'role')]
+    #[OpenApi\Property(
+        property: 'role',
+        type: 'string',
+        description: 'Member role type'
+    )]
+    private RoleType $role;
 
     /**
      * @var string
