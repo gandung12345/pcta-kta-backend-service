@@ -89,7 +89,8 @@ class Province extends AbstractEntity
     #[OpenApi\Property(
         property: 'createdAt',
         type: 'timestamp',
-        description: 'Province created at'
+        description: 'Province created at',
+        readOnly: true
     )]
     private ?DateTime $createdAt;
 
@@ -101,7 +102,8 @@ class Province extends AbstractEntity
     #[OpenApi\Property(
         property: 'updatedAt',
         type: 'timestamp',
-        description: 'Province updated at'
+        description: 'Province updated at',
+        readOnly: true
     )]
     private ?DateTime $updatedAt;
 

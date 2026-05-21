@@ -96,7 +96,8 @@ class Subdistrict extends AbstractEntity
     #[OpenApi\Property(
         property: 'createdAt',
         type: 'timestamp',
-        description: 'Subdistrict created at'
+        description: 'Subdistrict created at',
+        readOnly: true
     )]
     private ?DateTime $createdAt;
 
@@ -108,7 +109,8 @@ class Subdistrict extends AbstractEntity
     #[OpenApi\Property(
         property: 'updatedAt',
         type: 'timestamp',
-        description: 'Subdistrict updated at'
+        description: 'Subdistrict updated at',
+        readOnly: true
     )]
     private ?DateTime $updatedAt;
 

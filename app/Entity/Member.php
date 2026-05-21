@@ -86,7 +86,8 @@ class Member extends AbstractEntity
     #[OpenApi\Property(
         property: 'membershipIdentityNumber',
         type: 'string',
-        description: 'Membership identity number'
+        description: 'Membership identity number',
+        readOnly: true
     )]
     private string $membershipIdentityNumber;
 
@@ -185,7 +186,8 @@ class Member extends AbstractEntity
     #[OpenApi\Property(
         property: 'qrCodeImage',
         type: 'string',
-        description: 'Member QRCode image'
+        description: 'Member QRCode image',
+        readOnly: true
     )]
     private string $qrCodeImage;
 
@@ -263,7 +265,8 @@ class Member extends AbstractEntity
     #[OpenApi\Property(
         property: 'createdAt',
         type: 'timestamp',
-        description: 'Member created at'
+        description: 'Member created at',
+        readOnly: true
     )]
     private ?DateTime $createdAt;
 
@@ -275,7 +278,8 @@ class Member extends AbstractEntity
     #[OpenApi\Property(
         property: 'updatedAt',
         type: 'timestamp',
-        description: 'Member updated at'
+        description: 'Member updated at',
+        readOnly: true
     )]
     private ?DateTime $updatedAt;
 

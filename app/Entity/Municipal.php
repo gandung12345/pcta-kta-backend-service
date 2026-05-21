@@ -100,7 +100,8 @@ class Municipal extends AbstractEntity
     #[OpenApi\Property(
         property: 'createdAt',
         type: 'timestamp',
-        description: 'Municipal created at'
+        description: 'Municipal created at',
+        readOnly: true
     )]
     private ?DateTime $createdAt;
 
@@ -112,7 +113,8 @@ class Municipal extends AbstractEntity
     #[OpenApi\Property(
         property: 'updatedAt',
         type: 'timestamp',
-        description: 'Municipal updated at'
+        description: 'Municipal updated at',
+        readOnly: true
     )]
     private ?DateTime $updatedAt;
 

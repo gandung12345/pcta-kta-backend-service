@@ -98,7 +98,8 @@ class District extends AbstractEntity
     #[OpenApi\Property(
         property: 'createdAt',
         type: 'timestamp',
-        description: 'District created at'
+        description: 'District created at',
+        readOnly: true
     )]
     private ?DateTime $createdAt;
 
@@ -110,7 +111,8 @@ class District extends AbstractEntity
     #[OpenApi\Property(
         property: 'updatedAt',
         type: 'timestamp',
-        description: 'District updated at'
+        description: 'District updated at',
+        readOnly: true
     )]
     private ?DateTime $updatedAt;
 
