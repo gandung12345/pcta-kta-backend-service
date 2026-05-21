@@ -4,9 +4,16 @@ declare(strict_types=1);
 
 namespace Schnell\Paginator;
 
+use Override;
 use Psr\Http\Message\RequestInterface;
 
+use function class_exists;
 use function intval;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -35,7 +42,7 @@ class Paginator implements PaginatorInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getTotalRows(): int
     {
         return $this->totalRows;
@@ -44,7 +51,7 @@ class Paginator implements PaginatorInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setTotalRows(int $totalRows): void
     {
         $this->totalRows = $totalRows;
@@ -53,7 +60,7 @@ class Paginator implements PaginatorInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getMetadata(RequestInterface $request): PageInterface
     {
         $page = new Page();

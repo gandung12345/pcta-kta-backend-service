@@ -4,8 +4,16 @@ declare(strict_types=1);
 
 namespace Schnell\Bridge;
 
+use Override;
 use Schnell\ContainerInterface;
 use Schnell\Config\ConfigInterface;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -55,68 +63,68 @@ abstract class AbstractBridge implements BridgeInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getConfig(): ConfigInterface|null
     {
         return $this->config;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setConfig(ConfigInterface|null $config): void
     {
         $this->config = $config;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getContainer(): ContainerInterface|null
     {
         return $this->container;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setContainer(ContainerInterface|null $container): void
     {
         $this->container = $container;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getBasePath(): string|null
     {
         return $this->basePath;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setBasePath(string|null $path): void
     {
         $this->basePath = $path;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     abstract public function load(): void;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     abstract public function getAlias(): string;
 }

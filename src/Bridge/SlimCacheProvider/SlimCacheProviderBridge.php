@@ -4,8 +4,18 @@ declare(strict_types=1);
 
 namespace Schnell\Bridge\SlimCacheProvider;
 
+use Override;
 use Schnell\Bridge\AbstractBridge;
 use Slim\HttpCache\CacheProvider;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+class_exists(AbstractBridge::class);
+class_exists(CacheProvider::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -17,19 +27,21 @@ class SlimCacheProviderBridge extends AbstractBridge
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function load(): void
     {
+        $container = $this->getContainer();
+
         /** @psalm-suppress PossiblyNullReference */
-        $this->getContainer()->set(CacheProvider::class, new CacheProvider());
+        $container->set(CacheProvider::class, new CacheProvider());
         /** @psalm-suppress PossiblyNullReference */
-        $this->getContainer()->alias(CacheProvider::class, $this->getAlias());
+        $container->alias(CacheProvider::class, $this->getAlias());
     }
 
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getAlias(): string
     {
         return 'slim-cache-provider';

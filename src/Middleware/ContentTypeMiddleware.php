@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Schnell\Middleware;
 
+use Override;
 use Throwable;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -11,6 +12,16 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Schnell\Controller\ControllerPoolInterface;
 use Schnell\Http\Code as HttpCode;
 use Slim\Psr7\Response;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+class_exists(Throwable::class);
+class_exists(HttpCode::class);
+class_exists(Response::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -28,7 +39,7 @@ class ContentTypeMiddleware implements MiddlewareInterface
     private ControllerPoolInterface $controllerPool;
 
     /**
-     * @var array<string>
+     * @var array
      */
     private array $allowedContentTypes = [
         'application/json',
@@ -57,7 +68,7 @@ class ContentTypeMiddleware implements MiddlewareInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getControllerPool(): ControllerPoolInterface
     {
         return $this->controllerPool;
@@ -66,7 +77,7 @@ class ContentTypeMiddleware implements MiddlewareInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setControllerPool(
         ControllerPoolInterface $controllerPool
     ): void {
@@ -76,7 +87,7 @@ class ContentTypeMiddleware implements MiddlewareInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function process(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler

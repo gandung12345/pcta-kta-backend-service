@@ -4,6 +4,15 @@ declare(strict_types=1);
 
 namespace Schnell\Paginator;
 
+use Override;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+// phpcs:enable
+
 /**
  * @psalm-api
  * @psalm-suppress PropertyNotSetInConstructor
@@ -48,7 +57,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getTotalCount(): int
     {
         return $this->totalCount;
@@ -57,7 +66,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setTotalCount(int $totalCount): void
     {
         $this->totalCount = $totalCount;
@@ -66,7 +75,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getPage(): int
     {
         return $this->page;
@@ -75,7 +84,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setPage(int $page): void
     {
         $this->page = $page;
@@ -84,7 +93,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getPerPage(): int
     {
         return $this->perPage;
@@ -93,7 +102,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setPerPage(int $perPage): void
     {
         $this->perPage = $perPage;
@@ -102,7 +111,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getOffset(): int
     {
         return $this->offset;
@@ -111,7 +120,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setOffset(int $offset): void
     {
         $this->offset = $offset;
@@ -120,7 +129,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getTotalPage(): int
     {
         return $this->totalPage;
@@ -129,7 +138,7 @@ final class Page implements PageInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setTotalPage(int $totalPage): void
     {
         $this->totalPage = $totalPage;

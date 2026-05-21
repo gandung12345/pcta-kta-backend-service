@@ -4,9 +4,18 @@ declare(strict_types=1);
 
 namespace Schnell\Http\FQL\Ast\Node\Literal;
 
+use Override;
 use Schnell\Http\FQL\Ast\AstInterface;
 use Schnell\Http\FQL\Ast\Node\NodeTypes as AstNodeTypes;
 use Schnell\Http\FQL\Ast\Node\PairedAwareNodeInterface;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+class_exists(AstNodeTypes::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -42,7 +51,7 @@ class KeyValue implements PairedAwareNodeInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getKey(): ?string
     {
         return $this->key;
@@ -51,7 +60,7 @@ class KeyValue implements PairedAwareNodeInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setKey(?string $key): void
     {
         $this->key = $key;
@@ -60,7 +69,7 @@ class KeyValue implements PairedAwareNodeInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getValue()
     {
         return $this->value;
@@ -69,7 +78,7 @@ class KeyValue implements PairedAwareNodeInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setValue(mixed $value): void
     {
         $this->value = $value;
@@ -78,7 +87,7 @@ class KeyValue implements PairedAwareNodeInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getType(): int
     {
         return AstNodeTypes::KEY_VALUE;
@@ -87,7 +96,7 @@ class KeyValue implements PairedAwareNodeInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getInvokable(AstInterface $ast): ?array
     {
         return null;

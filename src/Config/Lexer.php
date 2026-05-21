@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Schnell\Config;
 
+use Override;
 use Schnell\Exception\ConfigLexerException;
 use Schnell\Config\Node\Assign;
 use Schnell\Config\Node\Arr as ArrayNode;
@@ -23,6 +24,7 @@ use function sprintf;
 // help opcache.preload discover always-needed symbols
 // @codeCoverageIgnoreStart
 // phpcs:disable
+class_exists(Override::class);
 class_exists(ConfigLexerException::class);
 class_exists(Assign::class);
 class_exists(ArrayNode::class);
@@ -31,6 +33,7 @@ class_exists(Boolean::class);
 class_exists(Identifier::class);
 class_exists(Integer::class);
 class_exists(Str::class);
+class_exists(NodeTypes::class);
 // phpcs:enable
 // @codeCoverageIgnoreEnd
 
@@ -100,7 +103,7 @@ final class Lexer implements LexerInterface
     private array $reservedKeywords;
 
     /**
-     * {@inheritdoc}
+     * @param string $buffer
      */
     public function __construct(string $buffer)
     {
@@ -133,7 +136,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getPosition(): int
     {
         return $this->position;
@@ -142,7 +145,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setPosition(int $position): void
     {
         $this->position = $position;
@@ -151,7 +154,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function decrementPosition(): void
     {
         $this->position--;
@@ -160,7 +163,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function incrementPosition(): void
     {
         $this->position++;
@@ -168,7 +171,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getCols(): int
     {
         return $this->cols;
@@ -177,7 +180,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setCols(int $cols): void
     {
         $this->cols = $cols;
@@ -186,7 +189,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function resetCols(): void
     {
         $this->setCols(0);
@@ -195,7 +198,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getToken(): string|null
     {
         return $this->token;
@@ -204,7 +207,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setToken(string|null $token): void
     {
         $this->token = $token;
@@ -213,7 +216,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getBuffer(): string
     {
         return $this->buffer;
@@ -222,7 +225,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setBuffer(string $buffer): void
     {
         $this->buffer = $buffer;
@@ -231,7 +234,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getScoped(): bool
     {
         return $this->scoped;
@@ -240,7 +243,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setScoped(bool $scoped): void
     {
         $this->scoped = $scoped;
@@ -249,7 +252,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getArrayScoped(): bool
     {
         return $this->arrayScoped;
@@ -258,7 +261,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setArrayScoped(bool $arrayScoped): void
     {
         $this->arrayScoped = $arrayScoped;
@@ -267,7 +270,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getScopeCount(): int
     {
         return $this->scopeCount;
@@ -276,7 +279,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setScopeCount(int $scopeCount): void
     {
         $this->scopeCount = $scopeCount;
@@ -285,7 +288,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setArrayScopeCount(int $arrayScopeCount): void
     {
         $this->arrayScopeCount = $arrayScopeCount;
@@ -294,7 +297,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getTokens(): array
     {
         return $this->tokens;
@@ -303,7 +306,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setTokens(array $tokens): void
     {
         $this->tokens = $tokens;
@@ -312,7 +315,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function addNode(NodeInterface $node): void
     {
         $this->tokens[] = $node;
@@ -321,7 +324,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getNewlines(): int
     {
         return $this->newlines;
@@ -330,7 +333,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setNewlines(int $newlines): void
     {
         $this->newlines = $newlines;
@@ -339,7 +342,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function incrementNewlines(): void
     {
         $this->newlines++;
@@ -348,7 +351,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function incrementCols(): void
     {
         $this->cols++;
@@ -357,7 +360,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function incrementScopeCount(): void
     {
         $this->scopeCount++;
@@ -366,7 +369,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function decrementScopeCount(): void
     {
         $this->scopeCount--;
@@ -375,7 +378,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function incrementArrayScopeCount(): void
     {
         $this->arrayScopeCount++;
@@ -384,7 +387,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getStrstart(): string|null
     {
         return $this->strstart;
@@ -393,7 +396,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setStrstart(string|null $strstart): void
     {
         $this->strstart = $strstart;
@@ -402,7 +405,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getReservedKeywords(): array
     {
         return $this->reservedKeywords;
@@ -411,7 +414,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setReservedKeywords(array $keywords): void
     {
         $this->reservedKeywords = $keywords;
@@ -420,7 +423,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getNodeAt(int $index): NodeInterface|null
     {
         return !isset($this->tokens[$index])
@@ -431,7 +434,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getLastNode(): NodeInterface|null
     {
         return $this->getNodeAt(sizeof($this->tokens) - 1);
@@ -440,7 +443,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function lex(): void
     {
         while (true) {

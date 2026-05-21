@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Schnell\Validator;
 
+use Override;
 use ReflectionClass;
 use ReflectionProperty;
 use Psr\Http\Message\RequestInterface;
@@ -15,6 +16,22 @@ use Schnell\Attribute\Schema\Rule;
 use Schnell\Attribute\Schema\TransformedClassType;
 use Schnell\Exception\ValidatorException;
 use Schnell\Schema\SchemaInterface;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+class_exists(ReflectionClass::class);
+class_exists(ReflectionProperty::class);
+class_exists(ChainEnum::class);
+class_exists(Enum::class);
+class_exists(Json::class);
+class_exists(Regex::class);
+class_exists(Rule::class);
+class_exists(TransformedClassType::class);
+class_exists(ValidatorException::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -40,7 +57,7 @@ final class Validator implements ValidatorInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getRequest(): ?RequestInterface
     {
         return $this->request;
@@ -49,7 +66,7 @@ final class Validator implements ValidatorInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setRequest(?RequestInterface $request): void
     {
         $this->request = $request;
@@ -58,7 +75,7 @@ final class Validator implements ValidatorInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function withRequest(
         RequestInterface|null $request
     ): ValidatorInterface {
@@ -70,7 +87,7 @@ final class Validator implements ValidatorInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function assign(SchemaInterface $schema, ?array $data = null): bool
     {
         if (null === $data && null === $this->getRequest()) {
@@ -87,7 +104,7 @@ final class Validator implements ValidatorInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function assignMultiple(SchemaInterface $schema): array
     {
         if (null === $this->getRequest()) {
@@ -258,7 +275,7 @@ final class Validator implements ValidatorInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function assignOptional(SchemaInterface $schema): bool
     {
         if (null === $this->getRequest()) {
@@ -355,7 +372,7 @@ final class Validator implements ValidatorInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function validateSchema(SchemaInterface $schema): void
     {
         $properties = $this->populateSchemaPropertiesWithProperty($schema);

@@ -4,7 +4,15 @@ declare(strict_types=1);
 
 namespace Schnell\Config\Ast;
 
+use Override;
 use Schnell\Config\Ast\Visitor\VisitorInterface;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -28,7 +36,7 @@ class Ast implements AstInterface
      * @readonly
      * @psalm-allow-private-mutation
      *
-     * @var array<\Schnell\Config\Ast\AstInterface>
+     * @var array
      */
     private array $childs;
 
@@ -58,7 +66,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getValue()
     {
         return $this->value;
@@ -67,7 +75,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setValue($value): void
     {
         $this->value = $value;
@@ -76,7 +84,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getVisitor(): VisitorInterface|null
     {
         return $this->visitor;
@@ -85,7 +93,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setVisitor(VisitorInterface|null $visitor): void
     {
         $this->visitor = $visitor;
@@ -94,7 +102,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getChilds(): array
     {
         return $this->childs;
@@ -103,7 +111,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setChilds(array $childs): void
     {
         $this->childs = $childs;
@@ -112,7 +120,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function addChild(AstInterface $child): void
     {
         $this->childs[] = $child;
@@ -121,7 +129,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getChildAt(int $index): AstInterface|null
     {
         if (!isset($this->childs[$index])) {
@@ -134,7 +142,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getLastChild(): AstInterface|null
     {
         return $this->getChildAt(sizeof($this->childs) - 1);
@@ -143,7 +151,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function visit()
     {
         if ($this->getVisitor() === null) {

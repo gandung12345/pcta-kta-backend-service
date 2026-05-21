@@ -4,8 +4,17 @@ declare(strict_types=1);
 
 namespace Schnell\Bridge\Cache;
 
+use Override;
 use Schnell\Bridge\AbstractBridge;
 use Psr\Cache\CacheItemPoolInterface;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+class_exists(AbstractBridge::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -15,9 +24,9 @@ use Psr\Cache\CacheItemPoolInterface;
 class CacheBridge extends AbstractBridge
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function load(): void
     {
         $flyweight = new CacheFlyweightFactory($this->getConfig());
@@ -28,9 +37,9 @@ class CacheBridge extends AbstractBridge
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getAlias(): string
     {
         return 'cache';

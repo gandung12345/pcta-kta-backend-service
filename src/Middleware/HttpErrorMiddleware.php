@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Schnell\Middleware;
 
+use Override;
 use Throwable;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -20,8 +21,12 @@ use function json_encode;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
+class_exists(Override::class);
 class_exists(Throwable::class);
-class_exists(HttpNotFoundException::class);
+class_exists(MapperException::class);
+class_exists(ValidatorException::class);
+class_exists(HttpCode::class);
+class_exists(HttpSpecializedException::class);
 class_exists(Response::class);
 // phpcs:enable
 
@@ -54,7 +59,7 @@ class HttpErrorMiddleware implements MiddlewareInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getControllerPool(): ControllerPoolInterface
     {
         return $this->controllerPool;
@@ -63,7 +68,7 @@ class HttpErrorMiddleware implements MiddlewareInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setControllerPool(
         ControllerPoolInterface $controllerPool
     ): void {
@@ -73,7 +78,7 @@ class HttpErrorMiddleware implements MiddlewareInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function process(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
@@ -87,7 +92,6 @@ class HttpErrorMiddleware implements MiddlewareInterface
         } catch (ValidatorException $e) {
             return $this->handleGenericException($e, HttpCode::BAD_REQUEST);
         } catch (Throwable $e) {
-            dd($e);
             return $this->handleGenericException($e);
         }
     }

@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace Schnell\Hateoas;
 
+use Override;
 use Psr\Http\Message\RequestInterface;
 use Schnell\Paginator\PageInterface;
 
 use function array_keys;
 use function array_values;
+use function class_exists;
 use function join;
 use function strval;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -53,7 +60,7 @@ final class Hateoas implements HateoasInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getData(): array
     {
         return $this->data;
@@ -62,7 +69,7 @@ final class Hateoas implements HateoasInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setData(array $data): void
     {
         $this->data = $data;
@@ -71,7 +78,7 @@ final class Hateoas implements HateoasInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getPage(): PageInterface
     {
         return $this->page;
@@ -80,7 +87,7 @@ final class Hateoas implements HateoasInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setPage(PageInterface $page): void
     {
         $this->page = $page;
@@ -89,7 +96,7 @@ final class Hateoas implements HateoasInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getRequest(): RequestInterface
     {
         return $this->request;
@@ -98,7 +105,7 @@ final class Hateoas implements HateoasInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setRequest(RequestInterface $request): void
     {
         $this->request = $request;
@@ -107,7 +114,7 @@ final class Hateoas implements HateoasInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function generate(): array
     {
         return [

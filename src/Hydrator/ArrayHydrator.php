@@ -3,6 +3,7 @@
 namespace Schnell\Hydrator;
 
 use DateTime;
+use Override;
 use ReflectionClass;
 use ReflectionProperty;
 use Doctrine\ORM\Mapping\OneToOne;
@@ -22,8 +23,16 @@ use function ucfirst;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
+class_exists(DateTime::class);
+class_exists(Override::class);
 class_exists(ReflectionClass::class);
 class_exists(ReflectionProperty::class);
+class_exists(OneToOne::class);
+class_exists(OneToMany::class);
+class_exists(ManyToOne::class);
+class_exists(JoinColumn::class);
+class_exists(Json::class);
+class_exists(HydratorException::class);
 // phpcs:enable
 
 /**
@@ -44,7 +53,7 @@ class ArrayHydrator implements HydratorInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function hydrate($value)
     {
         $ret = [];

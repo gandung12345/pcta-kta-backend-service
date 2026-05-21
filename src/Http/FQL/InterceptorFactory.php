@@ -4,11 +4,22 @@ declare(strict_types=1);
 
 namespace Schnell\Http\FQL;
 
+use Override;
 use Doctrine\ORM\QueryBuilder;
 use Psr\Http\Message\RequestInterface;
 use Schnell\Entity\EntityInterface;
 use Schnell\Http\FQL\Lexer;
 use Schnell\Http\FQL\Parser;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+class_exists(QueryBuilder::class);
+class_exists(Lexer::class);
+class_exists(Parser::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -54,7 +65,7 @@ class InterceptorFactory implements InterceptorFactoryInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getRequest(): ?RequestInterface
     {
         return $this->request;
@@ -63,7 +74,7 @@ class InterceptorFactory implements InterceptorFactoryInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setRequest(?RequestInterface $request): void
     {
         $this->request = $request;
@@ -72,7 +83,7 @@ class InterceptorFactory implements InterceptorFactoryInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getQueryBuilder(): ?QueryBuilder
     {
         return $this->queryBuilder;
@@ -81,7 +92,7 @@ class InterceptorFactory implements InterceptorFactoryInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setQueryBuilder(?QueryBuilder $queryBuilder): void
     {
         $this->queryBuilder = $queryBuilder;
@@ -90,7 +101,7 @@ class InterceptorFactory implements InterceptorFactoryInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function getEntity(): ?EntityInterface
     {
         return $this->entity;
@@ -99,7 +110,7 @@ class InterceptorFactory implements InterceptorFactoryInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function setEntity(?EntityInterface $entity): void
     {
         $this->entity = $entity;
@@ -108,7 +119,7 @@ class InterceptorFactory implements InterceptorFactoryInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function createInterceptor(): ?InterceptorInterface
     {
         if (($queryParams = $this->getFilterQuery()) === null) {

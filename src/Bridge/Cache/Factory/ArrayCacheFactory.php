@@ -4,8 +4,17 @@ declare(strict_types=1);
 
 namespace Schnell\Bridge\Cache\Factory;
 
+use Override;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+class_exists(ArrayAdapter::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -13,9 +22,9 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 class ArrayCacheFactory extends AbstractCacheFactory
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function createCache(): CacheItemPoolInterface
     {
         return new ArrayAdapter(

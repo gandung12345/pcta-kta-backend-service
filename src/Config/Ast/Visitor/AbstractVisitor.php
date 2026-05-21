@@ -4,7 +4,15 @@ declare(strict_types=1);
 
 namespace Schnell\Config\Ast\Visitor;
 
+use Override;
 use Schnell\Config\Ast\AstInterface;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -38,12 +46,12 @@ abstract class AbstractVisitor implements VisitorInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     abstract public function getName(): string;
 
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     abstract public function resolve();
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Schnell\Http\FQL;
 
+use Override;
 use ReflectionClass;
 use ReflectionProperty;
 use Doctrine\ORM\QueryBuilder;
@@ -26,6 +27,30 @@ use Schnell\Http\FQL\Ast\Node\Expr\ExprOrX as AstExprOrX;
 use Schnell\Http\FQL\Node\ExprNodeInterface;
 use Schnell\Http\FQL\Node\NodeInterface;
 use Schnell\Http\FQL\Node\NodeTypes;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+class_exists(ReflectionClass::class);
+class_exists(ReflectionProperty::class);
+class_exists(QueryBuilder::class);
+class_exists(FQLParserException::class);
+class_exists(Ast::class);
+class_exists(AstRootNode::class);
+class_exists(AstKeyValueLiteral::class);
+class_exists(AstExprAndX::class);
+class_exists(AstExprEqualX::class);
+class_exists(AstExprGreaterOrEqualX::class);
+class_exists(AstExprGreaterX::class);
+class_exists(AstExprLessOrEqualX::class);
+class_exists(AstExprLessX::class);
+class_exists(AstExprLikeX::class);
+class_exists(AstExprNotEqualX::class);
+class_exists(AstExprOrX::class);
+class_exists(NodeTypes::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -117,7 +142,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function getTokens(): ?array
     {
         return $this->tokens;
@@ -126,7 +151,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function setTokens(?array $tokens): void
     {
         $this->tokens = $tokens;
@@ -135,7 +160,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function getQueryBuilder(): ?QueryBuilder
     {
         return $this->queryBuilder;
@@ -144,7 +169,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function setQueryBuilder(?QueryBuilder $queryBuilder): void
     {
         $this->queryBuilder = $queryBuilder;
@@ -153,7 +178,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function getEntity(): ?EntityInterface
     {
         return $this->entity;
@@ -162,7 +187,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function setEntity(?EntityInterface $entity): void
     {
         $this->entity = $entity;
@@ -171,7 +196,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function getPosition(): int
     {
         return $this->position;
@@ -180,7 +205,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function setPosition(int $position): void
     {
         $this->position = $position;
@@ -189,7 +214,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function getScoped(): ?bool
     {
         return $this->scoped;
@@ -198,7 +223,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function setScoped(?bool $scoped): void
     {
         $this->scoped = $scoped;
@@ -207,7 +232,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function getScopeCount(): ?int
     {
         return $this->scopeCount;
@@ -216,7 +241,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function setScopeCount(?int $scopeCount): void
     {
         $this->scopeCount = $scopeCount;
@@ -225,7 +250,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function decrementScopeCount(): void
     {
         $this->scopeCount--;
@@ -234,7 +259,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function incrementScopeCount(): void
     {
         $this->scopeCount++;
@@ -243,7 +268,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function getAst(): ?AstInterface
     {
         return $this->ast;
@@ -252,7 +277,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function setAst(?AstInterface $ast): void
     {
         $this->ast = $ast;
@@ -261,7 +286,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function getParameterBag(): ?ParameterBag
     {
         return $this->parameterBag;
@@ -270,7 +295,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function setParameterBag(?ParameterBag $parameterBag): void
     {
         $this->parameterBag = $parameterBag;
@@ -437,7 +462,7 @@ class Parser implements ParserInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function parse(): void
     {
         $this->pushScopeContext($this->getAst());
@@ -561,6 +586,8 @@ class Parser implements ParserInterface
 
     /**
      * @internal
+     *
+     * @param \Schnell\Http\FQL\Ast\AstInterface $ast
      * @return void
      */
     private function pushScopeContext(AstInterface $ast): void
@@ -570,6 +597,8 @@ class Parser implements ParserInterface
 
     /**
      * @internal
+     *
+     * @return \Schnell\Http\FQL\Ast\AstInterface|null
      */
     private function pullScopeContext(): AstInterface|null
     {
@@ -595,6 +624,8 @@ class Parser implements ParserInterface
     }
 
     /**
+     * @internal
+     *
      * @param int $type
      * @param string $exceptionMessage
      * @return void

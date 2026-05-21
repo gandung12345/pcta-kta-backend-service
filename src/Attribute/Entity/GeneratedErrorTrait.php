@@ -16,7 +16,23 @@ use Doctrine\ORM\Proxy\InternalProxy;
 use Schnell\Exception\MapperException;
 use Schnell\Mapper\Query\Error as QueryError;
 
+use function class_exists;
 use function get_parent_class;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Throwable::class);
+class_exists(ReflectionClass::class);
+class_exists(ReflectionProperty::class);
+class_exists(Id::class);
+class_exists(OneToOne::class);
+class_exists(OneToMany::class);
+class_exists(ManyToOne::class);
+class_exists(ManyToMany::class);
+class_exists(InternalProxy::class);
+class_exists(MapperException::class);
+class_exists(QueryError::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>

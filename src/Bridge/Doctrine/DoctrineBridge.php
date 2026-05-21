@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Schnell\Bridge\Doctrine;
 
+use Override;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Configuration;
@@ -24,11 +25,16 @@ use function sprintf;
 // help opcache.preload discover always-needed symbols
 // @codeCoverageIgnoreStart
 // phpcs:disable
+class_exists(Override::class);
 class_exists(DriverManager::class);
+class_exists(Type::class);
+class_exists(Configuration::class);
 class_exists(EntityManager::class);
-class_exists(ORMSetup::class);
+class_exists(AttributeDriver::class);
 class_exists(AbstractBridge::class);
+class_exists(DateTimeType::class);
 class_exists(ArrayAdapter::class);
+class_exists(PhpFilesAdapter::class);
 // phpcs:enable
 // @codeCoverageIgnoreEnd
 
@@ -48,18 +54,20 @@ class DoctrineBridge extends AbstractBridge
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function load(): void
     {
         $this->overrideType();
+
+        $container = $this->getContainer();
 
         /**
          * @psalm-suppress PossiblyNullReference
          * @psalm-suppress PossiblyNullArgument
          */
-        $this->getContainer()->set(
+        $container->set(
             EntityManagerInterface::class,
             function (ContainerInterface $container, ConfigInterface $config): EntityManagerInterface {
                 $cacheDir = sprintf(
@@ -141,13 +149,13 @@ class DoctrineBridge extends AbstractBridge
         );
 
         /** @psalm-suppress PossiblyNullReference */
-        $this->getContainer()->alias(EntityManagerInterface::class, $this->getAlias());
+        $container->alias(EntityManagerInterface::class, $this->getAlias());
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getAlias(): string
     {
         return 'entity-manager';

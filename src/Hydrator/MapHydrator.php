@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Schnell\Hydrator;
 
 use DateTime;
+use Override;
 use ReflectionClass;
 use ReflectionProperty;
 use Doctrine\ORM\Mapping\OneToOne;
@@ -18,7 +19,23 @@ use Schnell\Decorator\StringifiedDecoratorInterface;
 use Schnell\Entity\EntityInterface;
 use Schnell\Exception\HydratorException;
 
+use function class_exists;
 use function is_a;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(DateTime::class);
+class_exists(Override::class);
+class_exists(ReflectionClass::class);
+class_exists(ReflectionProperty::class);
+class_exists(OneToOne::class);
+class_exists(OneToMany::class);
+class_exists(ManyToOne::class);
+class_exists(JoinColumn::class);
+class_exists(InternalProxy::class);
+class_exists(Json::class);
+class_exists(HydratorException::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -40,7 +57,7 @@ class MapHydrator implements HydratorInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function hydrate($value)
     {
         if (false === is_a($value, EntityInterface::class)) {

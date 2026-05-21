@@ -4,6 +4,15 @@ declare(strict_types=1);
 
 namespace Schnell\Entity;
 
+use Override;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+// phpcs:enable
+
 /**
  * @psalm-api
  *
@@ -12,20 +21,20 @@ namespace Schnell\Entity;
 abstract class AbstractEntity implements EntityInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     abstract public function getQueryBuilderAlias(): string;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     abstract public function getCanonicalTableName(): string;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     abstract public function getDqlName(): string;
 }

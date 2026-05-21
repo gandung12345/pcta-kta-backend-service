@@ -4,9 +4,17 @@ declare(strict_types=1);
 
 namespace Schnell\Bridge\Cache\Factory;
 
+use Override;
 use Psr\Cache\CacheItemPoolInterface;
 use Schnell\Bridge\Cache\CacheFactoryInterface;
 use Schnell\Config\ConfigInterface;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -30,26 +38,26 @@ abstract class AbstractCacheFactory implements CacheFactoryInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getConfig(): ConfigInterface
     {
         return $this->config;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setConfig(ConfigInterface $config): void
     {
         $this->config = $config;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     abstract public function createCache(): CacheItemPoolInterface;
 }

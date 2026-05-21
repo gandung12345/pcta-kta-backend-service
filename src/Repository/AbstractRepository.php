@@ -4,8 +4,16 @@ declare(strict_types=1);
 
 namespace Schnell\Repository;
 
+use Override;
 use Psr\Http\Message\RequestInterface;
 use Schnell\Mapper\MapperInterface;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -41,7 +49,7 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getMapper(): MapperInterface
     {
         return $this->mapper;
@@ -50,7 +58,7 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setMapper(MapperInterface $mapper): void
     {
         $this->mapper = $mapper;
@@ -59,7 +67,7 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getRequest(): RequestInterface
     {
         return $this->request;
@@ -68,7 +76,7 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setRequest(RequestInterface $request): void
     {
         $this->request = $request;

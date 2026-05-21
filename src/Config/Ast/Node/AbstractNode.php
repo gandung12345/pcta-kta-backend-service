@@ -4,6 +4,15 @@ declare(strict_types=1);
 
 namespace Schnell\Config\Ast\Node;
 
+use Override;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+// phpcs:enable
+
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
@@ -17,7 +26,7 @@ abstract class AbstractNode implements NodeInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getType(): int
     {
         return $this->type;
@@ -34,6 +43,6 @@ abstract class AbstractNode implements NodeInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     abstract public function getName(): string;
 }

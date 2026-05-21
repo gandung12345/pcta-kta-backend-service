@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace Schnell\Config;
 
+use Override;
 use Schnell\Config\Ast\AstInterface;
 use Schnell\Config\Ast\Node\NodeTypes as AstNodeTypes;
 
 use function array_merge_recursive;
+use function class_exists;
 use function preg_split;
 
 use const PREG_SPLIT_NO_EMPTY;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+class_exists(AstNodeTypes::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -65,7 +73,7 @@ final class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getAst(): AstInterface
     {
         return $this->ast;
@@ -74,7 +82,7 @@ final class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setAst(AstInterface $ast): void
     {
         $this->ast = $ast;
@@ -83,7 +91,7 @@ final class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getMap(): array
     {
         return $this->map;
@@ -92,7 +100,7 @@ final class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setMap(array $map): void
     {
         $this->map = $map;
@@ -101,7 +109,7 @@ final class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getKey(): string|null
     {
         return $this->key;
@@ -110,7 +118,7 @@ final class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setKey(string|null $key): void
     {
         $this->key = $key;
@@ -119,7 +127,7 @@ final class Config implements ConfigInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function get(string $name)
     {
         /** @psalm-suppress PossiblyFalseArgument */

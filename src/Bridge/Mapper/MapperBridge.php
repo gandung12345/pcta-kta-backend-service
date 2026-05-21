@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Schnell\Bridge\Mapper;
 
+use Override;
 use Doctrine\ORM\EntityManagerInterface;
 use Schnell\ContainerInterface;
 use Schnell\Bridge\AbstractBridge;
@@ -17,6 +18,7 @@ use function class_exists;
 // help opcache.preload discover always-needed symbols
 // @codeCoverageIgnoreStart
 // phpcs:disable
+class_exists(Override::class);
 class_exists(AbstractBridge::class);
 class_exists(ExtensionException::class);
 class_exists(Mapper::class);
@@ -33,11 +35,13 @@ class MapperBridge extends AbstractBridge
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function load(): void
     {
+        $container = $this->getContainer();
+
         /** @psalm-suppress PossiblyNullReference */
-        if (false === $this->getContainer()->has(EntityManagerInterface::class)) {
+        if (false === $container->has(EntityManagerInterface::class)) {
             throw new ExtensionException(
                 sprintf(
                     "Object instance with type '%s' not found.",
@@ -47,23 +51,21 @@ class MapperBridge extends AbstractBridge
         }
 
         /** @psalm-suppress PossiblyNullReference */
-        $this->getContainer()->set(
+        $container->set(
             MapperInterface::class,
             function (ContainerInterface $container, ConfigInterface $config): MapperInterface {
-                return new Mapper(
-                    $container->get(EntityManagerInterface::class)
-                );
+                return new Mapper($container->get(EntityManagerInterface::class));
             }
         );
 
         /** @psalm-suppress PossiblyNullReference */
-        $this->getContainer()->alias(MapperInterface::class, $this->getAlias());
+        $container->alias(MapperInterface::class, $this->getAlias());
     }
 
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getAlias(): string
     {
         return 'mapper';

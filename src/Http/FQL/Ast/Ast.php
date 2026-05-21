@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Schnell\Http\FQL\Ast;
 
+use Override;
 use Doctrine\ORM\QueryBuilder;
 use Schnell\Exception\FQLParserException;
 use Schnell\Http\FQL\ParameterBag;
@@ -11,6 +12,16 @@ use Schnell\Http\FQL\Ast\Node\NodeInterface as AstNodeInterface;
 use Schnell\Http\FQL\Ast\Node\NodeTypes;
 
 use function call_user_func_array;
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+class_exists(QueryBuilder::class);
+class_exists(FQLParserException::class);
+class_exists(ParameterBag::class);
+class_exists(NodeTypes::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -75,7 +86,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getValue(): ?AstNodeInterface
     {
         return $this->value;
@@ -84,7 +95,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setValue(?AstNodeInterface $value): void
     {
         $this->value = $value;
@@ -93,7 +104,7 @@ class Ast implements AstInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function getParent(): ?AstInterface
     {
         return $this->parent;
@@ -102,7 +113,7 @@ class Ast implements AstInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function setParent(?AstInterface $parent): void
     {
         $this->parent = $parent;
@@ -111,7 +122,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getQueryBuilder(): ?QueryBuilder
     {
         return $this->queryBuilder;
@@ -120,7 +131,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setQueryBuilder(?QueryBuilder $queryBuilder): void
     {
         $this->queryBuilder = $queryBuilder;
@@ -129,7 +140,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getParameterBag(): ?ParameterBag
     {
         return $this->parameterBag;
@@ -138,7 +149,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setParameterBag(?ParameterBag $parameterBag): void
     {
         $this->parameterBag = $parameterBag;
@@ -147,7 +158,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getChilds(): ?array
     {
         return $this->childs;
@@ -156,7 +167,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setChilds(?array $childs): void
     {
         $this->childs = $childs;
@@ -165,7 +176,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function addChild(?AstInterface $child): void
     {
         $this->childs[] = $child;
@@ -174,7 +185,7 @@ class Ast implements AstInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function visit(?string $queryAlias)
     {
         if (null === $queryAlias || '' === $queryAlias) {

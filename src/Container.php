@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Schnell;
 
 use Closure;
+use Override;
 use ReflectionClass;
 use ReflectionException;
 use Schnell\Config\ConfigInterface;
@@ -21,6 +22,7 @@ use function sprintf;
 // @codeCoverageIgnoreStart
 // phpcs:disable
 class_exists(Closure::class);
+class_exists(Override::class);
 class_exists(ReflectionClass::class);
 class_exists(ReflectionException::class);
 class_exists(ContainerException::class);
@@ -66,18 +68,18 @@ class Container implements ContainerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function has(string $id): bool
     {
         return array_key_exists($id, $this->definitions);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function get(string $id)
     {
         if (array_key_exists($id, $this->aliases)) {
@@ -93,9 +95,9 @@ class Container implements ContainerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function set(string $id, $definition): void
     {
         if (array_key_exists($id, $this->instances)) {
@@ -106,9 +108,9 @@ class Container implements ContainerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setMultiple(array $definitions): void
     {
         foreach ($definitions as $id => $definition) {
@@ -117,9 +119,9 @@ class Container implements ContainerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function alias(string $className, string $alias): void
     {
         if (array_key_exists($alias, $this->aliases)) {
@@ -130,18 +132,18 @@ class Container implements ContainerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getConfig(): ConfigInterface
     {
         return $this->config;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setConfig(ConfigInterface $config): void
     {
         $this->config = $config;

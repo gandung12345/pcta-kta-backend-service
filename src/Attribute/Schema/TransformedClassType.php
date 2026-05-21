@@ -5,8 +5,18 @@ declare(strict_types=1);
 namespace Schnell\Attribute\Schema;
 
 use Attribute;
+use Override;
 use ReflectionClass;
 use Schnell\Attribute\AttributeInterface;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Attribute::class);
+class_exists(Override::class);
+class_exists(ReflectionClass::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -117,9 +127,9 @@ final class TransformedClassType implements AttributeInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getIdentifier(): string
     {
         return 'schema.transformedClassType';

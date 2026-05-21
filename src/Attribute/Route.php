@@ -5,6 +5,15 @@ declare(strict_types=1);
 namespace Schnell\Attribute;
 
 use Attribute;
+use Override;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Attribute::class);
+class_exists(Override::class);
+// phpcs:enable
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
@@ -78,7 +87,7 @@ class Route implements AttributeInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getIdentifier(): string
     {
         return 'route';

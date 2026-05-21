@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Schnell\Controller;
 
+use Override;
 use Schnell\Attribute\Route;
 use Schnell\Controller\ControllerInterface;
 use Schnell\Exception\ControllerResolverException;
@@ -25,7 +26,10 @@ use function sprintf;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
+class_exists(Override::class);
 class_exists(Route::class);
+class_exists(ControllerResolverException::class);
+class_exists(Cache::class);
 class_exists(RouteCollectorProxy::class);
 class_exists(BodyParsingMiddleware::class);
 class_exists(ErrorMiddleware::class);
@@ -68,7 +72,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getControllerPool(): ControllerPoolInterface
     {
         return $this->controllerPool;
@@ -77,7 +81,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setControllerPool(
         ControllerPoolInterface $controllerPool
     ): void {
@@ -87,7 +91,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getRouteCollectorProxy(): RouteCollectorProxyInterface
     {
         return $this->routeCollectorProxy;
@@ -96,7 +100,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setRouteCollectorProxy(
         RouteCollectorProxyInterface $routeCollectorProxy
     ): void {
@@ -106,7 +110,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function resolve(ServerRequestInterface $request): void
     {
         foreach ($this->getControllerPool()->getPool() as $key) {
@@ -119,7 +123,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function add(MiddlewareInterface $middleware): void
     {
         /** @psalm-suppress UndefinedInterfaceMethod */
@@ -171,7 +175,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function run(?ServerRequestInterface $request = null): void
     {
         /** @psalm-suppress UndefinedInterfaceMethod */
@@ -181,7 +185,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         /** @psalm-suppress UndefinedInterfaceMethod */
@@ -191,7 +195,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function addRoutingMiddleware(): RoutingMiddleware
     {
         /** @psalm-suppress UndefinedInterfaceMethod */
@@ -201,7 +205,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function addBodyParsingMiddleware(
         array $bodyParsers = []
     ): BodyParsingMiddleware {
@@ -213,7 +217,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function addErrorMiddleware(
         bool $displayErrorDetails,
         bool $logErrors,
@@ -232,7 +236,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function addHttpCache(): void
     {
         $this->add(new Cache('public'));

@@ -4,12 +4,24 @@ declare(strict_types=1);
 
 namespace Schnell\Bridge\Twig;
 
+use Override;
 use Odan\Twig\TwigAssetsExtension;
 use Schnell\ContainerInterface;
 use Schnell\Bridge\AbstractBridge;
 use Schnell\Config\ConfigInterface;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+class_exists(TwigAssetsExtension::class);
+class_exists(AbstractBridge::class);
+class_exists(Twig::class);
+class_exists(TwigMiddleware::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -21,7 +33,7 @@ class TwigBridge extends AbstractBridge
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function load(): void
     {
         $container = $this->getContainer();
@@ -54,7 +66,7 @@ class TwigBridge extends AbstractBridge
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function getAlias(): string
     {
         return 'twig';

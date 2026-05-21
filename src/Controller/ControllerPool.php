@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Schnell\Controller;
 
+use Override;
 use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionMethod;
@@ -22,11 +23,13 @@ use function sprintf;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
+class_exists(Override::class);
+class_exists(ReflectionAttribute::class);
 class_exists(ReflectionClass::class);
+class_exists(ReflectionMethod::class);
 class_exists(SplObjectStorage::class);
-class_exists(ControllerPoolException::class);
 class_exists(Route::class);
-class_exists(Container::class);
+class_exists(ControllerPoolException::class);
 // phpcs:enable
 
 /**
@@ -71,81 +74,81 @@ class ControllerPool implements ControllerPoolInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getContainer(): ContainerInterface
     {
         return $this->container;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setContainer(ContainerInterface $container): void
     {
         $this->container = $container;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getPool(): SplObjectStorage
     {
         return $this->pool;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getPoolAt(object $key)
     {
         return $this->pool[$key];
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setPool(SplObjectStorage $pool): void
     {
         $this->pool = $pool;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function addPoolAt(object $key, $value): void
     {
         $this->pool[$key] = $value;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getConfig(): ConfigInterface
     {
         return $this->config;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setConfig(ConfigInterface $config): void
     {
         $this->config = $config;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function collect(): void
     {
         $recGlobFn = function (string $pattern, int $flags = 0) use (&$recGlobFn): array {
@@ -262,8 +265,10 @@ class ControllerPool implements ControllerPoolInterface
             ];
 
             foreach ($attributes as $attribute) {
-                if (false !== stripos($attribute->getName(), 'OpenApi') ||
-                    false !== stripos($attribute->getName(), 'Override')) {
+                if (
+                    false !== stripos($attribute->getName(), 'OpenApi') ||
+                    false !== stripos($attribute->getName(), 'Override')
+                ) {
                     continue;
                 }
 

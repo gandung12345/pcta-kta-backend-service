@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Schnell\Http\FQL;
 
+use Override;
 use Schnell\Exception\FQLLexerException;
 use Schnell\Http\FQL\Node\NodeInterface;
 use Schnell\Http\FQL\Node\Expr\AndX;
@@ -22,8 +23,30 @@ use Schnell\Http\FQL\Node\Symbol\Colon;
 use Schnell\Http\FQL\Node\Symbol\Comma;
 use Schnell\Http\FQL\Node\Symbol\OpenSquareBrace;
 
+use function class_exists;
 use function is_numeric;
 use function strlen;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+class_exists(FQLLexerException::class);
+class_exists(AndX::class);
+class_exists(EqualX::class);
+class_exists(GreaterOrEqualX::class);
+class_exists(GreaterX::class);
+class_exists(LessOrEqualX::class);
+class_exists(LessX::class);
+class_exists(LikeX::class);
+class_exists(NotEqualX::class);
+class_exists(OrX::class);
+class_exists(Integer::class);
+class_exists(Str::class);
+class_exists(CloseSquareBrace::class);
+class_exists(Colon::class);
+class_exists(Comma::class);
+class_exists(OpenSquareBrace::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -81,7 +104,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function lex(): void
     {
         while (true) {
@@ -136,7 +159,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getTokens(): array
     {
         return $this->tokens;
@@ -145,7 +168,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setTokens(array $tokens): void
     {
         $this->tokens = $tokens;
@@ -154,7 +177,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function addToken(NodeInterface $node): void
     {
         $this->tokens[] = $node;
@@ -163,7 +186,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getBuffer(): ?string
     {
         return $this->buffer;
@@ -172,7 +195,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setBuffer(?string $buffer): void
     {
         $this->buffer = $buffer;
@@ -181,7 +204,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getPosition(): int
     {
         return $this->position;
@@ -190,7 +213,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setPosition(int $position): void
     {
         $this->position = $position;
@@ -199,7 +222,7 @@ final class Lexer implements LexerInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function incrementPosition(): void
     {
         $this->position++;

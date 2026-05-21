@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Schnell\Controller;
 
+use Override;
 use Schnell\ContainerInterface;
 use Schnell\Config\ConfigInterface;
 use Schnell\Hateoas\Hateoas;
@@ -17,7 +18,9 @@ use function sha1;
 
 // help opcache.preload discover always-needed symbols
 // phpcs:disable
+class_exists(Override::class);
 class_exists(Hateoas::class);
+class_exists(HttpCode::class);
 // phpcs:enable
 
 /**
@@ -52,45 +55,45 @@ abstract class AbstractController implements ControllerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getContainer(): ContainerInterface
     {
         return $this->container;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setContainer(ContainerInterface $container): void
     {
         $this->container = $container;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getConfig(): ConfigInterface
     {
         return $this->config;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setConfig(ConfigInterface $config): void
     {
         $this->config = $config;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function withEtag(ResponseInterface $response): ResponseInterface
     {
         return $this->getContainer()
@@ -99,9 +102,9 @@ abstract class AbstractController implements ControllerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function json(
         ResponseInterface $response,
         array $data,
@@ -119,9 +122,9 @@ abstract class AbstractController implements ControllerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function hateoas(
         RequestInterface $request,
         ResponseInterface $response,
@@ -144,9 +147,9 @@ abstract class AbstractController implements ControllerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function response(
         ResponseInterface $response,
         string $buffer,
@@ -162,9 +165,9 @@ abstract class AbstractController implements ControllerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function html(
         ResponseInterface $response,
         string $buffer,

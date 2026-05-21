@@ -5,7 +5,16 @@ declare(strict_types=1);
 namespace Schnell\Attribute\Schema;
 
 use Attribute;
+use Override;
 use Schnell\Attribute\AttributeInterface;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Attribute::class);
+class_exists(Override::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -74,9 +83,9 @@ class ChainEnum implements AttributeInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getIdentifier(): string
     {
         return 'schema.chainEnum';

@@ -4,9 +4,18 @@ declare(strict_types=1);
 
 namespace Schnell\Http\FQL;
 
+use Override;
 use Doctrine\ORM\QueryBuilder;
 use Schnell\Entity\EntityInterface;
 use Schnell\Http\FQL\Ast\AstInterface;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+class_exists(QueryBuilder::class);
+// phpcs:enable
 
 /**
  * @psalm-api
@@ -52,7 +61,7 @@ class Interceptor implements InterceptorInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getAst(): ?AstInterface
     {
         return $this->ast;
@@ -61,7 +70,7 @@ class Interceptor implements InterceptorInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setAst(?AstInterface $ast): void
     {
         $this->ast = $ast;
@@ -70,7 +79,7 @@ class Interceptor implements InterceptorInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getQueryBuilder(): ?QueryBuilder
     {
         return $this->queryBuilder;
@@ -79,7 +88,7 @@ class Interceptor implements InterceptorInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setQueryBuilder(?QueryBuilder $queryBuilder): void
     {
         $this->queryBuilder = $queryBuilder;
@@ -88,7 +97,7 @@ class Interceptor implements InterceptorInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function getEntity(): ?EntityInterface
     {
         return $this->entity;
@@ -97,7 +106,7 @@ class Interceptor implements InterceptorInterface
     /**
      * {@inheritDoc}
      */
-    #[\Override]
+    #[Override]
     public function setEntity(?EntityInterface $entity): void
     {
         $this->entity = $entity;
@@ -106,7 +115,7 @@ class Interceptor implements InterceptorInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function intercept(): ?QueryBuilder
     {
         /** @psalm-suppress PossiblyNullReference */

@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace Schnell\Config;
 
+use Override;
 use Schnell\Exception\ConfigException;
 
+use function class_exists;
 use function file_get_contents;
 use function in_array;
 use function sprintf;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+class_exists(ConfigException::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -33,7 +41,7 @@ class ConfigFactory implements ConfigFactoryInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function import(string $filename): void
     {
         if (true === in_array($filename, $this->files, true)) {
@@ -48,7 +56,7 @@ class ConfigFactory implements ConfigFactoryInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function importBulk(array $filenames): void
     {
         foreach ($filenames as $filename) {
@@ -59,7 +67,7 @@ class ConfigFactory implements ConfigFactoryInterface
     /**
      * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getConfig(): ConfigInterface
     {
         $lexer = new Lexer($this->collectBuffer());

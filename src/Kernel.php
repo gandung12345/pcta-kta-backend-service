@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace Schnell;
 
+use Override;
 use Schnell\ContainerInterface;
 use Schnell\Bridge\BridgeInterface;
 use Schnell\Config\ConfigInterface;
 use Schnell\Controller\ControllerResolverInterface;
 use Psr\Http\Message\RequestInterface;
+
+use function class_exists;
+
+// help opcache.preload discover always-needed symbols
+// phpcs:disable
+class_exists(Override::class);
+// phpcs:enable
 
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
@@ -57,54 +65,54 @@ final class Kernel implements KernelInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getConfig(): ConfigInterface
     {
         return $this->config;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setConfig(ConfigInterface $config): void
     {
         $this->config = $config;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getContainer(): ContainerInterface
     {
         return $this->container;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setContainer(ContainerInterface $container): void
     {
         $this->container = $container;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function getControllerResolver(): ControllerResolverInterface
     {
         return $this->controllerResolver;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function setControllerResolver(
         ControllerResolverInterface $controllerResolver
     ): void {
@@ -112,9 +120,9 @@ final class Kernel implements KernelInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function handle(RequestInterface $request): void
     {
         /** @psalm-suppress ArgumentTypeCoercion */
@@ -122,9 +130,9 @@ final class Kernel implements KernelInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function addExtension(
         BridgeInterface $extension,
         string|null $basePath = null
@@ -138,9 +146,9 @@ final class Kernel implements KernelInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    #[\Override]
+    #[Override]
     public function load(): void
     {
         foreach ($this->extensions as $extension) {
