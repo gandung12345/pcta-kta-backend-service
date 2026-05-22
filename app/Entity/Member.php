@@ -264,8 +264,11 @@ class Member extends AbstractEntity
     #[Json(name: 'createdAt')]
     #[OpenApi\Property(
         property: 'createdAt',
-        type: 'timestamp',
+        type: 'string',
+        format: 'datetime',
         description: 'Member created at',
+        example: '1970-01-01 00:00:00',
+        pattern: '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}',
         readOnly: true
     )]
     private ?DateTime $createdAt;
@@ -277,8 +280,11 @@ class Member extends AbstractEntity
     #[Json(name: 'updatedAt')]
     #[OpenApi\Property(
         property: 'updatedAt',
-        type: 'timestamp',
+        type: 'string',
+        format: 'datetime',
         description: 'Member updated at',
+        example: '1970-01-01 00:00:00',
+        pattern: '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}',
         readOnly: true
     )]
     private ?DateTime $updatedAt;
@@ -419,6 +425,57 @@ class Member extends AbstractEntity
     public function setAddress(string $address): void
     {
         $this->address = $address;
+    }
+
+    /**
+     * @return \Pcta\Api\Type\Sex
+     */
+    public function getSex(): SexType
+    {
+        return $this->sex;
+    }
+
+    /**
+     * @param \Pcta\Api\Type\Sex $sex
+     * @return void
+     */
+    public function setSex(SexType $sex): void
+    {
+        $this->sex = $sex;
+    }
+
+    /**
+     * @return \Pcta\Api\Type\Religion
+     */
+    public function getReligion(): ReligionType
+    {
+        return $this->religion;
+    }
+
+    /**
+     * @param \Pcta\Api\Type\Religion $religion
+     * @return void
+     */
+    public function setReligion(ReligionType $religion): void
+    {
+        $this->religion = $religion;
+    }
+
+    /**
+     * @return \Pcta\Api\Type\Role
+     */
+    public function getRole(): RoleType
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param \Pcta\Api\Type\Role $role
+     * @return void
+     */
+    public function setRole(RoleType $role): void
+    {
+        $this->role = $role;
     }
 
     /**

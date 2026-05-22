@@ -79,11 +79,7 @@ class DistrictController extends BaseController
                                     type: 'string',
                                     example: 'http://foo.xyz/api/v1/district?page=1&perPage=15'
                                 ),
-                                new OpenApi\Property(
-                                    property: 'prev',
-                                    type: 'string',
-                                    example: null
-                                ),
+                                new OpenApi\Property(property: 'prev', type: 'string', example: null),
                                 new OpenApi\Property(
                                     property: 'next',
                                     type: 'string',
@@ -248,6 +244,15 @@ class DistrictController extends BaseController
     #[OpenApi\Put(
         path: '/api/v1/district/{id}',
         tags: ['District'],
+        parameters: [
+            new OpenApi\Parameter(
+                name: 'id',
+                in: 'path',
+                required: true,
+                description: 'District ID',
+                schema: new OpenApi\Schema(type: 'string')
+            )
+        ],
         requestBody: new OpenApi\RequestBody(
             content: new OpenApi\JsonContent(ref: '#/components/schemas/DistrictSchema')
         ),
@@ -299,6 +304,15 @@ class DistrictController extends BaseController
     #[OpenApi\Delete(
         path: '/api/v1/district/{id}',
         tags: ['District'],
+        parameters: [
+            new OpenApi\Parameter(
+                name: 'id',
+                in: 'path',
+                required: true,
+                description: 'District ID',
+                schema: new OpenApi\Schema(type: 'string')
+            )
+        ],
         responses: [
             new OpenApi\Response(response: 204, description: 'No Content'),
             new OpenApi\Response(response: 404, description: 'Not Found')

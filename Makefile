@@ -8,12 +8,18 @@ XDEBUG_USE_COMPRESSION = 'xdebug.use_compression=false'
 runprof:
 	$(RUNTIME) -d $(XDEBUG_MODE) -d $(XDEBUG_PROFILER_ENABLE_TRIGGER) \
 		-d $(XDEBUG_OUTPUT_DIR) -d $(XDEBUG_PROFILER_OUTPUT_NAME) \
-		-d $(XDEBUG_USE_COMPRESSION) -S localhost:31337 -t ./public
+		-d $(XDEBUG_USE_COMPRESSION) -S localhost:31337 -t ./public 2>&1
 
 run:
-	$(RUNTIME) -S localhost:31337 -t ./public
+	$(RUNTIME) -S localhost:31337 -t ./public 2>&1
 
 analyze:
 	./vendor/bin/psalm --force-jit 2>&1
 
-.PHONY: runprof run analyze
+codesniff:
+	./phpcs.phar 2>&1
+
+codefix:
+	./phpcbf.phar 2>&1
+
+.PHONY: runprof run analyze codesniff codefix
