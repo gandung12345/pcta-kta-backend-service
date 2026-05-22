@@ -21,3 +21,4 @@ gen/__pycache__
 gen/genesis/__pycache__
 gen/genesis/entity/__pycache__
 gen/genesis/task/__pycache__
+.todo
