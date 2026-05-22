@@ -200,18 +200,18 @@ class MemberSchema extends AbstractSchema
      * @return static
      */
     public function __construct(
-        ?string $identityNumber,
-        ?string $postalCode,
-        ?string $name,
-        ?string $phoneNumber,
-        ?string $address,
-        ?SexType $sex,
-        ?ReligionType $religion,
-        ?RoleType $role,
-        ?DateTimeDecorator $dateOfBirth,
-        ?string $placeOfBirth,
-        ?DateTimeDecorator $workDate,
-        ?string $workPlace
+        ?string $identityNumber = null,
+        ?string $postalCode = null,
+        ?string $name = null,
+        ?string $phoneNumber = null,
+        ?string $address = null,
+        ?SexType $sex = null,
+        ?ReligionType $religion = null,
+        ?RoleType $role = null,
+        ?DateTimeDecorator $dateOfBirth = null,
+        ?string $placeOfBirth = null,
+        ?DateTimeDecorator $workDate = null,
+        ?string $workPlace = null
     ) {
         $this->identityNumber = $identityNumber;
         $this->postalCode = $postalCode;

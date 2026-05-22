@@ -58,7 +58,7 @@ class DistrictSchema extends AbstractSchema
      * @param string|null $formalName
      * @return static
      */
-    public function __construct(?string $formalIdentifier, ?string $formalName)
+    public function __construct(?string $formalIdentifier = null, ?string $formalName = null)
     {
         $this->formalIdentifier = $formalIdentifier;
         $this->formalName = $formalName;

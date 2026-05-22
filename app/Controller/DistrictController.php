@@ -77,7 +77,7 @@ class DistrictController extends BaseController
                                 new OpenApi\Property(
                                     property: 'self',
                                     type: 'string',
-                                    example: 'http://foo.xyz/district?page=1&perPage=15'
+                                    example: 'http://foo.xyz/api/v1/district?page=1&perPage=15'
                                 ),
                                 new OpenApi\Property(
                                     property: 'prev',
@@ -87,7 +87,7 @@ class DistrictController extends BaseController
                                 new OpenApi\Property(
                                     property: 'next',
                                     type: 'string',
-                                    example: 'http://foo.xyz/district?page=2&perPage=15'
+                                    example: 'http://foo.xyz/api/v1/district?page=2&perPage=15'
                                 )
                             ]
                         )
@@ -132,6 +132,15 @@ class DistrictController extends BaseController
     #[OpenApi\Get(
         path: '/api/v1/district/{id}',
         tags: ['District'],
+        parameters: [
+            new OpenApi\Parameter(
+                name: 'id',
+                in: 'path',
+                required: true,
+                description: 'District ID',
+                schema: new OpenApi\Schema(type: 'string')
+            )
+        ],
         responses: [
             new OpenApi\Response(
                 response: 200,
@@ -179,6 +188,15 @@ class DistrictController extends BaseController
     #[OpenApi\Post(
         path: '/api/v1/municipal/{mid}/district',
         tags: ['District'],
+        parameters: [
+            new OpenApi\Parameter(
+                name: 'mid',
+                in: 'path',
+                required: true,
+                description: 'Municipal ID',
+                schema: new OpenApi\Schema(type: 'string')
+            )
+        ],
         requestBody: new OpenApi\RequestBody(
             content: new OpenApi\JsonContent(ref: '#/components/schemas/DistrictSchema')
         ),

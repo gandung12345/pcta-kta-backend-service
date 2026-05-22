@@ -129,7 +129,7 @@ class SubdistrictController extends BaseController
     #[Route('/district/{did}/subdistrict', method: 'POST')]
     #[OpenApi\Post(
         path: '/api/v1/district/{did}/subdistrict',
-        tags: ['District'],
+        tags: ['Subdistrict'],
         responses: [
             new OpenApi\Response(response: 201, description: 'Created'),
             new OpenApi\Response(response: 404, description: 'Not Found')
