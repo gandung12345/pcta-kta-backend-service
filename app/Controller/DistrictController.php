@@ -13,6 +13,7 @@ use Pcta\Api\Schema\DistrictSchema;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\RequestInterface as Request;
 use Schnell\Attribute\Route;
+use Schnell\Http\Code as HttpCode;
 use Schnell\Paginator\Paginator;
 use Schnell\Validator\Validator;
 
@@ -47,12 +48,57 @@ class DistrictController extends BaseController
         path: '/api/v1/district',
         tags: ['District'],
         responses: [
-            new OpenApi\Response(response: 200, description: 'OK')
+            new OpenApi\Response(
+                response: 200,
+                description: 'OK',
+                content: new OpenApi\JsonContent(
+                    type: 'object',
+                    properties: [
+                        new OpenApi\Property(
+                            property: 'data',
+                            type: 'array',
+                            items: new OpenApi\Items(ref: '#/components/schemas/District')
+                        ),
+                        new OpenApi\Property(
+                            property: 'meta',
+                            type: 'object',
+                            properties: [
+                                new OpenApi\Property(property: 'page', type: 'integer', example: 1),
+                                new OpenApi\Property(property: 'perPage', type: 'integer', example: 15),
+                                new OpenApi\Property(property: 'offset', type: 'integer', example: 0),
+                                new OpenApi\Property(property: 'totalCount', type: 'integer', example: 0),
+                                new OpenApi\Property(property: 'pageCount', type: 'integer', example: 1)
+                            ]
+                        ),
+                        new OpenApi\Property(
+                            property: '_links',
+                            type: 'object',
+                            properties: [
+                                new OpenApi\Property(
+                                    property: 'self',
+                                    type: 'string',
+                                    example: 'http://foo.xyz/district?page=1&perPage=15'
+                                ),
+                                new OpenApi\Property(
+                                    property: 'prev',
+                                    type: 'string',
+                                    example: null
+                                ),
+                                new OpenApi\Property(
+                                    property: 'next',
+                                    type: 'string',
+                                    example: 'http://foo.xyz/district?page=2&perPage=15'
+                                )
+                            ]
+                        )
+                    ]
+                )
+            )
         ]
     )]
     public function getAllDistricts(
         Request $request,
-        Response $repsonse,
+        Response $response,
         array $args
     ): Response {
         $repository = new DistrictRepository(
@@ -87,7 +133,11 @@ class DistrictController extends BaseController
         path: '/api/v1/district/{id}',
         tags: ['District'],
         responses: [
-            new OpenApi\Response(response: 200, description: 'OK'),
+            new OpenApi\Response(
+                response: 200,
+                description: 'OK',
+                content: new OpenApi\JsonContent(ref: '#/components/schemas/District')
+            ),
             new OpenApi\Response(response: 404, description: 'Not Found')
         ]
     )]
@@ -129,8 +179,15 @@ class DistrictController extends BaseController
     #[OpenApi\Post(
         path: '/api/v1/municipal/{mid}/district',
         tags: ['District'],
+        requestBody: new OpenApi\RequestBody(
+            content: new OpenApi\JsonContent(ref: '#/components/schemas/DistrictSchema')
+        ),
         responses: [
-            new OpenApi\Response(response: 201, description: 'Created'),
+            new OpenApi\Response(
+                response: 201,
+                description: 'Created',
+                content: new OpenApi\JsonContent(ref: '#/components/schemas/District')
+            ),
             new OpenApi\Response(response: 404, description: 'Not Found')
         ]
     )]
@@ -173,8 +230,15 @@ class DistrictController extends BaseController
     #[OpenApi\Put(
         path: '/api/v1/district/{id}',
         tags: ['District'],
+        requestBody: new OpenApi\RequestBody(
+            content: new OpenApi\JsonContent(ref: '#/components/schemas/DistrictSchema')
+        ),
         responses: [
-            new OpenApi\Response(response: 200, description: 'OK'),
+            new OpenApi\Response(
+                response: 200,
+                description: 'OK',
+                content: new OpenApi\JsonContent(ref: '#/components/schemas/District')
+            ),
             new OpenApi\Response(response: 404, description: 'Not Found')
         ]
     )]

@@ -47,7 +47,7 @@ class_exists(AbstractEntity::class);
 #[Entity]
 #[Table(name: 'subDistrict')]
 #[HasLifecycleCallbacks]
-#[OpenApi\Schema]
+#[OpenApi\Schema(schema: 'Subdistrict', type: 'object')]
 class Subdistrict extends AbstractEntity
 {
     /**

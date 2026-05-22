@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Pcta\Api\Schema;
 
+use OpenApi\Attributes as OpenApi;
+use Pcta\Api\Type\Religion as ReligionType;
+use Pcta\Api\Type\Role as RoleType;
+use Pcta\Api\Type\Sex as SexType;
 use Schnell\Attribute\Schema\Json;
 use Schnell\Attribute\Schema\Regex;
 use Schnell\Attribute\Schema\Rule;
@@ -26,6 +30,10 @@ class_exists(AbstractSchema::class);
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
+#[OpenApi\Schema(
+    schema: 'MemberSchema',
+    type: 'object'
+)]
 class MemberSchema extends AbstractSchema
 {
     use SchemaTrait;
@@ -36,6 +44,11 @@ class MemberSchema extends AbstractSchema
     #[Rule(required: true)]
     #[Json(name: 'identityNumber')]
     #[Regex(pattern: self::IDENTITY_NUMBER_PATTERN)]
+    #[OpenApi\Property(
+        property: 'identityNumber',
+        type: 'string',
+        description: 'Member schema identity number'
+    )]
     private ?string $identityNumber;
 
     /**
@@ -44,6 +57,11 @@ class MemberSchema extends AbstractSchema
     #[Rule(required: true)]
     #[Json(name: 'postalCode')]
     #[Regex(pattern: self::POSTAL_CODE_PATTERN)]
+    #[OpenApi\Property(
+        property: 'postalCode',
+        type: 'string',
+        description: 'Member schema postal code'
+    )]
     private ?string $postalCode;
 
     /**
@@ -51,6 +69,11 @@ class MemberSchema extends AbstractSchema
      */
     #[Rule(required: true)]
     #[Json(name: 'name')]
+    #[OpenApi\Property(
+        property: 'name',
+        type: 'string',
+        description: 'Member schema name'
+    )]
     private ?string $name;
 
     /**
@@ -59,6 +82,11 @@ class MemberSchema extends AbstractSchema
     #[Rule(required: true)]
     #[Json(name: 'phoneNumber')]
     #[Regex(pattern: self::PHONE_NUMBER_PATTERN)]
+    #[OpenApi\Property(
+        property: 'phoneNumber',
+        type: 'string',
+        description: 'Member schema phone number'
+    )]
     private ?string $phoneNumber;
 
     /**
@@ -66,7 +94,39 @@ class MemberSchema extends AbstractSchema
      */
     #[Rule(required: true)]
     #[Json(name: 'address')]
+    #[OpenApi\Property(
+        property: 'address',
+        type: 'string',
+        description: 'Member schema address'
+    )]
     private ?string $address;
+
+    #[Rule(required: true)]
+    #[Json(name: 'sex')]
+    #[OpenApi\Property(
+        property: 'sex',
+        type: 'string',
+        description: 'Member schema sex type'
+    )]
+    private ?SexType $sex;
+
+    #[Rule(required: true)]
+    #[Json(name: 'religion')]
+    #[OpenApi\Property(
+        property: 'religion',
+        type: 'string',
+        description: 'Member schema religion type'
+    )]
+    private ?ReligionType $religion;
+
+    #[Rule(required: true)]
+    #[Json(name: 'role')]
+    #[OpenApi\Property(
+        property: 'role',
+        type: 'string',
+        description: 'Member schema role type'
+    )]
+    private ?RoleType $role;
 
     /**
      * @var \Schnell\Decorator\Stringified\DateTimeDecorator|null
@@ -75,6 +135,12 @@ class MemberSchema extends AbstractSchema
     #[Json(name: 'dateOfBirth')]
     #[Regex(pattern: self::ISO8601_DATE_PATTERN)]
     #[TransformedClassType(name: DateTimeDecorator::class)]
+    #[OpenApi\Property(
+        property: 'dateOfBirth',
+        type: 'string',
+        format: 'date',
+        description: 'Member schema date of birth'
+    )]
     private ?DateTimeDecorator $dateOfBirth;
 
     /**
@@ -82,6 +148,11 @@ class MemberSchema extends AbstractSchema
      */
     #[Rule(required: true)]
     #[Json(name: 'placeOfBirth')]
+    #[OpenApi\Property(
+        property: 'placeOfBirth',
+        type: 'string',
+        description: 'Member schema place of birth'
+    )]
     private ?string $placeOfBirth;
 
     /**
@@ -91,6 +162,12 @@ class MemberSchema extends AbstractSchema
     #[Json(name: 'workDate')]
     #[Regex(pattern: self::ISO8601_DATE_PATTERN)]
     #[TransformedClassType(name: DateTimeDecorator::class)]
+    #[OpenApi\Property(
+        property: 'workDate',
+        type: 'string',
+        format: 'date',
+        description: 'Member schema work date'
+    )]
     private ?DateTimeDecorator $workDate;
 
     /**
@@ -100,6 +177,11 @@ class MemberSchema extends AbstractSchema
     #[Json(name: 'workPlace')]
     #[Regex(pattern: self::ISO8601_DATE_PATTERN)]
     #[TransformedClassType(name: DateTimeDecorator::class)]
+    #[OpenApi\Property(
+        property: 'workPlace',
+        type: 'string',
+        description: 'Member schema work place'
+    )]
     private ?string $workPlace;
 
     /**
@@ -108,6 +190,9 @@ class MemberSchema extends AbstractSchema
      * @param string|null $name
      * @param string|null $phoneNumber
      * @param string|null $address
+     * @param \Pcta\Api\Type\Sex|null $sex
+     * @param \Pcta\Api\Type\Religion|null $religion
+     * @param \Pcta\Api\Type\Role|null $role
      * @param \Schnell\Decorator\Stringified\DateTimeDecorator|null $dateOfBirth
      * @param string|null $placeOfBirth
      * @param \Schnell\Decorator\Stringified\DateTimeDecorator|null $workDate
@@ -120,6 +205,9 @@ class MemberSchema extends AbstractSchema
         ?string $name,
         ?string $phoneNumber,
         ?string $address,
+        ?SexType $sex,
+        ?ReligionType $religion,
+        ?RoleType $role,
         ?DateTimeDecorator $dateOfBirth,
         ?string $placeOfBirth,
         ?DateTimeDecorator $workDate,
@@ -130,6 +218,9 @@ class MemberSchema extends AbstractSchema
         $this->name = $name;
         $this->phoneNumber = $phoneNumber;
         $this->address = $address;
+        $this->sex = $sex;
+        $this->religion = $religion;
+        $this->role = $role;
         $this->dateOfBirth = $dateOfBirth;
         $this->placeOfBirth = $placeOfBirth;
         $this->workDate = $workDate;
@@ -219,6 +310,57 @@ class MemberSchema extends AbstractSchema
     public function setAddress(?string $address): void
     {
         $this->address = $address;
+    }
+
+    /**
+     * @return \Pcta\Api\Type\Sex|null
+     */
+    public function getSex(): ?SexType
+    {
+        return $this->sex;
+    }
+
+    /**
+     * @param \Pcta\Api\Type\Sex|null $sex
+     * @return void
+     */
+    public function setSex(?SexType $sex): void
+    {
+        $this->sex = $sex;
+    }
+
+    /**
+     * @return \Pcta\Api\Type\Religion|null
+     */
+    public function getReligion(): ?ReligionType
+    {
+        return $this->religion;
+    }
+
+    /**
+     * @param \Pcta\Api\Type\Religion|null $religion
+     * @return void
+     */
+    public function setReligion(?ReligionType $religion): void
+    {
+        $this->religion = $religion;
+    }
+
+    /**
+     * @return \Pcta\Api\Type\Role|null
+     */
+    public function getRole(): ?RoleType
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param \Pcta\Api\Type\Role|null $role
+     * @return void
+     */
+    public function setRole(?RoleType $role): void
+    {
+        $this->role = $role;
     }
 
     /**

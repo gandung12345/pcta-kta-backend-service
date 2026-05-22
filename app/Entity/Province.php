@@ -40,7 +40,7 @@ class_exists(AbstractEntity::class);
 #[Entity]
 #[Table(name: 'province')]
 #[HasLifecycleCallbacks]
-#[OpenApi\Schema]
+#[OpenApi\Schema(schema: 'Province', type: 'object')]
 class Province extends AbstractEntity
 {
     /**

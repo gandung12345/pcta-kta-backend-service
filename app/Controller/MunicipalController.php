@@ -13,6 +13,7 @@ use Pcta\Api\Schema\MunicipalSchema;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\RequestInterface as Request;
 use Schnell\Attribute\Route;
+use Schnell\Http\Code as HttpCode;
 use Schnell\Paginator\Paginator;
 use Schnell\Validator\Validator;
 

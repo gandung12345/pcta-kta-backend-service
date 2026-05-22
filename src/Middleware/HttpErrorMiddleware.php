@@ -92,6 +92,7 @@ class HttpErrorMiddleware implements MiddlewareInterface
         } catch (ValidatorException $e) {
             return $this->handleGenericException($e, HttpCode::BAD_REQUEST);
         } catch (Throwable $e) {
+            dd($e);
             return $this->handleGenericException($e);
         }
     }

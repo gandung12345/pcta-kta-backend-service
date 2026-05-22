@@ -537,7 +537,7 @@ class Parser implements ParserInterface
         $ast->setQueryBuilder($this->getQueryBuilder());
         $ast->setParameterBag($this->getParameterBag());
 
-        $this->pullScopeContext();
+        $context = $this->pullScopeContext();
         $context->addChild($ast);
 
         $ast->setParent($context);
@@ -576,7 +576,7 @@ class Parser implements ParserInterface
         $ast->setQueryBuilder($this->getQueryBuilder());
         $ast->setParameterBag($this->getParameterBag());
 
-        $this->pullScopeContext();
+        $context = $this->pullScopeContext();
         $context->addChild($ast);
 
         $ast->setParent($context);

@@ -49,7 +49,7 @@ class_exists(AbstractEntity::class);
 #[Entity]
 #[Table(name: 'member')]
 #[HasLifecycleCallbacks]
-#[OpenApi\Schema]
+#[OpenApi\Schema(schema: 'Member', type: 'object')]
 class Member extends AbstractEntity
 {
     /**

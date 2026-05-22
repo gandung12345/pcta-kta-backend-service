@@ -51,7 +51,7 @@ class_exists(AbstractEntity::class);
 #[Entity]
 #[Table(name: 'municipal')]
 #[HasLifecycleCallbacks]
-#[OpenApi\Schema]
+#[OpenApi\Schema(schema: 'Municipal', type: 'object')]
 class Municipal extends AbstractEntity
 {
     /**

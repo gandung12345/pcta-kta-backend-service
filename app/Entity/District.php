@@ -49,7 +49,7 @@ class_exists(AbstractEntity::class);
 #[Entity]
 #[Table(name: 'district')]
 #[HasLifecycleCallbacks]
-#[OpenApi\Schema]
+#[OpenApi\Schema(schema: 'District', type: 'object')]
 class District extends AbstractEntity
 {
     /**
@@ -97,8 +97,11 @@ class District extends AbstractEntity
     #[Json(name: 'createdAt')]
     #[OpenApi\Property(
         property: 'createdAt',
-        type: 'timestamp',
+        type: 'string',
+        format: 'datetime',
         description: 'District created at',
+        example: '1970-01-01 00:00:00',
+        pattern: '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}',
         readOnly: true
     )]
     private ?DateTime $createdAt;
@@ -110,8 +113,11 @@ class District extends AbstractEntity
     #[Json(name: 'updatedAt')]
     #[OpenApi\Property(
         property: 'updatedAt',
-        type: 'timestamp',
+        type: 'string',
+        format: 'datetime',
         description: 'District updated at',
+        example: '1970-01-01 00:00:00',
+        pattern: '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}',
         readOnly: true
     )]
     private ?DateTime $updatedAt;
