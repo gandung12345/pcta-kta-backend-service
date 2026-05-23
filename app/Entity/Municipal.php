@@ -99,8 +99,11 @@ class Municipal extends AbstractEntity
     #[Json(name: 'createdAt')]
     #[OpenApi\Property(
         property: 'createdAt',
-        type: 'timestamp',
+        type: 'string',
+        format: 'datetime',
         description: 'Municipal created at',
+        example: '1970-01-01 00:00:00',
+        pattern: '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}',
         readOnly: true
     )]
     private ?DateTime $createdAt;
@@ -112,8 +115,11 @@ class Municipal extends AbstractEntity
     #[Json(name: 'updatedAt')]
     #[OpenApi\Property(
         property: 'updatedAt',
-        type: 'timestamp',
+        type: 'string',
+        format: 'datetime',
         description: 'Municipal updated at',
+        example: '1970-01-01 00:00:00',
+        pattern: '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}',
         readOnly: true
     )]
     private ?DateTime $updatedAt;
