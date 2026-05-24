@@ -48,7 +48,48 @@ class ProvinceController extends BaseController
         path: '/api/v1/province',
         tags: ['Province'],
         responses: [
-            new OpenApi\Response(response: 200, description: 'OK')
+            new OpenApi\Response(
+                response: 200,
+                description: 'OK',
+                content: new OpenApi\JsonContent(
+                    type: 'object',
+                    properties: [
+                        new OpenApi\Property(
+                            property: 'data',
+                            type: 'array',
+                            items: new OpenApi\Items(ref: '#/components/schemas/Province')
+                        ),
+                        new OpenApi\Property(
+                            property: 'meta',
+                            type: 'object',
+                            properties: [
+                                new OpenApi\Property(property: 'page', type: 'integer', example: 1),
+                                new OpenApi\Property(property: 'perPage', type: 'integer', example: 15),
+                                new OpenApi\Property(property: 'offset', type: 'integer', example: 0),
+                                new OpenApi\Property(property: 'totalCount', type: 'integer', example: 0),
+                                new OpenApi\Property(property: 'pageCount', type: 'integer', example: 1)
+                            ]
+                        ),
+                        new OpenApi\Property(
+                            property: '_links',
+                            type: 'object',
+                            properties: [
+                                new OpenApi\Property(
+                                    property: 'self',
+                                    type: 'string',
+                                    example: 'http://foo.xyz/api/v1/province?page=1&perPage=15'
+                                ),
+                                new OpenApi\Property(property: 'prev', type: 'string', example: null),
+                                new OpenApi\Property(
+                                    property: 'next',
+                                    type: 'string',
+                                    example: 'http://foo.xyz/api/v1/province?page=1&perPage=15'
+                                )
+                            ]
+                        )
+                    ]
+                )
+            )
         ]
     )]
     public function getAllProvinces(
@@ -87,8 +128,21 @@ class ProvinceController extends BaseController
     #[OpenApi\Get(
         path: '/api/v1/province/{id}',
         tags: ['Province'],
+        parameters: [
+            new OpenApi\Parameter(
+                name: 'id',
+                in: 'path',
+                required: true,
+                description: 'Province ID',
+                schema: new OpenApi\Schema(type: 'string')
+            )
+        ],
         responses: [
-            new OpenApi\Response(response: 200, description: 'OK'),
+            new OpenApi\Response(
+                response: 200,
+                description: 'OK',
+                content: new OpenApi\JsonContent(ref: '#/components/schemas/Province')
+            ),
             new OpenApi\Response(response: 404, description: 'Not Found')
         ]
     )]
@@ -130,8 +184,15 @@ class ProvinceController extends BaseController
     #[OpenApi\Post(
         path: '/api/v1/province',
         tags: ['Province'],
+        requestBody: new OpenApi\RequestBody(
+            content: new OpenApi\JsonContent(ref: '#/components/schemas/ProvinceSchema')
+        ),
         responses: [
-            new OpenApi\Response(response: 201, description: 'Created')
+            new OpenApi\Response(
+                response: 201,
+                description: 'Created',
+                content: new OpenApi\JsonContent(ref: '#/components/schemas/Province')
+            )
         ]
     )]
     public function createProvince(
@@ -164,8 +225,24 @@ class ProvinceController extends BaseController
     #[OpenApi\Put(
         path: '/api/v1/province/{id}',
         tags: ['Province'],
+        parameters: [
+            new OpenApi\Parameter(
+                name: 'id',
+                in: 'path',
+                required: true,
+                description: 'Province ID',
+                schema: new OpenApi\Schema(type: 'string')
+            )
+        ],
+        requestBody: new OpenApi\RequestBody(
+            content: new OpenApi\JsonContent(ref: '#/components/schemas/ProvinceSchema')
+        ),
         responses: [
-            new OpenApi\Response(response: 200, description: 'OK'),
+            new OpenApi\Response(
+                response: 200,
+                description: 'OK',
+                content: new OpenApi\JsonContent(ref: '#/components/schemas/Province')
+            ),
             new OpenApi\Response(response: 404, description: 'Not Found')
         ]
     )]
@@ -208,6 +285,15 @@ class ProvinceController extends BaseController
     #[OpenApi\Delete(
         path: '/api/v1/province/{id}',
         tags: ['Province'],
+        parameters: [
+            new OpenApi\Parameter(
+                name: 'id',
+                in: 'path',
+                required: true,
+                description: 'Province ID',
+                schema: new OpenApi\Schema(type: 'string')
+            )
+        ],
         responses: [
             new OpenApi\Response(response: 204, description: 'No Content'),
             new OpenApi\Response(response: 404, description: 'Not Found')
