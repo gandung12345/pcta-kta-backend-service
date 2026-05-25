@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pcta\Api\Schema;
 
+use OpenApi\Attributes as OpenApi;
 use Schnell\Attribute\Schema\Json;
 use Schnell\Attribute\Schema\Rule;
 use Schnell\Schema\AbstractSchema;
@@ -20,6 +21,10 @@ class_exists(AbstractSchema::class);
 /**
  * @author Paulus Gandung Prakosa <gandung@infradead.org>
  */
+#[OpenApi\Schema(
+    schema: 'SubdistrictSchema',
+    type: 'object'
+)]
 class SubdistrictSchema extends AbstractSchema
 {
     use SchemaTrait;
@@ -29,6 +34,11 @@ class SubdistrictSchema extends AbstractSchema
      */
     #[Rule(required: true)]
     #[Json(name: 'formalIdentifier')]
+    #[OpenApi\Property(
+        property: 'formalIdentifier',
+        type: 'string',
+        description: 'Subdistrict schema formal identifier'
+    )]
     private ?string $formalIdentifier;
 
     /**
@@ -36,6 +46,11 @@ class SubdistrictSchema extends AbstractSchema
      */
     #[Rule(required: true)]
     #[Json(name: 'formalName')]
+    #[OpenApi\Property(
+        property: 'formalName',
+        type: 'string',
+        description: 'Subdistrict schema formal name'
+    )]
     private ?string $formalName;
 
     /**
